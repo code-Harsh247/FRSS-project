@@ -6,6 +6,8 @@ import viewIcon from "../assets/Icons/view.png"
 import InputBox from "../InputBox/InputBox";
 import CustomButton from "../Button/CustomButton";
 
+import { NavLink } from "react-router-dom";
+
 const LoginForm = () => {
 
     const [emailInput, setEmailInput] = useState("");
@@ -59,7 +61,7 @@ const LoginForm = () => {
                         </div>
                         <div className="signupLink">
                             <span style={{ color: "black" }}>Don't have an account yet? </span>
-                            <span style={{ color: "black", textDecoration: "underline", fontWeight: "bold" }}>Sign up</span>
+                            <NavLink className="SignUpPageLink" to="/signup">Sign up</NavLink>
                         </div>
 
                     </form>

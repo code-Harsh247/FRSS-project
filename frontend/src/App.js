@@ -1,10 +1,27 @@
 import React from "react";
-import LoginForm from "./components/loginSection/LoginForm"
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
+import AdminLoginInPage from "./pages/AdminLoginPage";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 const App = () => {
+    const router = createBrowserRouter([
+        {
+            path:"/login",
+            element: <LoginPage/>
+        },
+        {
+            path:"/signup",
+            element: <SignUpPage/>
+        },
+        {
+            path:"/admin",
+            element: <AdminLoginInPage/>
+        }
+    ])
     return (
         <div>
-            <LoginForm />
+            <RouterProvider router={router}/>   
         </div>
     );
 };
