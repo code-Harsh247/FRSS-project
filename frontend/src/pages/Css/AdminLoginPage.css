@@ -1,0 +1,39 @@
+
+.Container {
+    display: flex;
+    position: relative; /* Establish a positioning context for absolute children */
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+  
+  .ImgContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure image covers the entire container */
+    object-position: bottom
+  }
+
+  .ImgContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure image covers the entire container, even if it has to be cropped */
+  }
+
+  .AdminLoginPage-Logo {
+    position: absolute;
+    bottom: 10px; /* Adjust for desired vertical positioning from the bottom */
+    left: 10px;  /* Adjust for desired horizontal positioning from the left */
+    width: 20%; /* Adjust logo width as needed */
+    height: 20%; /* Adjust logo height as needed */
+  }
+
+  
+  .AdminLoginPage-Logo img {
+    width: 100%; /* Ensure image fills the logo container */
+    height: 100%; /* Ensure image fills the logo container */
+  }
+  
