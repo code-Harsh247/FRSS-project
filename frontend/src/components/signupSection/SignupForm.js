@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../loginSection/LoginForm.css"
+import "../signupSection/SignupForm.css"
 import "../assets/fonts/fonts.css"
 import hideIcon from "../assets/Icons/hide.png"
 import viewIcon from "../assets/Icons/view.png"
@@ -43,11 +43,11 @@ const SignupForm = () => {
 
     return (
         <div className="Container">
-            <div className="LoginSectionContainer">
+            <div className="SignUpSectionContainer">
                 <div className="FormContainer">
                     <form>
-                        <div className="LoginHeader">
-                            <p>SignUp</p>
+                        <div className="SignUpHeader">
+                            <p>Sign Up</p>
                             <span>Signup to your account to access our products</span>
                         </div>
                         <div className="Name">
@@ -73,14 +73,13 @@ const SignupForm = () => {
                             </div>
                             <InputBox onInputChange={handlePasswordChange} type={showPassword ? "text" : "password"} autocomplete="current-password" />
                         </div>
-                        <div className="LoginBtn">
+                        <div className="SignUpBtn">
                             <CustomButton btnText="Sign up" handleClick={handleButtonClick} />
                         </div>
                         <div className="signupLink">
-                            <span style={{ color: "black" }}>Already have an account yet? </span>
+                            <span style={{ color: "black" }}>Already have an account? </span>
                             <NavLink className="SignUpPageLink" to="/login">Login</NavLink>
                         </div>
-
                     </form>
                 </div>
 
