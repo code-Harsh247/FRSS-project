@@ -1,9 +1,18 @@
 import React from 'react'
+import SignupForm from '../components/signupSection/SignupForm'
+import "./Css/LoginPage.css"
+import signupPage_Img from "../components/assets/images/img1.jpg"
+import Logo from "../components/assets/Logo/Logo.png"
 
-const SignUpPage = () => {
+const LoginPage = () => {
   return (
-    <div>Signup</div>
+    <div className='Container'>
+        <div className='ImgContainer'>
+          <img src= {signupPage_Img} alt='Signup Page'/>
+        </div>
+        <SignupForm/>
+        <img src={Logo} className="LoginPage-Logo" alt="Company Logo" />
+    </div>
   )
 }
-
-export default SignUpPage;
+export default LoginPage;
