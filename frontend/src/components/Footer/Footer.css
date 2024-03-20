@@ -1,0 +1,86 @@
+.footerContainer{
+    
+    display:flexbox;
+    /* border:1px solid red; */
+    height: 400px;
+    width: 100vw;
+}
+.footerLogo img{
+    
+    height: 45%;
+    width: 45%;
+    object-fit: contain; 
+    margin-left: 2rem;   
+    
+}
+.footerLogo{
+    /* border:1px solid blue; */
+    float: left;
+    display:flexbox;
+    justify-content:flex-start;
+    align-items:self-start;
+    height:100%;
+    width:30%;
+}
+.footerrights{
+    display:flexbox;
+    justify-content:flex-start;
+    align-items:center;
+    height: 100%;
+    width: 100%;
+}
+.list1{
+    float: left;
+    display:flexbox;
+    justify-content:space-between;
+    align-items:center;
+    height: 100%;
+    width: 20%;
+}
+.list2{
+    float: left;
+    /* border:1px bold green; */
+    display:flexbox;
+    justify-content:space-around;
+    align-items:center;
+    height: 100%;
+    width: 50%;
+}
+li{
+    list-style-type: none; /* Remove the default bullet points */
+  }
+
+li a {
+    text-decoration: none; /* Remove the underline from hyperlinks within list items */
+  }
+
+.list1,.list2{
+    margin-top: 3%;
+}
+
+.list1 li{
+    padding-top: 15%;
+    font-weight: bold;
+}
+.list2 li{
+    padding-top:5%;
+    font-weight: bold;
+}
+.list1 .footer_home{
+    padding-top:20%;
+    font-weight: bold;
+}
+.list2 .footer_contact{
+    padding-top:7.6%;
+}
+    
+.list2 li .{
+    padding-top:4%;
+    padding-bottom:4%;
+    font-weight: bold;
+}
+
+.list1 p,.list2 p{
+    font-weight: bold;
+    color:rgb(193, 180, 180);
+}

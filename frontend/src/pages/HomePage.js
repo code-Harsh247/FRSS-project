@@ -4,6 +4,7 @@ import bannerImg from '../components/assets/images/homepage banner img.jpg'
 import "./Css/HomePage.css"
 import CustomButton from '../components/Button/CustomButton';
 import { useNavigate } from 'react-router-dom';
+import Footer from "../components/Footer/Footer";
 
 const HomePage = () => {
 
@@ -29,6 +30,7 @@ const HomePage = () => {
 
             <div className='browse'></div>
         </div>
+        
     )
 }
 
