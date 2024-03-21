@@ -4,7 +4,6 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import AdminLoginInPage from "./pages/AdminLoginPage";
-import { useNavigate } from 'react-router-dom'
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 const App = () => {

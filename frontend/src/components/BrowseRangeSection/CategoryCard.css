@@ -1,0 +1,35 @@
+ .BRsec-Category-Card-Container{
+    padding: 2rem;
+}
+
+.BRsec-Category-Card {
+  width: 285px;
+  height: 381px;
+  border-radius: 30px;
+  background: #e0e0e0;
+  box-shadow: 15px 15px 30px #bebebe,
+             -15px -15px 30px #ffffff;
+
+  }
+  
+  .BRsec-Category-Card img:hover {
+    border: 3px solid black;
+  }
+  
+  .BRsec-Category-Card p{
+    font-family: 'Stardom';
+    font-size: 16px;
+  }
+
+  .Category-img {
+    width: 100%; /* Ensures the image takes the full width of its container */
+    height: 100%; /* Ensures the image takes the full height of its container */
+    overflow: hidden; /* Hides any overflow if the image is larger than its container */
+  }
+  
+  .Category-img img {
+    width: 100%; /* Ensures the image takes the full width of its container */
+    height: 100%; /* Ensures the image takes the full height of its container */
+    object-fit: cover; /* Scales the image while maintaining its aspect ratio to cover the entire container */
+    border-radius: 16px;
+  }

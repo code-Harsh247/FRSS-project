@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from '../components/Navbar/Navbar';
+import BRsection from '../components/BrowseRangeSection/BRsection';
 import bannerImg from '../components/assets/images/homepage banner img.jpg'
 import "./Css/HomePage.css"
 import CustomButton from '../components/Button/CustomButton';
@@ -26,8 +27,7 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
-
-            <div className='browse'></div>
+            <BRsection/>
         </div>
     )
 }
