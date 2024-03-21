@@ -27,12 +27,8 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
             <BRsection/>
-=======
-
-            <div className='browse'></div>     
->>>>>>> 5be24e477c65010cc573883146ea07b530794510
+   
         </div>
         
     )
