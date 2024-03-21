@@ -1,6 +1,6 @@
 .footerContainer{
     
-    display:flexbox;
+    display:flex;
     border-top:1px solid grey;
     height: 400px;
     width: 100vw;
