@@ -1,0 +1,54 @@
+.aboutUsContainer{
+    display: flexbox;
+    /* border: 1px solid black ; */
+    height: 100vh;
+}
+
+.aboutUsImage{ 
+    display: flex; 
+    float:left;  
+    /* border:1px solid black; */
+    width:50%;
+    justify-content: center; 
+     
+}
+
+.aboutUsText{
+    border: 1px bold red;
+    float:left; 
+    background-color: white;
+    width:50%;
+    height: 100%;
+}
+.aboutUsImage img{
+    width: auto;
+    height: 100vh;
+    object-fit: contain;
+    
+   
+}
+.aboutUsTitle p{
+    font-size: 8rem;
+    font-weight: bold;
+    text-align: center;
+    font-family: Stardom;
+    text-align: left;
+    /* padding: 10%;
+    padding-right: 10%; */
+    
+}
+.aboutUsTitle{
+    height:40%;
+    padding-top: 20%;
+    padding-right: 10%;
+    
+}
+.aboutUsContent{
+    padding:5%;
+    padding-left: 0%;
+    padding-top:2.5%;
+    height:60%;
+}
+.aboutUsContent p{
+    text-align: left;
+}

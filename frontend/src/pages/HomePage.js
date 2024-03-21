@@ -28,7 +28,7 @@ const HomePage = () => {
                 </div>
             </div>
             <BRsection/>
-   
+
         </div>
         
     )
