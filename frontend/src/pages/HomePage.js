@@ -27,8 +27,9 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div className='browse'></div>
+            <div className='browse'></div>     
         </div>
+        
     )
 }
 
