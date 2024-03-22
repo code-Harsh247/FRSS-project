@@ -1,4 +1,5 @@
 
+
 .aboutUsContainer .banner-container {
     flex:1;
     position: relative;
@@ -20,7 +21,7 @@
     width: 40%;
     height: 50%;
     z-index: 2;
-    background-color: #FFF3E3;
+    background-color: #ffffff;
     position:absolute;
     right: 50%;
     
@@ -37,3 +38,4 @@
     font-family: 'Stardom';
     font-size: 450%;
   }
+
