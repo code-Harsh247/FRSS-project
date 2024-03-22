@@ -39,6 +39,10 @@ app.post("/upload", upload.single('product'), (req,res)=>{
     })
 })
 
+//Schema for Creating products
+
+
+
 app.listen(port,(error)=>{
     if(!error){
         console.log(`Server running on port ${port}`)

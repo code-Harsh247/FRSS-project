@@ -1,4 +1,5 @@
 .footerContainer{
+    display: flex;
     overflow: hidden;
     display:flex;
     border-top:1px solid grey;
@@ -6,7 +7,6 @@
     width: 100vw;
 }
 .footerLogo img{
-    
     height: 45%;
     width: 45%;
     object-fit: contain; 
@@ -21,28 +21,40 @@
     width:30%;
 }
 .footerrights{
-
     justify-content:flex-start;
     align-items:center;
     height: 100%;
     width: 100%;
 }
 .list1{
-    float: left;
-
-    justify-content:space-between;
-    align-items:center;
+    display: flex;
+    align-items:flex-start;
     height: 100%;
     width: 20%;
 }
+.list1 ul{
+    margin-top: 1rem;
+    list-style: none;
+}
+.list1 p{
+    padding-bottom: 2rem;
+}
+.list1 li{
+    padding-bottom: 1rem;
+}
 .list2{
-    float: left;
-    /* border:1px bold green; */
 
-    justify-content:space-around;
-    align-items:center;
+    display: flex;
+    align-items:flex-start;
     height: 100%;
-    width: 50%;
+    width: 20%;
+}
+.list2 ul{
+    margin-top: 1rem;
+    list-style: none;
+}
+.list2 li{
+    padding-bottom: 1rem;
 }
 li{
     list-style-type: none; /* Remove the default bullet points */
@@ -52,29 +64,19 @@ li a {
     text-decoration: none; /* Remove the underline from hyperlinks within list items */
   }
 
-.list1,.list2{
-    margin-top: 3%;
-}
 
 .list1 li{
-    padding-top: 15%;
     font-weight: bold;
 }
-.list2 li{
-    padding-top:5%;
-    font-weight: bold;
-}
+
 .list1 .footer_home{
-    padding-top:20%;
     font-weight: bold;
 }
-.list2 .footer_contact{
-    padding-top:7.6%;
+
+.list2 p{
+    padding-bottom: 2rem;
 }
-    
 .list2 li {
-    padding-top:4%;
-    padding-bottom:4%;
     font-weight: bold;
 }
 
