@@ -1,5 +1,4 @@
 .aboutUsContainer{
-   
     height: 100vh;
 }
 
@@ -21,11 +20,9 @@
     width: auto;
     height: 100vh;
     object-fit: contain;
-    
-   
 }
 .aboutUsTitle p{
-    font-size: 8rem;
+    font-size: 64px;
     font-weight: bold;
     text-align: center;
     font-family: Stardom;
