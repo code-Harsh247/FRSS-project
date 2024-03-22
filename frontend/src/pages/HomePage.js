@@ -7,7 +7,6 @@ import CustomButton from '../components/Button/CustomButton';
 import Footer from '../components/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import AboutUs from '../components/AboutUs/AboutUs';
-import Footer from '../components/Footer/Footer';
 
 const HomePage = () => {
 
@@ -31,6 +30,8 @@ const HomePage = () => {
                 </div>
             </div>
             <BRsection/>
+            <AboutUs/>
+            <Footer/>
    
         </div>
         
