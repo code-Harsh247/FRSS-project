@@ -1,45 +1,41 @@
-.aboutUsContainer{
-    height: 100vh;
-}
 
-.aboutUsImage{ 
-    display: flex; 
-    float:left;  
-    width:50%;
-    justify-content: center; 
-     
-}
 
-.aboutUsText{
-    float:left; 
-    background-color: white;
-    width:50%;
-    height: 100%;
-}
-.aboutUsImage img{
-    width: auto;
-    height: 100vh;
-    object-fit: contain;
-}
-.aboutUsTitle p{
-    font-size: 64px;
-    font-weight: bold;
-    text-align: center;
-    font-family: Stardom;
-    text-align: left;    
-}
-.aboutUsTitle{
-    height:40%;
-    padding-top: 20%;
-    padding-right: 10%;
+.aboutUsContainer .banner-container {
+    flex:1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .aboutUsContainer .banner-image {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+  }
+
+  .aboutUsContainer .banner-text-box{
+    width: 40%;
+    height: 50%;
+    z-index: 2;
+    background-color: #FFF3E3;
+    position:absolute;
+    right: 50%;
     
-}
-.aboutUsContent{
-    padding:5%;
-    padding-left: 0%;
-    padding-top:2.5%;
-    height:60%;
-}
-.aboutUsContent p{
-    text-align: left;
-}
+  }
+  .aboutUsContainer .banner-text-box .rent-text{
+    margin: 0px 20px;
+    font-size: 80%;
+    color: black;
+    width: 70%;
+  }
+
+ 
+  .aboutUsContainer .furniture-text{
+    font-family: 'Stardom';
+    font-size: 450%;
+  }
+
