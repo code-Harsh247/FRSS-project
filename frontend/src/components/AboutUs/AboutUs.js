@@ -1,26 +1,22 @@
 import React from "react";
 import "./AboutUs.css";
-import AboutUsImage from "../assets/images/AboutUsChair.jpg";
+import bannerImg from '../assets/images/homepage banner img.jpg'
 
 
 const AboutUs = () => {
     
     return (
         <div className="aboutUsContainer">
-            <div className="aboutUsImage">
-           <img src={AboutUsImage} alt="About Us Image" />
-           </div>
-           <div className="aboutUsText">
-            <div className="aboutUsTitle">
-                <p>About Us</p>
-                </div>
-                <div className="aboutUsContent">
-                    <p>
-Nullam a posuere diam, non rhoncus ex. Fusce eu elementum massa. Morbi id mattis odio. Morbi commodo commodo ligula, vitae lacinia odio posuere ac. Aliquam diam leo, dignissim ac elementum sit amet, consequat at tellus. Duis dictum convallis nisl, ut lacinia tellus pretium vitae. Donec enim ex, bibendum quis bibendum in, pharetra a metus. Curabitur tortor mi, maximus a magna quis, laoreet imperdiet tellus. Etiam eu metus ac mi pellentesque vehicula. Vivamus et enim rhoncus, laoreet turpis ac, facilisis odio.
-                    </p>
+            <div className='wrapper'>
+                <div className='banner-container'>
+                    <img src={bannerImg} alt='Banner' className='banner-image' />
+                    <div className='banner-text-box'>
+                        <p className='furniture-text'>About Us</p>
+                        <p className='rent-text'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                       
                     </div>
-
-           </div>
+                </div>
+            </div>
             </div>
             
       );
