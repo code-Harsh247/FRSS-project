@@ -4,6 +4,7 @@ import BRsection from '../components/BrowseRangeSection/BRsection';
 import bannerImg from '../components/assets/images/homepage banner img.jpg'
 import "./Css/HomePage.css"
 import CustomButton from '../components/Button/CustomButton';
+import Footer from '../components/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
@@ -28,7 +29,7 @@ const HomePage = () => {
                 </div>
             </div>
             <BRsection/>
-   
+            <Footer/>
         </div>
         
     )
