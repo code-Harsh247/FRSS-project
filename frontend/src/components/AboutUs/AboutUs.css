@@ -12,7 +12,6 @@
 }
 
 .aboutUsText{
-    border: 1px bold red;
     float:left; 
     background-color: white;
     width:50%;
@@ -30,10 +29,7 @@
     font-weight: bold;
     text-align: center;
     font-family: Stardom;
-    text-align: left;
-    /* padding: 10%;
-    padding-right: 10%; */
-    
+    text-align: left;    
 }
 .aboutUsTitle{
     height:40%;

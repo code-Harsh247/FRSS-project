@@ -1,3 +1,8 @@
+.BRsection-Container{
+    height: 100vh;
+    width: 100vw;
+}
+
 .BRsec-header{
     padding: 2rem;
     display: flex;
