@@ -1,13 +1,11 @@
 .aboutUsContainer{
-    display: flexbox;
-    /* border: 1px solid black ; */
+   
     height: 100vh;
 }
 
 .aboutUsImage{ 
     display: flex; 
     float:left;  
-    /* border:1px solid black; */
     width:50%;
     justify-content: center; 
      
