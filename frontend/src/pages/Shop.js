@@ -7,7 +7,7 @@ import Footer from '../components/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import AboutUs from '../components/AboutUs/AboutUs';
 import ShopBanner from '../components/ShopBanner/ShopBanner';
-import ProductCard from '../components/ProductCard/ProductCard';
+// import ProductCard from '../components/ProductCard/ProductCard';
 
 const Shop = () => {
 
