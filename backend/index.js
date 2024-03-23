@@ -7,8 +7,7 @@ const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
 const { error } = require('console');
-// const Product=require('./models/Product');
-// import Product from "./models/Product"
+const Product=require('./models/Product');
 
 app.use(express.json());
 app.use(cors());
@@ -17,7 +16,6 @@ app.use(cors());
 mongoose.connect("mongodb+srv://Harsh:lxBEGLqhWGM1TGc6@frss-project-dbcluster.ezcyfh4.mongodb.net/frssProject")
 
 //API Creation
-
 app.get("/",(req,res)=>{
     res.send("App is running");
 })
@@ -30,7 +28,7 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload  = multer({storage: storage})
+const upload  = multer({storage})
 
 //Upload Endpoint for images
 app.use('/images', express.static('upload/images'))
@@ -41,41 +39,41 @@ app.post("/upload", upload.single('product'), (req,res)=>{
     })
 })
 
-//Schema for Creating products
-const Product =mongoose.model("Product",{
-    id: {
-        type: Number,
-        required: true
-    },
-    name: {
-        type: String,
-        required: true,
-    },
-    description:{
-        type:String,
-        required: true,
-    },
-    image: {
-        type: String,
-        required: true,
-    },
-    cost:{
-        type: Number,
-        required:true,
-    },
-    price: {
-        type: Number,
-        required: true,
-    },
-    category: {
-        type: String,
-        required: true
-    },
-    available: {
-        type: Boolean,
-        default: true,
-    }
-});
+// //Schema for Creating products
+// const Product =mongoose.model("Product",{
+//     id: {
+//         type: Number,
+//         required: true
+//     },
+//     name: {
+//         type: String,
+//         required: true,
+//     },
+//     description:{
+//         type:String,
+//         required: true,
+//     },
+//     image: {
+//         type: String,
+//         required: true,
+//     },
+//     cost:{
+//         type: Number,
+//         required:true,
+//     },
+//     price: {
+//         type: Number,
+//         required: true,
+//     },
+//     category: {
+//         type: String,
+//         required: true
+//     },
+//     available: {
+//         type: Boolean,
+//         default: true,
+//     }
+// });
 //API for adding products in the database
 app.post('/addproduct',async(req,res)=>{
     let products=await Product.find({});
