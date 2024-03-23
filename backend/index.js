@@ -39,42 +39,6 @@ app.post("/upload", upload.single('product'), (req,res)=>{
     })
 })
 
-// //Schema for Creating products
-// const Product =mongoose.model("Product",{
-//     id: {
-//         type: Number,
-//         required: true
-//     },
-//     name: {
-//         type: String,
-//         required: true,
-//     },
-//     description:{
-//         type:String,
-//         required: true,
-//     },
-//     image: {
-//         type: String,
-//         required: true,
-//     },
-//     cost:{
-//         type: Number,
-//         required:true,
-//     },
-//     price: {
-//         type: Number,
-//         required: true,
-//     },
-//     category: {
-//         type: String,
-//         required: true
-//     },
-//     available: {
-//         type: Boolean,
-//         default: true,
-//     }
-// });
-//API for adding products in the database
 app.post('/addproduct',async(req,res)=>{
     let products=await Product.find({});
     let id;
