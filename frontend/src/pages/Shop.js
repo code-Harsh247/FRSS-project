@@ -7,7 +7,7 @@ import Footer from '../components/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 // import AboutUs from '../components/AboutUs/AboutUs';
 import ShopBanner from '../components/ShopBanner/ShopBanner';
-
+import ServiceBanner from '../components/ServiceBanner/ServiceBanner';
 
 const Shop = () => {
 
@@ -19,10 +19,11 @@ const Shop = () => {
     return (
         <div className='Shop-Container'>
             
-                <Navbar />
+                {/* <Navbar />
                 <ShopBanner/>
 
-            <Footer/>
+            <Footer/> */}
+            <ServiceBanner/>
    
         </div>
         
