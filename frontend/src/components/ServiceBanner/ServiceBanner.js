@@ -8,12 +8,22 @@ function Card() {
         <ul>
             <li>
                 <img src='https://img.icons8.com/ios/452/checked--v1.png' alt='checked icon'/>
-                <p>Warranty Protection</p>
+                <p className='servicetitle'>High Quality</p>
+                <p>Crafted from top materials</p>
+            </li>
+            <li>
+                <img src='https://img.icons8.com/ios/452/checked--v1.png' alt='checked icon'/>
+                <p className='servicetitle'>Warranty Protection</p>
                 <p>Over 2 Years Warranty</p>
             </li>
             <li>
                 <img src='https://img.icons8.com/ios/452/checked--v1.png' alt='checked icon'/>
-                <p>Warranty Protection</p>
+                <p className='servicetitle'>Warranty Protection</p>
+                <p>Over 2 Years Warranty</p>
+            </li>
+            <li>
+                <img src='https://img.icons8.com/ios/452/checked--v1.png' alt='checked icon'/>
+                <p className='servicetitle'>Warranty Protection</p>
                 <p>Over 2 Years Warranty</p>
             </li>
         </ul>

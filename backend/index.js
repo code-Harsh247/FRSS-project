@@ -1,4 +1,5 @@
-const port = 4000;
+require('dotenv').config();
+const bcrypt = require('bcrypt');
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -14,7 +15,7 @@ app.use(express.json());
 app.use(cors());
 
 //Database connection
-mongoose.connect("mongodb+srv://Harsh:lxBEGLqhWGM1TGc6@frss-project-dbcluster.ezcyfh4.mongodb.net/frssProject")
+mongoose.connect(`${process.env.DB_CONN}`)
 
 //API Creation
 app.get("/",(req,res)=>{
@@ -36,7 +37,7 @@ app.use('/images', express.static('upload/images'))
 app.post("/upload", upload.single('product'), (req,res)=>{
     res.json({
         success: 1,
-        image_url:`http://localhost:${port}/images/${req.file.filename}`
+        image_url:`http://localhost:${process.env.PORT}/images/${req.file.filename}`
     })
 })
 
@@ -97,11 +98,12 @@ app.post('/signup',async(req,res)=>{
     for(let i=0;i<100;i++){
         cart[i]=0;
     }
+    const hashPassword = await bcrypt.hash(req.body.password,10)
     const user =new User({
         name:req.body.name,
         email:req.body.email,
         phone:req.body.phone,
-        passwd:req.body.password,
+        passwd:hashPassword,
         cartData:cart,
     })
 
@@ -111,7 +113,7 @@ app.post('/signup',async(req,res)=>{
             id:user.id
         }
     }
-    const token=jwt.sign(data,'secret_ecom');
+    const token=jwt.sign(data,`${process.env.SECRET_KEY}`);
     res.json({success:true,token})
 })
 
@@ -120,14 +122,14 @@ app.post('/signup',async(req,res)=>{
 app.post('/login',async(req,res)=>{
     let user=await User.findOne({email:req.body.email});
     if(user){
-        const passCompare=req.body.password===user.passwd;
+        const passCompare=await bcrypt.compare(req.body.password, user.passwd);
         if(passCompare){
             const data={
                 user:{
                     id:user.id
                 }
             }
-            const token=jwt.sign(data,'secret_ecom');
+            const token=jwt.sign(data,`${process.env.SECRET_KEY}`);
             res.json({success:true,token});
         }
         else{
@@ -135,13 +137,13 @@ app.post('/login',async(req,res)=>{
         }
     }
     else{
-        res.json({success:false,errors:"Wrong Email Id"});
+        res.json({success:false,errors:"No user with the given email id found"});
     }
 })
 
-app.listen(port,(error)=>{
+app.listen(process.env.PORT,(error)=>{
     if(!error){
-        console.log(`Server running on port ${port}`)
+        console.log(`Server running on port ${process.env.PORT}`)
     }else{
         console.log(`Error : ${error}`)
     }

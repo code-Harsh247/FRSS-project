@@ -4,23 +4,24 @@ import bannerImg from '../assets/images/aboutUsImg.jpg'
 
 
 const AboutUs = () => {
-    
+
     return (
-        <div className="aboutUsContainer">
+        <div className="aboutUsContainer" id="AboutUs">
             <div className='wrapper'>
                 <div className='banner-container'>
                     <img src={bannerImg} alt='Banner' className='banner-image' />
                     <div className='banner-text-box'>
                         <p className='furniture-text'>About Us</p>
-                        <p className='rent-text'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                       
+                        <p className='rent-text'>
+                            Welcome to our Furniture Rental Store System! We're a team of three computer science enthusiasts from IIT Kharagpur: Hemant, Harsh Chattar, and Abhinav Kumar Singh. Our goal with this project is to simplify furniture rental for everyone. We believe in making quality furniture accessible to all, whether it's for temporary living arrangements, special events, or simply trying out new styles. </p>
+
                     </div>
                 </div>
             </div>
-            </div>
-            
-      );
-        
+        </div>
+
+    );
+
 };
 
 export default AboutUs;
