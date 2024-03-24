@@ -1,10 +1,10 @@
 import React from 'react'
 import "./BRsection.css"
 import CategoryCard from './CategoryCard'
-import chairImg from "../assets/images/chair-no-bg.png"
-import sofaImg from "../assets/images/sofa-no-bg.png"
-import bedImg from "../assets/images/bed-no-bg.png"
-import tableImg from "../assets/images/table-no-bg.png"
+import chairImg from "../assets/images/chair.jpg"
+import sofaImg from "../assets/images/sofa.jpg"
+import bedImg from "../assets/images/beds.jpg"
+import tableImg from "../assets/images/tables.jpg"
 
 const cardImgURLS = [
   { id: 1, title: 'Beds', url: bedImg},
