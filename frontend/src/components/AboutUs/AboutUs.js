@@ -6,7 +6,7 @@ import bannerImg from '../assets/images/aboutUsImg.jpg'
 const AboutUs = () => {
 
     return (
-        <div className="aboutUsContainer">
+        <div className="aboutUsContainer" id="AboutUs">
             <div className='wrapper'>
                 <div className='banner-container'>
                     <img src={bannerImg} alt='Banner' className='banner-image' />

@@ -27,6 +27,10 @@
     height: 100%; /* Ensures the image takes the full height of its container */
     overflow: hidden; /* Hides any overflow if the image is larger than its container */
   }
+
+  .Category-img :hover{
+    transform : scale(0.95);
+  }
   
   .Category-img img {
     width: 100%; /* Ensures the image takes the full width of its container */
