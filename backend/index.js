@@ -8,6 +8,7 @@ const path = require("path");
 const cors = require("cors");
 const { error } = require('console');
 const Product=require('./models/Product');
+const User=require('./models/User');
 
 app.use(express.json());
 app.use(cors());
@@ -84,6 +85,58 @@ app.get('/allproducts',async(req,res)=>{
     let products=await Product.find({});
     console.log("All Products Fetched");
     res.send(products);
+})
+// API for Signup
+
+app.post('/signup',async(req,res)=>{
+    let check=await User.findOne({email:req.body.email});
+    if(check){
+        return res.status(400).json({success:false,errors:"exiting user"});
+    }
+    let cart={};
+    for(let i=0;i<100;i++){
+        cart[i]=0;
+    }
+    const user =new User({
+        name:req.body.name,
+        email:req.body.email,
+        phone:req.body.phone,
+        passwd:req.body.password,
+        cartData:cart,
+    })
+
+    await user.save();
+    const data={
+        user:{
+            id:user.id
+        }
+    }
+    const token=jwt.sign(data,'secret_ecom');
+    res.json({success:true,token})
+})
+
+//API for User login
+
+app.post('/login',async(req,res)=>{
+    let user=await User.findOne({email:req.body.email});
+    if(user){
+        const passCompare=req.body.password===user.passwd;
+        if(passCompare){
+            const data={
+                user:{
+                    id:user.id
+                }
+            }
+            const token=jwt.sign(data,'secret_ecom');
+            res.json({success:true,token});
+        }
+        else{
+            res.json({success:false,errors:"Wrong Password"});
+        }
+    }
+    else{
+        res.json({success:false,errors:"Wrong Email Id"});
+    }
 })
 
 app.listen(port,(error)=>{
