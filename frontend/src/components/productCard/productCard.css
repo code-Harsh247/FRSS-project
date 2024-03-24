@@ -1,92 +1,37 @@
-.card {
-    position: relative;
-    width: 11.875em;
-    height: 16.5em;
-    box-shadow: 0px 1px 13px rgba(0,0,0,0.1);
-    cursor: pointer;
-    transition: all 120ms;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    padding: 0.5em;
-    padding-bottom: 3.4em;
-    border: 2px solid #000000;
-  }
-  
-  .card::after {
-    content: "Add to Cart";
-    padding-top: 1.25em;
-    padding-left: 1.25em;
-    position: absolute;
-    left: 0;
-    bottom: -60px;
-    background: #00AC7C;
-    color: #fff;
-    height: 2.5em;
-    width: 90%;
-    transition: all 80ms;
-    font-weight: 600;
-    text-transform: uppercase;
-    opacity: 0;
-  }
-  
-  .card .title {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.9em;
-    position: absolute;
-    left: 0.625em;
-    bottom: 1.875em;
-    font-weight: 400;
-    color: #000;
-  }
-  
-  .card .price {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size: 0.9em;
-    position: absolute;
-    left: 0.625em;
-    bottom: 0.625em;
-    color: #000;
-  }
-  
-  .card:hover::after {
-    bottom: 0;
-    opacity: 1;
-  }
-  
-  .card:active {
-    transform: scale(0.98);
-  }
-  
-  .card:active::after {
-    content: "Added !";
-    height: 3.125em;
-  }
-  
-  .text {
-    max-width: 55px;
-  }
-  
-  /* .image {
-    background: rgb(241, 241, 241);
-    width: 100%;
-    height: 100%;
-    display: grid;
-    place-items: center;
-    object-fit: contain;
-  } */
-  .image {
-    background: rgb(241, 241, 241);
-    width: auto; /* Set width to auto */
-    height: 100%; /* Set height to 100% */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .image img {
-    max-width: 100%; /* Ensure image fits within its container */
-    max-height: 105%; /* Ensure image fits within its container */
-    object-fit: contain; /* Maintain aspect ratio and fit within container */
-  }
+.ShopProductCard {
+  display: flex;
+  flex-direction: column;
+  width: 300px; /* Adjust width as needed */
+  margin: 10px; 
+  padding: 2%;/* Adjust margin as needed */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  background-color: #fff;
+  /* border: 2px solid #000000; */
+  width:33vw;
+}
+
+.card img {
+  width: 50%;
+  height: auto; /* Adjust height as needed */
+  object-fit: cover;
+}
+
+.card-content {
+  padding-top: 3%;
+}
+
+.card-title {
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+}
+
+.card-text {
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.bestseller {
+  color: #f9c74f;
+  font-weight: bold;
+}
