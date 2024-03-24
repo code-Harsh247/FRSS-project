@@ -10,27 +10,27 @@
   width:33vw;
 }
 
-.card img {
+.ShopProductCard .card img {
   width: 50%;
   height: auto; /* Adjust height as needed */
   object-fit: cover;
 }
 
-.card-content {
+.ShopProductCard .card-content {
   padding-top: 3%;
 }
 
-.card-title {
+.ShopProductCard .card-title {
   font-size: 0.8rem;
   margin-bottom: 8px;
 }
 
-.card-text {
+.ShopProductCard .card-text {
   font-size: 0.8rem;
   line-height: 1.5;
 }
 
-.bestseller {
+.ShopProductCard .bestseller {
   color: #f9c74f;
   font-weight: bold;
 }

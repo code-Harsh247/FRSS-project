@@ -5,10 +5,18 @@ function Card() {
     <div className="card">
       <div className="card-image">
         <div className="card-icons">
-        <img src="https://www.flaticon.com/free-icons/trophy" title="trophy icons"></img> {/* Replace with actual icons */}
-          <i className="fas fa-shield-alt"></i> {/* Replace with actual icons */}
-          <i className="fas fa-shipping-fast"></i> {/* Replace with actual icons */}
-          <i className="fas fa-headset"></i> {/* Replace with actual icons */}
+        <ul>
+            <li>
+                <img src='https://img.icons8.com/ios/452/checked--v1.png' alt='checked icon'/>
+                <p>Warranty Protection</p>
+                <p>Over 2 Years Warranty</p>
+            </li>
+            <li>
+                <img src='https://img.icons8.com/ios/452/checked--v1.png' alt='checked icon'/>
+                <p>Warranty Protection</p>
+                <p>Over 2 Years Warranty</p>
+            </li>
+        </ul>
         </div>
       </div>
       <div className="card-content">
