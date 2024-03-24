@@ -1,0 +1,36 @@
+.ShopProductCard {
+  display: flex;
+  flex-direction: column;
+  margin: 10px; 
+  padding: 2%;/* Adjust margin as needed */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  background-color: #fff;
+  /* border: 2px solid #000000; */
+  width:33vw;
+}
+
+.ShopProductCard .card img {
+  width: 50%;
+  height: auto; /* Adjust height as needed */
+  object-fit: cover;
+}
+
+.ShopProductCard .card-content {
+  padding-top: 3%;
+}
+
+.ShopProductCard .card-title {
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+}
+
+.ShopProductCard .card-text {
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.ShopProductCard .bestseller {
+  color: #f9c74f;
+  font-weight: bold;
+}
