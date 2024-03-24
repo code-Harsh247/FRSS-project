@@ -2,15 +2,16 @@ import React from 'react'
 import "./BRsection.css"
 import CategoryCard from './CategoryCard'
 import chairImg from "../assets/images/chair-no-bg.png"
-import sofaImg from "../assets/images/couch-no-bg.png"
+import sofaImg from "../assets/images/sofa-no-bg.png"
 import closetImg from "../assets/images/closets-no-bg.png"
 import bedImg from "../assets/images/bed-no-bg.png"
+import tableImg from "../assets/images/table-no-bg.png"
 
 const cardImgURLS = [
   { id: 1, title: 'Beds', url: bedImg},
   { id: 2, title: 'Chairs', url: chairImg },
   { id: 3, title: 'Sofas', url: sofaImg },
-  { id: 4, title: 'Closets', url: closetImg}
+  { id: 4, title: 'Tables', url: tableImg}
 ];
 
 const BRsection = () => {
