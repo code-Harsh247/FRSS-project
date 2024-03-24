@@ -4,7 +4,7 @@ import bannerImg from '../assets/images/aboutUsImg.jpg'
 
 
 const AboutUs = () => {
-    
+
     return (
         <div className="aboutUsContainer">
             <div className='wrapper'>
@@ -13,15 +13,15 @@ const AboutUs = () => {
                     <div className='banner-text-box'>
                         <p className='furniture-text'>About Us</p>
                         <p className='rent-text'>
-Welcome to our Furniture Rental Store System! We're a team of three computer science enthusiasts from IIT Kharagpur: Hemant, Harsh Chatter, and Abhinav Kumar Singh. Our goal with this project is to simplify furniture rental for everyone. We believe in making quality furniture accessible to all, whether it's for temporary living arrangements, special events, or simply trying out new styles. Join us on this journey as we strive to revolutionize the way people furnish their spaces.</p>
-                       
+                            Welcome to our Furniture Rental Store System! We're a team of three computer science enthusiasts from IIT Kharagpur: Hemant, Harsh Chattar, and Abhinav Kumar Singh. Our goal with this project is to simplify furniture rental for everyone. We believe in making quality furniture accessible to all, whether it's for temporary living arrangements, special events, or simply trying out new styles. </p>
+
                     </div>
                 </div>
             </div>
-            </div>
-            
-      );
-        
+        </div>
+
+    );
+
 };
 
 export default AboutUs;
