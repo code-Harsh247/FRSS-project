@@ -1,7 +1,6 @@
 .ShopProductCard {
   display: flex;
   flex-direction: column;
-  width: 300px; /* Adjust width as needed */
   margin: 10px; 
   padding: 2%;/* Adjust margin as needed */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
