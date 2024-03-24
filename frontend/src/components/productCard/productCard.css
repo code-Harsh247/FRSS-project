@@ -10,6 +10,10 @@
   width:33vw;
 }
 
+.ShopProductCard:hover{
+  transform:scale(0.95);
+}
+
 .ShopProductCard .card img {
   width: 50%;
   height: auto; /* Adjust height as needed */
@@ -21,13 +25,12 @@
 }
 
 .ShopProductCard .card-title {
-  font-size: 0.8rem;
+  font-size: 2rem;
   margin-bottom: 8px;
 }
 
 .ShopProductCard .card-text {
-  font-size: 0.8rem;
-  line-height: 1.5;
+  font-size: 1rem;
 }
 
 .ShopProductCard .bestseller {

@@ -1,5 +1,5 @@
 import React from 'react';
-import './ProductCard.css';
+import './productCard.css';
 
 function ProductCard({ imageUrl, productName, price }) {
   return (
@@ -8,10 +8,7 @@ function ProductCard({ imageUrl, productName, price }) {
       <div className="card-content">
         <h3 className="card-title">{productName}</h3>
         <p className="card-text">
-          <br />
           ${price}
-          <br />
-          Contract Grade
         </p>
       </div>
     </div>

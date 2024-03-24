@@ -5,8 +5,11 @@ import Navbar from '../components/Navbar/Navbar';
 // import CustomButton from '../components/Button/CustomButton';
 import Footer from '../components/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
+import "../pages/Css/Shop.css"
 // import AboutUs from '../components/AboutUs/AboutUs';
 import ShopBanner from '../components/ShopBanner/ShopBanner';
+import ProductCard from '../components/productCard/productCard';
+import testImg from '../components/assets/images/chair.jpg'
 
 
 const Shop = () => {
@@ -21,8 +24,8 @@ const Shop = () => {
             
                 <Navbar />
                 <ShopBanner/>
-
-            <Footer/>
+                <ProductCard imageUrl={testImg} productName="chair" price="10000"/>
+                <Footer/>
    
         </div>
         
