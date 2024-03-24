@@ -3,7 +3,6 @@ import "./BRsection.css"
 import CategoryCard from './CategoryCard'
 import chairImg from "../assets/images/chair-no-bg.png"
 import sofaImg from "../assets/images/sofa-no-bg.png"
-import closetImg from "../assets/images/closets-no-bg.png"
 import bedImg from "../assets/images/bed-no-bg.png"
 import tableImg from "../assets/images/table-no-bg.png"
 

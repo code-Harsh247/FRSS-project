@@ -10,7 +10,8 @@
     height: 45%;
     width: 45%;
     object-fit: contain; 
-    margin-left: 2rem;   
+    margin-left: 2rem;  
+    margin-top: 2rem; 
     
 }
 .footerLogo{
@@ -33,7 +34,7 @@
     width: 20%;
 }
 .list1 ul{
-    margin-top: 1rem;
+    margin-top: 3rem;
     list-style: none;
 }
 .list1 p{
@@ -50,7 +51,7 @@
     width: 20%;
 }
 .list2 ul{
-    margin-top: 1rem;
+    margin-top: 3rem;
     list-style: none;
 }
 .list2 li{
