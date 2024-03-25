@@ -21,7 +21,7 @@ const Footer = () => {
               <div className="list2">
                 <ul>
                     <p className="help">Help</p>
-                    <li className="footer_contact"><a href="/contact">Contact</a></li>
+                    <li className="footer_contact"><a href="#ContactBanner">Contact</a></li>
                     <li className="footer_policy">Privacy Policies</li>
               </ul>
               </div>

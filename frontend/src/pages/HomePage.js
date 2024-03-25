@@ -6,6 +6,7 @@ import "./Css/HomePage.css"
 import CustomButton from '../components/Button/CustomButton';
 import Footer from '../components/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
+import ContactBanner from '../components/ContactBanner/ContactBanner';
 import AboutUs from '../components/AboutUs/AboutUs';
 
 const HomePage = () => {
@@ -31,6 +32,7 @@ const HomePage = () => {
             </div>
             <BRsection/>
             <AboutUs/>
+            <ContactBanner/>
             <Footer/>
    
         </div>

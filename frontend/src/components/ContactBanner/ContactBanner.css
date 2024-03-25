@@ -1,0 +1,50 @@
+.ContactBanner-Container{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 30vh;
+    
+}
+
+.ContactBanner-Header{
+    width: 100%;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ContactBanner-Header p{
+    font-family: 'Stardom';
+    font-size: 40px;
+    color: black;
+}
+
+.EngineerIcon-Container{
+    width: 4rem;
+    height: 4rem;
+    margin: 0.5rem;
+}
+.EngineerIcon-Container img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.Contact{
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem;
+}
+
+.ContactBanner-Contact-Wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.Contact-Name{
+    font-weight: bold;
+}
+
