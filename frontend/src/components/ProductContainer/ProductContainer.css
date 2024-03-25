@@ -1,0 +1,10 @@
+.Product-Card-Container{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100vw;
+    height: auto;
+}
+
+.item-Card{
+    flex-basis: calc(33.33% - 20px);
+}

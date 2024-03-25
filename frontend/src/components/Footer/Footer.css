@@ -2,7 +2,7 @@
     display: flex;
     overflow: hidden;
     display:flex;
-    border-top:1px solid grey;
+    background-color: #F0F0F0;
     height: 280px;
     width: 100vw;
 }
@@ -83,5 +83,5 @@ li a {
 
 .list1 p,.list2 p{
     font-weight: bold;
-    color:rgb(193, 180, 180);
+    color: #6F593F;
 }

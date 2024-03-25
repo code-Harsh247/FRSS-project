@@ -1,0 +1,36 @@
+.Product-Details-Container{
+    display: flex;
+    height: 90vh;
+    width: 100vw;
+    border: 1px solid red;
+}
+
+.Product-Pictures{
+    display: flex;
+    height: 100%;
+    width: 55%;
+    border: 1px solid black;
+    justify-content: center;
+    align-items:center;
+}
+
+.Product-Other-Pictures{
+    display: flex;
+    align-items: center;
+    width: 15%;
+    height: 85%;
+    justify-content: flex-start;
+    flex-direction: column;
+    border: 1px solid green;
+}
+.Product-Main-Picture{
+    width: 80%;
+    height: 85%;
+    border: 2px solid purple;
+}
+.ProdPic{
+    border: 2px solid black;
+    width: 90%;
+    height: 19%;
+    margin-bottom: 1rem;
+}

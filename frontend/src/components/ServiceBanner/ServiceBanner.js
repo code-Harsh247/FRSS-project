@@ -12,7 +12,7 @@ function ServiceBanner() {
 
 
             <div className='Service'>
-                    <img src={trophy} alt='trophy'/ >
+                    <img src={trophy} alt='trophy'/>
                 <p className='servicetitle'>High Quality</p>
                 <p>Crafted from top materials</p>
             </div>

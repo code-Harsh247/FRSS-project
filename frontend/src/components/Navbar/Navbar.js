@@ -16,7 +16,7 @@ const Navbar = () => {
                 <NavLink to="/">Home</NavLink>
                 <NavLink to="/shop">Shop</NavLink>
                 <a href="#AboutUs">About</a>
-                <a href="/contact">Contact</a>
+                <a href="#ContactBanner">Contact</a>
             </div>
             <div className="icons">
                 <img src={search} alt="Search" className="search-icon"/>

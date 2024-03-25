@@ -13,7 +13,7 @@ const Footer = () => {
             <div className="list1">
                 <ul>
                     <p className="link">Links</p>
-                    <li className="footer_home"><a href="#">Home</a></li>
+                    <li className="footer_home"><a href="#Home">Home</a></li>
                     <li className="footer_shop"><NavLink to="/shop">Shop</NavLink></li>
                     <li className="footer_about"><a href="#AboutUs">About</a></li>
               </ul>
@@ -21,8 +21,8 @@ const Footer = () => {
               <div className="list2">
                 <ul>
                     <p className="help">Help</p>
-                    <li className="footer_contact"><a href="/contact">Contact</a></li>
-                    <li className="footer_policy"><a href="#">Privacy Policies</a></li>
+                    <li className="footer_contact"><a href="#ContactBanner">Contact</a></li>
+                    <li className="footer_policy">Privacy Policies</li>
               </ul>
               </div>
 

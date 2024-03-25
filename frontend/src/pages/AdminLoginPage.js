@@ -17,13 +17,3 @@ import Logo from "../components/assets/Logo/Logo.png"
 }
 export default AdminLoginPage;
 
-// import React from 'react'
-
-
-
-// const LoginPage = () => {
-//   return (
-    
-//   )
-// }
-// export default LoginPage;
