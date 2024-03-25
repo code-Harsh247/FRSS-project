@@ -17,7 +17,7 @@ const HomePage = () => {
     }
 
     return (
-        <div className='container'>
+        <div className='container' id='Home'>
             <div className='wrapper'>
                 <Navbar />
                 <div className='banner-container'>

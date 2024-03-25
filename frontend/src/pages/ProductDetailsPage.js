@@ -6,7 +6,7 @@ const ProductDetailsPage = () => {
   return (
     <div>
       <Navbar/>
-      <ProdDetails />
+      <ProdDetails title="" />
     </div>
   )
 }

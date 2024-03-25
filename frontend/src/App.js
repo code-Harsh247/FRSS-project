@@ -6,6 +6,7 @@ import SignUpPage from "./pages/SignUpPage";
 import AdminLoginInPage from "./pages/AdminLoginPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
+import { ProductProvider } from "./context/ProductContext";
 
 const App = () => {
     const router = createBrowserRouter([
@@ -35,9 +36,11 @@ const App = () => {
         }
     ])
     return (
+        <ProductProvider>
         <div>
             <RouterProvider router={router}/>   
         </div>
+        </ProductProvider>
     );
 };
 

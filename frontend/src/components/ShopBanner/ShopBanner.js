@@ -6,7 +6,7 @@ const ShopBanner = () => {
     return (
         <div className="shopBannerContainer">
             <div className='imgContainer' >
-                <img src={bannerImg} alt='Banner' className='banner-image' z />
+                <img src={bannerImg} alt='Banner' className='banner-image'/>
             </div>
             <div className="shopBannerText">
             <p className="Shop">Shop</p>
