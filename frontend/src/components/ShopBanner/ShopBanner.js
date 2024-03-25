@@ -1,7 +1,7 @@
 import React from "react";
 import "./ShopBanner.css";
 import bannerImg from '../assets/images/img1.jpg'
-const ShopBanner = () => {
+const ShopBanner = ({name}) => {
     
     return (
         <div className="shopBannerContainer">
@@ -9,8 +9,8 @@ const ShopBanner = () => {
                 <img src={bannerImg} alt='Banner' className='banner-image' z />
             </div>
             <div className="shopBannerText">
-            <p className="Shop">Shop</p>
-            <p>Home &gt; Shop</p>
+            <p className="Shop">{name}</p>
+            <p>Home &gt; {name}</p>
             </div>
         </div>
       );

@@ -9,10 +9,11 @@ import AboutUs from '../components/AboutUs/AboutUs';
 import ShopBanner from '../components/ShopBanner/ShopBanner';
 // import ProductCard from '../components/ProductCard/ProductCard';
 
+
+
 const Shop = () => {
 
     const navigate = useNavigate();
-
     const goToShop = ()=>{
         navigate('/shop');
     }
@@ -21,7 +22,8 @@ const Shop = () => {
         <div className='container'>
             
                 <Navbar />
-                <ShopBanner/>
+                <ShopBanner name='Shop'/>
+                <BRsection/>
             <Footer/>
    
         </div>
