@@ -1,12 +1,25 @@
 import React from 'react'
 import Counter from '../Counter/Counter';
 import "./ProductDetails.css"
+import CustomButton from "../Button/CustomButton"
+import CustomButtonSecondary from '../Button/CustomButttonSecondary';
 
 const ProdDetails = ({item}) => {
     if (!item) {
         // Render some placeholder or return null if there's no product data
         return <div>Loading product details...</div>;
       }
+
+      const AddToCart = ()=>{
+        console.log("Product Added to cart");
+      }
+      const BuyNow = ()=>{
+        console.log("Buying now");
+      }
+
+      const buttonStyle = {
+        width: '100%', // Set width to 100%
+      };
 
     return (
         <div className='Product-Details-Container'>
@@ -35,6 +48,8 @@ const ProdDetails = ({item}) => {
                         <p>{item.description}</p>
                     </div>
                     <Counter/>
+                    <CustomButton btnText = "Buy now" handleClick={BuyNow} Btnwidth="100%"/>
+                    <CustomButtonSecondary btnText="Add to Cart" handleClick={AddToCart} Btnwidth="100%"/>
                 </div>
             </div>
         </div>
