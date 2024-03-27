@@ -1,59 +1,78 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import Counter from '../Counter/Counter';
-import "./ProductDetails.css"
-import CustomButton from "../Button/CustomButton"
+import "./ProductDetails.css";
+import CustomButton from "../Button/CustomButton";
 import CustomButtonSecondary from '../Button/CustomButttonSecondary';
 
-const ProdDetails = ({item}) => {
-    if (!item) {
-        // Render some placeholder or return null if there's no product data
-        return <div>Loading product details...</div>;
-      }
+const ProdDetails = ({ item }) => {
+    const [mainImg, setMainImg] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
-      const AddToCart = ()=>{
-        console.log("Product Added to cart");
-      }
-      const BuyNow = ()=>{
-        console.log("Buying now");
-      }
+    useEffect(() => {
+        if (item && item.image && item.image.length > 0) {
+            setMainImg(item.image[0]);
+        }
+    }, [item]);
 
-      const buttonStyle = {
-        width: '100%', // Set width to 100%
-      };
+    const handleMainImg = (index) => {
+        setMainImg(item.image[index]);
+        setSelectedImageIndex(index);
+    };
+
+    const handleImageLoad = () => {
+        setLoading(false);
+    };
 
     return (
         <div className='Product-Details-Container'>
             <div className='Product-Pictures'>
                 <div className='Product-Other-Pictures'>
-                    <div className='ProdPic' id='pic1'>
-                    </div>
-                    <div className='ProdPic' id='pic2'>
-                    </div>
-                    <div className='ProdPic' id='pic3'>
-                    </div>
+                    {item && item.image && item.image.map((img, index) => (
+                        <div 
+                            className={`ProdPic ${index === selectedImageIndex ? 'selected' : ''}`} 
+                            key={index} 
+                            id={`pic${index}`} 
+                            onClick={() => handleMainImg(index)}
+                        >
+                            {index === 0 && loading ? (
+                                <img src={img} alt={item.name} style={{ display: 'none' }} onLoad={handleImageLoad} />
+                            ) : (
+                                <img src={img} alt={item.name} onLoad={handleImageLoad} />
+                            )}
+                        </div>
+                    ))}
                 </div>
                 <div className='Product-Main-Picture'>
-                    <img src={item.image} alt={item.name}/>
+                    {mainImg && (
+                        <>
+                            {loading ? (
+                                <div>Loading main image...</div>
+                            ) : (
+                                <img src={mainImg} alt={item.name} onLoad={handleImageLoad} />
+                            )}
+                        </>
+                    )}
                 </div>
             </div>
             <div className='Product-Details-Wrapper'>
                 <div className='Product-Details'>
                     <div className='Product-Name'>
-                        <p>{item.name}</p>
+                        <p>{item ? item.name : 'Loading...'}</p>
                     </div>
                     <div className='Product-Price'>
-                        <p>{`Rs ${item.price}`}</p>
+                        <p>{item ? `Rs ${item.price} / month` : 'Loading...'}</p>
                     </div>
                     <div className='Product-Desc'>
-                        <p>{item.description}</p>
+                        <p>{item ? item.description : 'Loading...'}</p>
                     </div>
-                    <Counter/>
-                    <CustomButton btnText = "Buy now" handleClick={BuyNow} Btnwidth="100%"/>
-                    <CustomButtonSecondary btnText="Add to Cart" handleClick={AddToCart} Btnwidth="100%"/>
+                    <Counter />
+                    <CustomButton btnText="Rent now" handleClick={() => console.log("Buying now")} Btnwidth="100%" />
+                    <CustomButtonSecondary btnText="Add to Cart" handleClick={() => console.log("Product Added to cart")} Btnwidth="100%" />
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default ProdDetails
+export default ProdDetails;
