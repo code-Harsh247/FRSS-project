@@ -74,7 +74,7 @@ const SignupForm = () => {
                             <InputBox onInputChange={handlePasswordChange} type={showPassword ? "text" : "password"} autocomplete="current-password" />
                         </div>
                         <div className="SignUpBtn">
-                            <CustomButton btnText="Sign up" handleClick={handleButtonClick} />
+                            <CustomButton btnText="Sign up" handleClick={handleButtonClick} Btnwidth="8.5em" />
                         </div>
                         <div className="signupLink">
                             <span style={{ color: "black" }}>Already have an account? </span>

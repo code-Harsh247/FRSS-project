@@ -5,6 +5,7 @@
     align-items: center;
     padding: 8px 20px;
     font-family: Arial, sans-serif;
+    border-bottom: 1px solid #ddd;
   }
 
   .logo-container{

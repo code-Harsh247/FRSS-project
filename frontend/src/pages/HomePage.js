@@ -26,7 +26,7 @@ const HomePage = () => {
                     <div className='banner-text-box'>
                         <p className='furniture-text'>Furniture as unique as you</p>
                         <p className='rent-text'>Rent your signature style today at the most affordable prices!</p>
-                        <div><CustomButton btnText="Buy Now" handleClick={goToShop}></CustomButton></div>
+                        <div><CustomButton btnText="Buy Now" handleClick={goToShop} Btnwidth="8.5em"></CustomButton></div>
                     </div>
                 </div>
             </div>

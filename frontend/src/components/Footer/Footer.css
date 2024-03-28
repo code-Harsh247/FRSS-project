@@ -5,6 +5,7 @@
     background-color: #F0F0F0;
     height: 280px;
     width: 100vw;
+    border-top:1px solid #ddd ;
 }
 .footerLogo img{
     height: 45%;

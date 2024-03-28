@@ -57,7 +57,7 @@ const AdminLoginForm = () => {
                             <InputBox onInputChange={handlePasswordChange} type={showPassword ? "text" : "password"} autocomplete="current-password" />
                         </div>
                         <div className="LoginBtn">
-                            <CustomButton btnText="Log in" handleClick={handleButtonClick} />
+                            <CustomButton btnText="Log in" handleClick={handleButtonClick} Btnwidth="8.5em"/>
                         </div>
                         
 
