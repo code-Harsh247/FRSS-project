@@ -4,27 +4,56 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    phone:{
-        type:Number,
-        required:true,
-        unique:true,
+    phone: {
+        type: Number,
+        required: true,
+        unique: true,
     },
-    email:{
-        type:String,
-        required:true,
-        unique:true,
+    email: {
+        type: String,
+        required: true,
+        unique: true,
     },
-    passwd:{
-        type:String,
-        required:true,
+    passwd: {
+        type: String,
+        required: true,
     },
-    date:{
-        type:Date,
+    date: {
+        type: Date,
         default: Date.now,
     },
-    cartdata:{
-        type:Object,
+    cartData: {
+        type: [{
+            count: {
+                type: Number,
+            },
+            id: {
+                type: Number,
+            }
+        }],
+        default: [] // Setting default value as empty array
+    },
+    addresses: {
+        type: [String],
+        default: []
+    },
+    bill: {
+        type: [{
+            count: {
+                type: Number,
+            },
+            id: {
+                type: Number,
+            },
+        }],
+        default: []
+    },
+    gender: { 
+        type: String,
+        enum: ['male', 'female'],
+        default: 'male',
     }
+
 });
 
 const User = mongoose.model("User", UserSchema);

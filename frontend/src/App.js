@@ -7,6 +7,7 @@ import AdminLoginInPage from "./pages/AdminLoginPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import { ProductProvider } from "./context/ProductContext";
+import { AuthProvider } from "./context/AuthContext";
 
 const App = () => {
     const router = createBrowserRouter([
@@ -36,11 +37,13 @@ const App = () => {
         }
     ])
     return (
+        <AuthProvider>
         <ProductProvider>
         <div>
             <RouterProvider router={router}/>   
         </div>
         </ProductProvider>
+        </AuthProvider>
     );
 };
 

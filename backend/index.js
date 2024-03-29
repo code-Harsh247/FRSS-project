@@ -84,16 +84,21 @@ app.post('/removeproduct',async(req,res)=>{
 
 app.get('/allproducts',async(req,res)=>{
     let products=await Product.find({});
-    console.log(products);
     console.log("All Products Fetched");
     res.send(products);
 })
-// API for Signup
+// API for Signu
 
 app.post('/signup',async(req,res)=>{
-    let check=await User.findOne({email:req.body.email});
-    if(check){
-        return res.status(400).json({success:false,errors:"exiting user"});
+    let checkEmail=await User.findOne({email:req.body.email});
+    let checkPhone=await User.findOne({phone:req.body.phone});
+    if(checkEmail){
+        alert("A user with the same Email already exists.")
+        return res.status(400).json({success:false,errors:"user with this email already exists"});
+    }
+    if(checkPhone){
+        alert("A user with the same Phone Number already exists.")
+        return res.status(400).json({success:false,errors:"user with this Phone no. already exists"});
     }
     let cart={};
     for(let i=0;i<100;i++){
@@ -120,27 +125,27 @@ app.post('/signup',async(req,res)=>{
 
 //API for User login
 
-app.post('/login',async(req,res)=>{
-    let user=await User.findOne({email:req.body.email});
-    if(user){
-        const passCompare=await bcrypt.compare(req.body.password, user.passwd);
-        if(passCompare){
-            const data={
-                user:{
-                    id:user.id
-                }
-            }
-            const token=jwt.sign(data,`${process.env.SECRET_KEY}`);
-            res.json({success:true,token});
+app.post('/login', async (req, res) => {
+    try {
+        console.log(req.body);
+        const user = await User.findOne({ email: req.body.email });
+        if (!user) {
+            return res.status(404).json({ success: false, errors: "No user with the given email found" });
         }
-        else{
-            res.json({success:false,errors:"Wrong Password"});
+
+        const isPasswordValid = await bcrypt.compare(req.body.password, user.passwd);
+        if (!isPasswordValid) {
+            return res.status(401).json({ success: false, errors: "Wrong password" });
         }
+
+        const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY);
+        console.log(token);
+        res.json({ success: true, token });
+    } catch (error) {
+        res.status(500).json({ success: false, errors: "Server Error" });
     }
-    else{
-        res.json({success:false,errors:"No user with the given email id found"});
-    }
-})
+});
+
 
 app.listen(process.env.PORT,(error)=>{
     if(!error){
