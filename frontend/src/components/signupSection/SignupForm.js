@@ -37,7 +37,7 @@ const SignupForm = () => {
     const handleButtonClick = async (event) => {
         event.preventDefault();  //Prevents page refresh when button is clicked. (Happens when button is inside a form element)
         try{
-            const response = await axios.post('/signup',{
+            const response = await axios.post('/users/signup',{
                 name: nameInput,
                 phone: phoneNumber,
                 email: emailInput,
@@ -49,7 +49,7 @@ const SignupForm = () => {
                 alert('Signup successful. Please login.');
                 const token = response.token;
                 localStorage.setItem('token', token);
-                navigate('/login');
+                navigate('/users/login');
             }
             else {
                 alert('Login failed');

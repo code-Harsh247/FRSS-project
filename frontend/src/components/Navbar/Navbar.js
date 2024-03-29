@@ -14,13 +14,14 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const { isLoggedIn, login, logout } = useAuth();
+    console.log(isLoggedIn);
 
     const handleProfileClick = (event) => {
         event.stopPropagation();
         const iconRect = profileIconRef.current.getBoundingClientRect();
         setLogoutBoxPosition({
             top: iconRect.bottom + window.scrollY + 25,
-            left: iconRect.left -60+ window.scrollX - (150 - iconRect.width) / 2, // Assuming the box width is 150px
+            left: iconRect.left -60+ window.scrollX - (150 - iconRect.width) / 2, 
         });
         setProfileListVisibility((prevVisibility) => !prevVisibility);
     };
@@ -37,6 +38,7 @@ const Navbar = () => {
     }, []);
 
     const handleLogOut = ()=>{
+        logout();
         localStorage.removeItem('token');
         navigate('/login');
     }
@@ -75,9 +77,9 @@ const Navbar = () => {
                     }}
                 >
                     {isLoggedIn? (
-                        <button onClick={handleLogOut}>Logout</button>
+                        <button onClick={handleLogOut}>Log Out</button>
                     ):(
-                        <button onClick={handleLogIn}>LogIn</button>
+                        <button onClick={handleLogIn}>Log In</button>
                     )}
                 </div>
             )}

@@ -6,6 +6,7 @@ import viewIcon from "../assets/Icons/view.png"
 import InputBox from "../InputBox/InputBox";
 import CustomButton from "../Button/CustomButton";
 import axios from "../../context/axiosConfig";
+import { useAuth } from "../../context/AuthContext";
 
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -17,6 +18,7 @@ const LoginForm = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -35,7 +37,7 @@ const LoginForm = () => {
 
         try {
             // Send a request to the backend to authenticate the user
-            const response = await axios.post('/login', {
+            const response = await axios.post('/users/login', {
                 email: emailInput,
                 password: passwordInput
             });
@@ -45,6 +47,7 @@ const LoginForm = () => {
                 // Login successful
                 const token = response.data.token;
                 localStorage.setItem('token', token); // Store token in local storage
+                login();
                 navigate('/'); // Redirect to dashboard or any other page
             } else {
                 // Login failed
