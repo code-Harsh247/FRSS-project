@@ -1,7 +1,7 @@
 .BRsection-Container{
-    height: 100vh;
+    height: auto;
     width: 100vw;
-
+    padding: 3rem;
 }
 
 .BRsec-header{
@@ -20,12 +20,8 @@
 .categories{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
 
 }
-.categories CategoryCard{
-    width: calc(25% - 20px); /* 25% width for each item minus margins or paddings */
-    padding: 10px; /* Adjust as needed */
-    box-sizing: border-box;
-}
+
