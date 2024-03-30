@@ -7,8 +7,6 @@
 
   const ProductDetailsPage = () => {
     const {products} = useProducts();
-    // if(products.length() > 0 ) console.log("Products fetched to page");
-    // else console.log("Error fetching prodcts to page")
     return (
       <div>
         <Navbar/>

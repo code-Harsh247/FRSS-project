@@ -46,4 +46,7 @@ router.get('/allproducts', async (req, res) => {
     res.send(products);
 });
 
+
+
+
 module.exports = router;

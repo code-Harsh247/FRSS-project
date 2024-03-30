@@ -1,5 +1,37 @@
-#Banner-Container{
+#Banner-Container {
     width: 100vw;
     height: 66vh;
-    border: 1px solid red;
+    display: flex;
+    align-items: flex-end;
+}
+
+#Banner-Wrapper {
+    height: auto;
+    width: 100%;
+    text-align: right;
+    position: relative;
+}
+
+#Banner-Wrapper div {
+    width: 60%;
+}
+
+#Banner-Wrapper p {
+    position: absolute;
+    bottom: 15%;
+    left: -100%; /* Initial position off the left side */
+    width: 40%;
+    height: auto;
+    text-align: left;
+    padding: 10px;
+    transition: left 0.2s ease; /* Transition for left property */
+}
+
+#Banner-Wrapper:hover p {
+    left: 0; 
+}
+
+#Banner-Wrapper span{
+    margin: 0 1rem;
+    font-size: 8rem;
 }
