@@ -46,6 +46,10 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    unitsRented: {
+        type: Number,
+        default: 0
+    },
     available: {
         type: Boolean,
         default: true,

@@ -1,0 +1,38 @@
+#most-rented-container{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: auto;
+    justify-content: center;
+    align-items: start;
+}
+
+#most-rented-heading{
+    width: 100%;
+    height: auto;
+    text-align: center;
+    padding-bottom: 2rem;
+}
+
+#most-rented-subheading{
+    font-family: 'Poppins';
+}
+
+#most-rented-heading p{
+    font-size: 40px;
+    font-family: 'Stardom';
+    color: black;
+}
+
+.mostRentedProducts{
+    display: flex;
+    height: auto;
+    flex-wrap: wrap;
+}
+
+.productCard {
+    width: calc(33.333% - 20px); /* Adjusting for margin, assuming 10px margin on each side */
+    margin: 10px; /* Adjust margin as needed */
+    box-sizing: border-box; /* Ensures padding and border are included in the width */
+}
+
