@@ -33,7 +33,7 @@ const App = () => {
             element: <AdminLoginInPage/>
         },
         {
-            path:"/product",
+            path:"/product/:productID",
             element: <ProductDetailsPage/>
         }
     ])

@@ -8,10 +8,12 @@
   background-color: #fff;
   /* border: 2px solid #000000; */
   width:32vw;
+  cursor: pointer;
 }
 
-.ShopProductCard:hover{
+.ShopProductCard:active{
   transform:scale(0.98);
+  box-shadow: none;
 }
 
 .ShopProductCard .card img {
@@ -37,3 +39,5 @@
   color: #f9c74f;
   font-weight: bold;
 }
+
+

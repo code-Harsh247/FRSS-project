@@ -27,8 +27,9 @@
     overflow: hidden; /* Hides any overflow if the image is larger than its container */
   }
 
-  .Category-img :hover{
-    transform : scale(0.95);
+  .Category-img :active{
+    transform : scale(0.98);
+    box-shadow: none;
   }
   
   .Category-img img {

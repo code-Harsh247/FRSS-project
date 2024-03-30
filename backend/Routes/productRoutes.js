@@ -47,6 +47,26 @@ router.get('/allproducts', async (req, res) => {
     res.send(products);
 });
 
+router.get('/:productID', async (req, res) => {
+    const { productID } = req.params;
+
+    try {
+        let product = await Product.findOne({ _id: productID }); 
+
+        if (product) {
+            console.log(`Product ${productID} fetched`);
+            res.send(product);
+        } else {
+            res.status(404).send({ message: "Product not found" });
+        }
+    } catch (error) {
+        // Catch any errors that occur during the query
+        console.error(`Error fetching product ${productID}:`, error);
+        res.status(500).send({ message: "Error fetching product details" });
+    }
+});
+
+
 
 
 router.put('/updateproduct/:id', async (req, res) => {

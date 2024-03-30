@@ -1,15 +1,15 @@
 .BRsection-Container{
     height: auto;
     width: 100vw;
-    padding-bottom: 3rem;
+    padding: 2rem 0;
 }
 
 .BRsec-header{
-    padding: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    padding-bottom: 2rem;
 }
 
 .BRsec-header #header-text{

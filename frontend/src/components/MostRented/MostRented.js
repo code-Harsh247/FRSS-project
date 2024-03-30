@@ -22,7 +22,8 @@ const MostRented = () => {
                 {top6MostRented.map(product => (
                     <div className="productCard" key={product.id}>
                     <ProductCard
-                        imageUrl={product.image[0]} // Assuming the first image is the main image
+                        id={product._id}
+                        imageUrl={product.image[0]}
                         productName={product.name}
                         price={product.price}
                     />

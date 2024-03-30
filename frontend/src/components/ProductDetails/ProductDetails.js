@@ -29,10 +29,10 @@ const ProdDetails = ({ item }) => {
             <div className='Product-Pictures'>
                 <div className='Product-Other-Pictures'>
                     {item && item.image && item.image.map((img, index) => (
-                        <div 
-                            className={`ProdPic ${index === selectedImageIndex ? 'selected' : ''}`} 
-                            key={index} 
-                            id={`pic${index}`} 
+                        <div
+                            className={`ProdPic ${index === selectedImageIndex ? 'selected' : ''}`}
+                            key={index}
+                            id={`pic${index}`}
                             onClick={() => handleMainImg(index)}
                         >
                             {index === 0 && loading ? (
@@ -67,10 +67,10 @@ const ProdDetails = ({ item }) => {
                         <p>{item ? item.description : 'Loading...'}</p>
                     </div>
                     <Counter />
-                    <div className='Buttons'>
+                </div>
+                <div className='Buttons'>
                     <CustomButton btnText="Rent now" handleClick={() => console.log("Buying now")} Btnwidth="100%" />
                     <CustomButtonSecondary btnText="Add to Cart" handleClick={() => console.log("Product Added to cart")} Btnwidth="100%" />
-                    </div>   
                 </div>
             </div>
         </div>
