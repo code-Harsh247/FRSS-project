@@ -12,7 +12,7 @@
     return (
       <div>
         <Navbar/>
-        <ProdDetails item={products[0]} />
+        <ProdDetails item={products[2]} />
         <ServiceBanner/>
         <Footer/>
       </div>
