@@ -56,7 +56,7 @@ const Navbar = () => {
             if (aboutSection) {
                 aboutSection.scrollIntoView({ behavior: 'smooth' });
             }
-        }, 500);
+        }, 100);
     };
 
     const scrollToContactSection = () => {
@@ -69,7 +69,7 @@ const Navbar = () => {
             if (contactSection) {
                 contactSection.scrollIntoView({ behavior: 'smooth' });
             }
-        }, 500);
+        }, 100);
     };
     
     
