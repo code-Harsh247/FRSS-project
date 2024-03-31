@@ -5,8 +5,9 @@ import hideIcon from "../assets/Icons/hide.png"
 import viewIcon from "../assets/Icons/view.png"
 import InputBox from "../InputBox/InputBox";
 import CustomButton from "../Button/CustomButton";
+import axios from "../../context/axiosConfig";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
     const [nameInput,setNameInput]=useState("");
@@ -32,12 +33,31 @@ const SignupForm = () => {
         setPasswordInput(password);
     }
 
-    const handleButtonClick = (event) => {
+    const navigate = useNavigate();
+    const handleButtonClick = async (event) => {
         event.preventDefault();  //Prevents page refresh when button is clicked. (Happens when button is inside a form element)
-        console.log("Name:", nameInput);
-        console.log("Phone:",phoneNumber);
-        console.log("Email : ", emailInput);
-        console.log("Password : ", passwordInput);
+        try{
+            const response = await axios.post('/users/signup',{
+                name: nameInput,
+                phone: phoneNumber,
+                email: emailInput,
+                password: passwordInput,
+                cart:[]
+            });
+
+            if(response.status === 200){
+                alert('Signup successful. Please login.');
+                const token = response.token;
+                localStorage.setItem('token', token);
+                navigate('/users/login');
+            }
+            else {
+                alert('Login failed');
+            }
+        }
+        catch (error){
+            alert('An error occurred. Please try again.');
+        }
     };
 
 

@@ -5,18 +5,19 @@ const InputBox = ({ type = "text", onInputChange, autocomplete }) => {
     const [inputValue, setInputValue] = useState('');
 
     const handleChange = (event) => {
-        setInputValue(event.target.value);
-        onInputChange(inputValue);
+        const newValue = event.target.value;
+        setInputValue(newValue); // Update the state with the new value
+        onInputChange(newValue); // Pass the new value to the parent component
     };
 
     return (
         <div>
             <input className="InputBox"
-                type= {type}
+                type={type}
                 value={inputValue}
                 onChange={handleChange}
                 placeholder=""
-                autoComplete = {autocomplete}
+                autoComplete={autocomplete}
             />
         </div>
     );

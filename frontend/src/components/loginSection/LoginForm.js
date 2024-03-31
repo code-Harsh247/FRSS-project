@@ -5,14 +5,20 @@ import hideIcon from "../assets/Icons/hide.png"
 import viewIcon from "../assets/Icons/view.png"
 import InputBox from "../InputBox/InputBox";
 import CustomButton from "../Button/CustomButton";
+import axios from "../../context/axiosConfig";
+import { useAuth } from "../../context/AuthContext";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+
 
 const LoginForm = () => {
 
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+
+    const navigate = useNavigate();
+    const { login } = useAuth();
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -25,11 +31,32 @@ const LoginForm = () => {
         setPasswordInput(password);
     }
 
-    const handleButtonClick = (event) => {
-        event.preventDefault();  //Prevents page refresh when button is clicked. (Happens when button is inside a form element)
-        console.log("Email : ", emailInput);
-        console.log("Password : ", passwordInput);
-    };
+
+    const handleButtonClick = async (event) => {
+        event.preventDefault();
+
+        try {
+            // Send a request to the backend to authenticate the user
+            const response = await axios.post('/users/login', {
+                email: emailInput,
+                password: passwordInput
+            });
+
+
+            if (response.status === 200) {
+                // Login successful
+                const token = response.data.token;
+                localStorage.setItem('token', token); // Store token in local storage
+                login();
+                navigate('/'); // Redirect to dashboard or any other page
+            } else {
+                // Login failed
+                alert('Login failed');
+            }
+        } catch (error) {
+            alert('An error occurred. Please try again.');
+        }
+    }
 
 
     return (
@@ -57,7 +84,7 @@ const LoginForm = () => {
                             <InputBox onInputChange={handlePasswordChange} type={showPassword ? "text" : "password"} autocomplete="current-password" />
                         </div>
                         <div className="LoginBtn">
-                            <CustomButton btnText="Log in" handleClick={handleButtonClick} Btnwidth="8.5em"/>
+                            <CustomButton btnText="Log in" handleClick={handleButtonClick} Btnwidth="8.5em" />
                         </div>
                         <div className="signupLink">
                             <span style={{ color: "black" }}>Don't have an account yet? </span>

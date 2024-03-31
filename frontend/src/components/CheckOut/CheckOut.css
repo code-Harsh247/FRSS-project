@@ -1,0 +1,35 @@
+.CheckOutContainer {
+  width:100vw;
+  display:flex;
+}
+.CheckOutContainer>.LeftPart>p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+  }
+
+.LeftPart .FirstName,.LeftPart .LastName{
+    width: 50%;
+    padding:2%;
+    padding-left:20%;
+    padding-right:2%;
+}
+.LeftPart .CountryRegion,.LeftPart .StreetAddress,.LeftPart .TownCity,.LeftPart .Province,.LeftPart .ZIPCode,.LeftPart .Phone,.LeftPart .Email{
+    padding:2%;
+    padding-left:20%;
+    padding-right:2%;
+}
+.LeftPart .Name{
+    display:flex;
+    justify-content:space-between;
+}
+.CheckOutContainer .LeftPart{
+    width: 50vw;
+}
+.RightPart p{
+    font-weight: bold;
+}
+.RightPart{
+    padding-left: 10%;
+    width:50vw;
+}

@@ -1,0 +1,7 @@
+.ReviewStarContainer  input[type=radio]{
+    display: none;
+}
+#reviewstar{
+    cursor:pointer;
+    
+}
