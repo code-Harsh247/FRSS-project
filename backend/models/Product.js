@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const ProductSchema = new mongoose.Schema({
     id: {
         type: Number,
-        required: true
+        // required: true
     },
     name: {
         type: String,
@@ -25,13 +25,13 @@ const ProductSchema = new mongoose.Schema({
     comments: [{
         rating: {
             type: Number,
-            required: true,
+            // required: true,
             min: 0, // 0 is the lowest rating
             max: 5, // 5 is the highest rating
         },
         comment: {
             type: String,
-            required: true,
+            // required: true,
         }
     }],
     cost:{
@@ -45,6 +45,10 @@ const ProductSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true
+    },
+    unitsRented: {
+        type: Number,
+        default: 0
     },
     available: {
         type: Boolean,

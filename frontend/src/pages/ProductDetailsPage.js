@@ -1,22 +1,38 @@
-  import React from 'react'
-  import ProdDetails from '../components/ProductDetails/ProductDetails'
-  import Navbar from '../components/Navbar/Navbar'
-  import {useProducts} from  '../context/ProductContext';
-  import ServiceBanner from '../components/ServiceBanner/ServiceBanner'
-  import Footer from '../components/Footer/Footer';
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import ProdDetails from '../components/ProductDetails/ProductDetails'
+import Navbar from '../components/Navbar/Navbar'
+import ServiceBanner from '../components/ServiceBanner/ServiceBanner'
+import Footer from '../components/Footer/Footer';
+import axios from '../context/axiosConfig'
 
-  const ProductDetailsPage = () => {
-    const {products} = useProducts();
-    // if(products.length() > 0 ) console.log("Products fetched to page");
-    // else console.log("Error fetching prodcts to page")
-    return (
-      <div>
-        <Navbar/>
-        <ProdDetails item={products[0]} />
-        <ServiceBanner/>
-        <Footer/>
-      </div>
-    )
-  }
+const ProductDetailsPage = () => {
+  const { productID } = useParams();
+  const [product, setProduct] = useState(null);
 
-  export default ProductDetailsPage
+
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        const response = await axios.get(`products/${productID}`);
+        setProduct(response.data);
+      } catch (error) {
+        console.error("Failed to fetch product details:", error);
+      }
+    };
+    window.scrollTo(0, 0);
+
+    fetchProductDetails();
+  }, [productID]);
+
+  return (
+    <div>
+      <Navbar />
+      <ProdDetails item={product} />
+      <ServiceBanner />
+      <Footer />
+    </div>
+  )
+}
+
+export default ProductDetailsPage

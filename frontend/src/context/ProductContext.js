@@ -10,6 +10,7 @@ export const ProductProvider = ({ children }) => {
         const fetchProducts = async () => {
             try {
                 const response = await axios.get('products/allproducts');
+                console.log(response.data)
                 setProducts(response.data);
             } catch (error) {
                 console.error('Error:', error);

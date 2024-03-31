@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
-
+require('dotenv').config()
+const multer=require('multer')
 router.post('/addproduct', async (req, res) => {
     let products = await Product.find({});
     let id;
@@ -44,6 +45,51 @@ router.get('/allproducts', async (req, res) => {
     let products = await Product.find({});
     console.log("All Products Fetched");
     res.send(products);
+});
+
+router.get('/:productID', async (req, res) => {
+    const { productID } = req.params;
+
+    try {
+        let product = await Product.findOne({ _id: productID }); 
+
+        if (product) {
+            console.log(`Product ${productID} fetched`);
+            res.send(product);
+        } else {
+            res.status(404).send({ message: "Product not found" });
+        }
+    } catch (error) {
+        // Catch any errors that occur during the query
+        console.error(`Error fetching product ${productID}:`, error);
+        res.status(500).send({ message: "Error fetching product details" });
+    }
+});
+
+
+
+
+router.put('/updateproduct/:id', async (req, res) => {
+    try {
+        const productId = req.params.id;
+        const updatedProductData = req.body;
+
+        // Find the product by ID and update its details
+        const updatedProduct = await Product.findOneAndUpdate(
+            { id: productId },
+            { $set: updatedProductData },
+            { new: true } // To return the updated document
+        );
+
+        if (updatedProduct) {
+            res.json({ success: true, product: updatedProduct });
+        } else {
+            res.status(404).json({ success: false, message: "Product not found" });
+        }
+    } catch (error) {
+        console.error("Error updating product:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
 });
 
 module.exports = router;

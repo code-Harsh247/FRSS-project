@@ -8,6 +8,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import { ProductProvider } from "./context/ProductContext";
 import { AuthProvider } from "./context/AuthContext";
+import { CategoryProvider } from "./context/CategoriesContext";
 
 const App = () => {
     const router = createBrowserRouter([
@@ -32,17 +33,19 @@ const App = () => {
             element: <AdminLoginInPage/>
         },
         {
-            path:"/product",
+            path:"/product/:productID",
             element: <ProductDetailsPage/>
         }
     ])
     return (
         <AuthProvider>
+        <CategoryProvider>
         <ProductProvider>
         <div>
             <RouterProvider router={router}/>   
         </div>
         </ProductProvider>
+        </CategoryProvider>
         </AuthProvider>
     );
 };

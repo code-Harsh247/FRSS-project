@@ -46,6 +46,33 @@ const Navbar = () => {
     const handleLogIn=()=>{
         navigate('/login');
     }
+    const scrollToAboutSection = () => {
+        // First, navigate to the homepage
+        navigate('/');
+        
+        // Scroll down to the About section after a slight delay to ensure navigation completes
+        setTimeout(() => {
+            const aboutSection = document.getElementById('AboutUs');
+            if (aboutSection) {
+                aboutSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 500);
+    };
+
+    const scrollToContactSection = () => {
+        // First, navigate to the homepage
+        navigate('/');
+        
+        // Scroll down to the Contact section after a slight delay to ensure navigation completes
+        setTimeout(() => {
+            const contactSection = document.getElementById('ContactBanner');
+            if (contactSection) {
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 500);
+    };
+    
+    
 
     return (
         <>
@@ -56,8 +83,8 @@ const Navbar = () => {
                 <div className="links">
                     <NavLink to="/">Home</NavLink>
                     <NavLink to="/shop">Shop</NavLink>
-                    <a href="#AboutUs">About</a>
-                    <a href="#ContactBanner">Contact</a>
+                    <NavLink to="/" onClick={scrollToAboutSection}>About</NavLink>
+                    <NavLink to="/" onClick={scrollToContactSection}>Contact</NavLink>
                 </div>
                 <div className="icons">
                     <img src={search} alt="Search" className="search-icon" />

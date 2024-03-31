@@ -29,12 +29,10 @@
 }
 .shopBannerContainer p{
     text-align: center;
-
-    font-weight: bold;
 }
 .shopBannerContainer .Shop{
     font-size:64px;
-   
+    font-family: 'Stardom';
     color:black;
 
 }

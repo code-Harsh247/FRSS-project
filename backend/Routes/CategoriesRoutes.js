@@ -14,9 +14,11 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/addCategory', async (req, res) => {
     const category = new Category({
-        name: req.body.name
+        name: req.body.name,
+        description: req.body.description,
+        ImgUrl: req.body.ImgUrl,
     });
 
     try {
