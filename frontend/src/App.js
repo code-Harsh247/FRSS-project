@@ -9,6 +9,7 @@ import ProductDetailsPage from "./pages/ProductDetailsPage";
 import { ProductProvider } from "./context/ProductContext";
 import { AuthProvider } from "./context/AuthContext";
 import { CategoryProvider } from "./context/CategoriesContext";
+import CheckOut from "./pages/CheckOut";
 
 const App = () => {
     const router = createBrowserRouter([
@@ -31,6 +32,10 @@ const App = () => {
         {
             path:"/admin",
             element: <AdminLoginInPage/>
+        },
+        {
+            path:"/checkout",
+            element: <CheckOut/>
         },
         {
             path:"/product/:productID",

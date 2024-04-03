@@ -1,11 +1,14 @@
 .CheckOutContainer {
   width:100vw;
-  display:flex;
+  display: flex;
+  padding-top: 2.5% ;
+  padding-bottom: 5% ;
 }
 .CheckOutContainer>.LeftPart>p {
-    font-size: 1.5rem;
+    font-size: 3.5rem;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
+    padding-left: 20%;
   }
 
 .LeftPart .FirstName,.LeftPart .LastName{

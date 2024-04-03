@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import InputBox from "../InputBox/InputBox";
-import "./CheckOut.css"
-
+import InputBox from "../components/InputBox/InputBox";
+import "./Css/CheckOut.css"
+import ShopBanner from '../components/ShopBanner/ShopBanner';
+import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Footer/Footer";
+import ServiceBanner from "../components/ServiceBanner/ServiceBanner";
 
 const CheckOut = ({name}) => {
     const product = {
@@ -21,11 +24,8 @@ const CheckOut = ({name}) => {
     const [ZIPCodeInput, setZIPCodeInput] = useState("");
     const [emailInput, setEmailInput] = useState("");
     const [PhoneInput, setPhoneInput] = useState("");
-    const [paymentMethod, setPaymentMethod] = useState('none'); 
 
-  const handlePaymentMethodChange = (event) => {
-    setPaymentMethod(event.target.value);
-  };
+
 
 
     const handleProvinceChange = (province) => {
@@ -59,6 +59,9 @@ const CheckOut = ({name}) => {
 
 
     return (
+      <div className="MainCheckOutContainer">
+        <Navbar />
+        <ShopBanner name="Checkout" />
         <div className="CheckOutContainer">
             <div className="LeftPart">
                 <p>Billing Details</p>
@@ -139,8 +142,7 @@ const CheckOut = ({name}) => {
               id="direct-bank-transfer"
               name="payment-method"
               value="direct-bank-transfer"
-              checked={paymentMethod === 'direct-bank-transfer'}
-              onChange={handlePaymentMethodChange}
+           
             />
             <label htmlFor="direct-bank-transfer">Direct Bank Transfer</label>
           </li>
@@ -150,8 +152,7 @@ const CheckOut = ({name}) => {
               id="cash-on-delivery"
               name="payment-method"
               value="cash-on-delivery"
-              checked={paymentMethod === 'cash-on-delivery'}
-              onChange={handlePaymentMethodChange}
+              
             />
             <label htmlFor="cash-on-delivery">Cash On Delivery</label>
           </li>
@@ -161,6 +162,9 @@ const CheckOut = ({name}) => {
     </div>
             </div>
             
+        </div>
+        <ServiceBanner/>
+        <Footer/>
         </div>
       );
         
