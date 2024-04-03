@@ -48,10 +48,31 @@ const UserSchema = new mongoose.Schema({
         }],
         default: []
     },
-    gender: { 
+    gender: {
         type: String,
         enum: ['male', 'female'],
         default: 'male',
+    },
+    Rented: {
+        type: [{
+            ProductId: {
+                type: Number,
+                required: true
+            },
+            Quantity: {
+                type: Number,
+                required: true
+            },
+            RentDuration: {
+                type: Number,
+                required: true
+            },
+            Date: {
+                type: Date,
+                default: Date.now
+            }
+        }],
+        default: []
     }
 
 });
