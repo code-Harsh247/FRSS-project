@@ -73,7 +73,6 @@ router.get('/allusers', async (req, res) => {
     try {
         const users = await User.find();
         res.json({ success: true, users });
-        console.log(users);
     } catch (error) {
         res.status(500).json({ success: false, errors: "Server Error" });
     }
@@ -83,7 +82,7 @@ router.get('/user/:name', async(req,res)=>{
     try{
         const user = await User.find
     }
-    catch{error}{
+    catch(error){
         res.status(500).json({ success: false, errors: "Server Error" });
     }
 })
