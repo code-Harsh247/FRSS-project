@@ -66,8 +66,42 @@ router.get('/:productID', async (req, res) => {
     }
 });
 
+router.get('/searchproductname/:productName', async (req, res) => {
+    const { productName } = req.params;
 
+    try {
+        let products = await Product.find({ name: productName }); 
+        if (products.length > 0) {
+            console.log(`Products with name ${productName} fetched`);
+            res.send(products);
+        } else {
+            res.status(404).send({ message: "No products found with the given name" });
+        }
+    } catch (error) {
+        // Catch any errors that occur during the query
+        console.error(`Error fetching products with name ${productName}:`, error);
+        res.status(500).send({ message: "Error fetching product details" });
+    }
+});
 
+router.get('/searchproductcategory/:categoryName', async (req, res) => {
+    const { categoryName } = req.params;
+
+    try {
+        let products = await Product.find({ category: categoryName }); 
+
+        if (products.length > 0) {
+            console.log(`Products in category ${categoryName} fetched`);
+            res.send(products);
+        } else {
+            res.status(404).send({ message: "No products found in the given category" });
+        }
+    } catch (error) {
+        // Catch any errors that occur during the query
+        console.error(`Error fetching products in category ${categoryName}:`, error);
+        res.status(500).send({ message: "Error fetching product details" });
+    }
+});
 
 router.put('/updateproduct/:id', async (req, res) => {
     try {
