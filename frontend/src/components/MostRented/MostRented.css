@@ -4,7 +4,7 @@
     width: 100vw;
     height: auto;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start;
 }
 
 #most-rented-heading{
