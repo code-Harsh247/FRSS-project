@@ -11,7 +11,7 @@ const Shop = () => {
     return (
         <div className='container'>
             <Navbar />
-            <ShopBanner />
+            <ShopBanner name="Shop" />
             <BRsection/>
             <MostRented/>
             <ServiceBanner />
