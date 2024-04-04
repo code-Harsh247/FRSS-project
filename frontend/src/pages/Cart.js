@@ -19,12 +19,12 @@ function Cart() {
     
     return (
         <div className="MainCartContainer">
-            {/* <Navbar/>
-            <ShopBanner name="Cart"/> */}
+            <Navbar/>
+            <ShopBanner name="Cart"/>
             <CartItem product={product} quantity={quantity}/>
             <CartItem product={product} quantity={quantity}/>
-            {/* <ServiceBanner/>
-            <Footer/> */}
+            <ServiceBanner/>
+            <Footer/>
         </div>
       );
 }
