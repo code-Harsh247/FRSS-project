@@ -1,6 +1,6 @@
 import React from 'react';
 import './MostRented.css';
-import ProductCard from '../productCard/productCard';
+import ProductCard from '../ProductCard/productCard';
 import { useProducts } from '../../context/ProductContext';
 
 const MostRented = () => {

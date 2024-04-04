@@ -9,11 +9,12 @@ import { useNavigate } from 'react-router-dom';
 import ContactBanner from '../components/ContactBanner/ContactBanner';
 import AboutUs from '../components/AboutUs/AboutUs';
 
+
 const HomePage = () => {
 
     const navigate = useNavigate();
 
-    const goToShop = ()=>{
+    const goToShop = () => {
         navigate('/shop');
     }
 
@@ -30,13 +31,12 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
-            <BRsection/>
-            <AboutUs/>
-            <ContactBanner/>
-            <Footer/>
-   
+            <BRsection />
+            <AboutUs />
+            <ContactBanner />
+            <Footer />
         </div>
-        
+
     )
 }
 

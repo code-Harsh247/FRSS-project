@@ -5,7 +5,7 @@ import guarantee from '../assets/Icons/guarantee.png';
 import shipping from '../assets/Icons/shipping.png';
 import customer from '../assets/Icons/customer.png';
 
-function Card() {
+function ServiceBanner() {
     return (
         <div className="ServiceBannerContainer">
 
@@ -46,4 +46,4 @@ function Card() {
     );
 }
 
-export default Card;
+export default ServiceBanner;
