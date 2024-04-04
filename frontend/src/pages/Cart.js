@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import InputBox from "../components/InputBox/InputBox";
+import React from "react";
 import "./Css/Cart.css"
 import ShopBanner from '../components/ShopBanner/ShopBanner';
 import Navbar from "../components/Navbar/Navbar";
