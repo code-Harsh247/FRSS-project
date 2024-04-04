@@ -126,5 +126,102 @@ router.get('/search/:name', async (req, res) => {
         res.status(500).json({ success: false, errors: "Server Error" });
     }
 });
+router.post('/add-to-cart/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const productId = req.body.productId;
+        const quantity = req.body.quantity;
+
+        // Find the user by ID
+        const user = await User.findById(userId);
+
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ success: false, errors: "User not found" });
+        }
+
+        // Check if the product already exists in the cart
+        const productIndex = user.cartData.findIndex(item => item.id === productId);
+        if (productIndex !== -1) {
+            // If the product already exists in the cart, update its quantity
+            user.cartData[productIndex].count += quantity;
+        } else {
+            // If the product doesn't exist in the cart, add it with product id and count
+            const product = {
+                id: productId,
+                count: quantity
+            };
+            // Push the product into the cartData array
+            user.cartData.push(product);
+        }
+
+        // Save the updated user object
+        await user.save();
+
+        res.json({ success: true, message: "Product added to cart successfully", user });
+    } catch (error) {
+        res.status(500).json({ success: false, errors: "Server Error" });
+    }
+});
+
+
+
+router.delete('/empty-cart/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        // Find the user by ID
+        const user = await User.findById(userId);
+
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ success: false, errors: "User not found" });
+        }
+
+        // Empty the cartData array
+        user.cartData = [];
+
+        // Save the updated user object
+        await user.save();
+
+        res.json({ success: true, message: "Cart emptied successfully", user });
+    } catch (error) {
+        res.status(500).json({ success: false, errors: "Server Error" });
+    }
+});
+
+router.delete('/delete-product/:userId/:productId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const productId = req.params.productId;
+
+        // Find the user by ID
+        const user = await User.findById(userId);
+
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ success: false, errors: "User not found" });
+        }
+        console.log(user);
+        // Find the index of the product in the cartData array
+        const productIndex = user.cartData.findIndex(item => item.id == productId);
+        // console.log(productIndex);
+
+        // Check if the product exists in the cart
+        if (productIndex === -1) {
+            return res.status(404).json({ success: false, errors: "Product not found in the user's cart" });
+        }
+
+        // Remove the product from the cartData array
+        user.cartData.splice(productIndex, 1);
+
+        // Save the updated user object
+        await user.save();
+
+        res.json({ success: true, message: "Product deleted successfully from the user's cart", user });
+    } catch (error) {
+        res.status(500).json({ success: false, errors: "Server Error" });
+    }
+});
 
 module.exports = router;
