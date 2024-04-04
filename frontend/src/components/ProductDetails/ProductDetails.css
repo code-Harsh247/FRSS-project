@@ -39,7 +39,7 @@
 
 .Product-Other-Pictures{
     display: flex;
-    align-items: start;
+    align-items: flex-start;
     width: 15%;
     height: 76.5vh;
     justify-content: flex-start;
@@ -65,7 +65,7 @@
     min-height: 76.7vh;
     display: flex;
     justify-content: space-between;
-    align-items: start;
+    align-items: flex-start;
     flex-direction: column;
     /* border: 1px solid red; */
 }
