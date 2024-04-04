@@ -3,6 +3,7 @@ import Shop from "./pages/Shop";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
+import ShopCategory from "./pages/ShopCategory";
 import AdminLoginInPage from "./pages/AdminLoginPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
@@ -40,6 +41,10 @@ const App = () => {
         {
             path:"/product/:productID",
             element: <ProductDetailsPage/>
+        },
+        {
+            path:"/category/:categoryName",
+            element: <ShopCategory/>
         }
     ])
     return (
