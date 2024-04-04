@@ -10,6 +10,7 @@ import { ProductProvider } from "./context/ProductContext";
 import { AuthProvider } from "./context/AuthContext";
 import { CategoryProvider } from "./context/CategoriesContext";
 import CheckOut from "./pages/CheckOut";
+import Cart from "./pages/Cart";
 
 const App = () => {
     const router = createBrowserRouter([
@@ -36,6 +37,10 @@ const App = () => {
         {
             path:"/checkout",
             element: <CheckOut/>
+        },
+        {
+            path:"/cart",
+            element: <Cart/>
         },
         {
             path:"/product/:productID",

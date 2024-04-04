@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import "./Counter.css"
+import './Counter.css';
 
-function Counter() {
-  const [count, setCount] = useState(0);
+function Counter({ onCountChange }) {
+  const [count, setCount] = useState(1);
 
   const increment = () => {
     setCount(count + 1);
+    // Call the onCountChange function with the new count
+    onCountChange(count + 1);
   };
 
   const decrement = () => {
-    if (count > 0) {
+    if (count > 1) {
       setCount(count - 1);
+      // Call the onCountChange function with the new count
+      onCountChange(count - 1);
     }
   };
 
