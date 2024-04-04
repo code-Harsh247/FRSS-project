@@ -27,5 +27,5 @@ function Counter({ onCountChange }) {
     </div>
   );
 }
-
+}
 export default Counter;
