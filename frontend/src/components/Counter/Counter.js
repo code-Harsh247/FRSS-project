@@ -12,6 +12,7 @@ function Counter({ onCountChange }) {
 
   const decrement = () => {
     if (count > 1) {
+    if (count > 1) {
       setCount(count - 1);
       // Call the onCountChange function with the new count
       onCountChange(count - 1);

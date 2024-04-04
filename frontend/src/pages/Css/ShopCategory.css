@@ -1,0 +1,11 @@
+.CategoryProducts{
+    display: flex;
+    height: auto;
+    flex-wrap: wrap;
+}
+
+.productCard {
+    width: calc(33.333% - 20px); /* Adjusting for margin, assuming 10px margin on each side */
+    margin: 10px; /* Adjust margin as needed */
+    box-sizing: border-box; /* Ensures padding and border are included in the width */
+}
