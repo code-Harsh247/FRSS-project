@@ -5,7 +5,7 @@ import ServiceBanner from '../components/ServiceBanner/ServiceBanner';
 import Footer from '../components/Footer/Footer';
 import ShopBanner from '../components/ShopBanner/ShopBanner';
 import { useProducts } from '../context/ProductContext';
-import ProductCard from '../components/productCard/productCard';
+import ProductCard from '../components/ProductCard/ProductCard';
 import './Css/ShopCategory.css' 
 
 const ShopCategory = () => {
