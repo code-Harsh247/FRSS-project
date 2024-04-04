@@ -1,6 +1,6 @@
 import React from 'react'
 import { useProducts } from "../../context/ProductContext";
-import ProductCard from "../productCard/productCard";
+import ProductCard from "../ProductCard/ProductCard";
 import "./ProductContainer.css"
 
 const ProductContainer = () => {
