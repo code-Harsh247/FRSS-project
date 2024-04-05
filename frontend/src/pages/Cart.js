@@ -19,7 +19,9 @@ function Cart() {
     return (
         <div className="MainCartContainer">
             <Navbar/>
-            <ShopBanner name="Cart"/>
+            <div className="CartBanner">
+                <span>Cart</span>
+            </div>
             <CartItem product={product} quantity={quantity}/>
             <CartItem product={product} quantity={quantity}/>
             <ServiceBanner/>
