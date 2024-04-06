@@ -92,13 +92,9 @@ const Navbar = () => {
                 </div>
                 <div className="icons">
                     <img src={search} alt="Search" className="search-icon" />
-<<<<<<< HEAD
-                    <img src={cart} alt="cart" className="cart-icon" onClick={openCartPage} />
-=======
                     <img src={cart} alt="cart" className="cart-icon" onClick={()=>{
                         navigate('/cart');
                     }}/>
->>>>>>> 7b073c97ed1953bca80fd503f32c8aacfe1b3690
                     <div ref={profileIconRef} className="profile-icon-container" onClick={handleProfileClick}>
                         <img src={profile} alt="profile" className="profile-icon" />
                     </div>
