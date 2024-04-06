@@ -16,7 +16,7 @@ const ContactBanner = () => {
                     <div className='Contact-details'>
                         <p className='Contact-Name'>Harsh Chattar</p>
                         <p className='Contact-Roll'>22CS30028</p>
-                        <p className='Contact-Email'>harsh@kgpian.iitkgp.ac.in</p>
+                        <p className='Contact-Email'>harsh2407@kgpian.iitkgp.ac.in</p>
                     </div>
 
                 </div>
@@ -27,7 +27,7 @@ const ContactBanner = () => {
                     <div className='Contact-details'>
                         <p className='Contact-Name'>Abhinav Kumar Singh</p>
                         <p className='Contact-Roll'>22CS30005</p>
-                        <p className='Contact-Email'>abhinav@kgpian.iitkgp.ac.in</p>
+                        <p className='Contact-Email'>abhiroy7079@kgpian.iitkgp.ac.in</p>
                     </div>
 
                 </div>
@@ -38,7 +38,7 @@ const ContactBanner = () => {
                     <div className='Contact-details'>
                         <p className='Contact-Name'>Hemant</p>
                         <p className='Contact-Roll'>22CS30029</p>
-                        <p className='Contact-Email'>hemant@kgpian.iitkgp.ac.in</p>
+                        <p className='Contact-Email'>hemant.mag99@kgpian.iitkgp.ac.in</p>
                     </div>
 
                 </div>
