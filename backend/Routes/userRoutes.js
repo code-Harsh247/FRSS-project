@@ -242,7 +242,7 @@ router.post('/rent/:userId', async (req, res) => {
         }
 
         // Check if the product already exists in the cart
-        const productIndex = user.cartData.findIndex(item => item.id === productId);
+        // const productIndex = user.cartData.findIndex(item => item.id === productId);
         const product={
             ProductId:productId,
             Quantity:quantity,
@@ -250,26 +250,117 @@ router.post('/rent/:userId', async (req, res) => {
         }
         user.Rented.push(product);
 
-
-        // if (productIndex !== -1) {
-        //     // If the product already exists in the cart, update its quantity
-        //     user.cartData[productIndex].count += quantity;
-        // } else {
-        //     // If the product doesn't exist in the cart, add it with product id and count
-        //     const product = {
-        //         id: productId,
-        //         count: quantity
-        //     };
-        //     // Push the product into the cartData array
-        //     user.cartData.push(product);
-        // }
-
-        // Save the updated user object
         await user.save();
 
         res.json({ success: true, message: "Product rented successfully", user });
     } catch (error) {
         res.status(500).json({ success: false, errors: "Server Error" });
+    }
+});
+
+// router.post('/rent-all/:userId', async (req, res) => {
+//     try {
+//         const userId = req.params.userId;
+
+//         // Find the user by ID
+//         const user = await User.findById(userId);
+
+//         // Check if user exists
+//         if (!user) {
+//             return res.status(404).json({ success: false, errors: "User not found" });
+//         }
+
+//         const rentItems=user.cartData;
+//         // console.log(user);
+//         // Rent each item in the rentItems array
+//         for (const item of rentItems) {
+//             const { productId, quantity, duration } = item;
+//             // Check if the product exists
+//             const product = await Product.findById(productId);
+//             // Check if the product is available for rent
+//             if (!product.available) {
+//                 return res.status(400).json({ success: false, errors: `Product ${product.name} is not available for rent` });
+//             }
+
+//             // Add product renting information to the user's rented section
+//             const rentingInfo = {
+//                 ProductId: productId,
+//                 Quantity: quantity,
+//                 RentDuration: duration
+//             };
+//             user.Rented.push(rentingInfo);
+
+//             // Increase unitsRented count for the product
+//             product.unitsRented += quantity;
+
+//             // Set product as unavailable for rent
+//             // product.available = false;
+//         }
+
+//         // Save changes
+//         await user.save();
+//         await Promise.all(rentItems.map(item => Product.findByIdAndUpdate(item.productId, { $set: { available: false }, $inc: { unitsRented: item.quantity } })));
+
+//         res.json({ success: true, message: "Products rented successfully", user });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ success: false, errors: "Server Error" });
+//     }
+// });
+
+
+router.post('/products/:productId/comment', async (req, res) => {
+    try {
+        const productId = req.params.productId;
+        const { rating, comment } = req.body;
+
+        // Find the product by ID
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).json({ success: false, message: 'Product not found' });
+        }
+
+        // Check if the rating is within the allowed range (0 to 5)
+        if (rating < 0 || rating > 5) {
+            return res.status(400).json({ success: false, message: 'Rating should be between 0 and 5' });
+        }
+
+        // Add the comment to the product
+        product.comments.push({ rating, comment });
+
+        // Recalculate average rating
+        if (product.comments.length > 0) {
+            const sum = product.comments.reduce((acc, { rating }) => acc + rating, 0);
+            product.ratings = sum / product.comments.length;
+        } else {
+            product.ratings = 0; // Default to 0 if no comments are present
+        }
+
+        // Save the updated product
+        await product.save();
+
+        res.status(200).json({ success: true, message: 'Comment added successfully', product });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+});
+
+router.get('/products/:productId/comments', async (req, res) => {
+    try {
+        const productId = req.params.productId;
+
+        // Find the product by ID
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).json({ success: false, message: 'Product not found' });
+        }
+
+        // Return the list of comments for the product
+        res.status(200).json({ success: true, comments: product.comments });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
 });
 
