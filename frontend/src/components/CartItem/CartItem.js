@@ -3,8 +3,10 @@ import './CartItem.css';
 import Counter from '../Counter/Counter';
 import closeicon from '../assets/Icons/close.png';
 
-function CartItem({ product }) {
-  const [quantity, setQuantity] = useState(1);
+function CartItem({img,name,price, q }) {
+  const [quantity, setQuantity] = useState(q);
+  // console.log("Check start");
+  // console.log(product);
 
   // Function to handle count change
   const handleCountChange = (newCount) => {
@@ -20,19 +22,18 @@ function CartItem({ product }) {
       <div className='CartItemImageContainer'>
         <img
           className="cart-item-image"
-          src={product.imageUrl} // Assuming you have an imageUrl property
-          alt={product.name}
+          src={img} // Assuming you have an imageUrl property
+          alt={name}
         />
       </div>
       <div className="cartiteminfo">
-        <h3 className="cartitemname">{product.name}</h3>
+        <h3 className="cartitemname">{name}</h3>
         <span className="cartitemprice">
-          ₹{(product.price * quantity).toLocaleString()}/month
+          ₹{(price * quantity).toLocaleString()}/month
         </span>
         <div className="cartitemquantity">
           <div className="quantity">
             <div className="counter">
-              {/* Pass handleCountChange function to Counter component */}
               <Counter onCountChange={handleCountChange} />
             </div>
           </div>

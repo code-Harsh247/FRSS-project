@@ -71,6 +71,10 @@ const Navbar = () => {
             }
         }, 100);
     };
+
+    const openCartPage=()=>{
+        navigate('/cart');
+    }
     
     
 
@@ -88,7 +92,7 @@ const Navbar = () => {
                 </div>
                 <div className="icons">
                     <img src={search} alt="Search" className="search-icon" />
-                    <img src={cart} alt="cart" className="cart-icon" />
+                    <img src={cart} alt="cart" className="cart-icon" onClick={openCartPage} />
                     <div ref={profileIconRef} className="profile-icon-container" onClick={handleProfileClick}>
                         <img src={profile} alt="profile" className="profile-icon" />
                     </div>
