@@ -64,7 +64,7 @@ function Cart() {
             </div>}
 
             {isLoggedIn && cartProducts.length === 0 && (
-                <div className="EmptyCartMessage">Your cart is empty.</div>
+                <div className="EmptyCart"><p>Your cart is empty.</p></div>
             )}
 
             {isLoggedIn && cartProducts.length > 0 && (

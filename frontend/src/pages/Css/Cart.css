@@ -12,3 +12,18 @@
     padding: 10px;
     font-size: 1.2rem;
 }
+
+.EmptyCart{
+    height: 30vh;
+    /* border: 2px solid black; */
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.EmptyCart p{
+    padding: 10px;
+    font-size: 1.2rem;
+}
