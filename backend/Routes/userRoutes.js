@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Product=require("../models/Product")
 
 router.post('/signup', async (req, res) => {
     try {
@@ -219,6 +220,54 @@ router.delete('/delete-product/:userId/:productId', async (req, res) => {
         await user.save();
 
         res.json({ success: true, message: "Product deleted successfully from the user's cart", user });
+    } catch (error) {
+        res.status(500).json({ success: false, errors: "Server Error" });
+    }
+});
+
+
+router.post('/rent/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const productId = req.body.productId;
+        const quantity = req.body.quantity;
+        const duration=req.body.duration;
+
+        // Find the user by ID
+        const user = await User.findById(userId);
+
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ success: false, errors: "User not found" });
+        }
+
+        // Check if the product already exists in the cart
+        const productIndex = user.cartData.findIndex(item => item.id === productId);
+        const product={
+            ProductId:productId,
+            Quantity:quantity,
+            RentDuration:duration,
+        }
+        user.Rented.push(product);
+
+
+        // if (productIndex !== -1) {
+        //     // If the product already exists in the cart, update its quantity
+        //     user.cartData[productIndex].count += quantity;
+        // } else {
+        //     // If the product doesn't exist in the cart, add it with product id and count
+        //     const product = {
+        //         id: productId,
+        //         count: quantity
+        //     };
+        //     // Push the product into the cartData array
+        //     user.cartData.push(product);
+        // }
+
+        // Save the updated user object
+        await user.save();
+
+        res.json({ success: true, message: "Product rented successfully", user });
     } catch (error) {
         res.status(500).json({ success: false, errors: "Server Error" });
     }
