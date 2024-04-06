@@ -57,7 +57,7 @@ router.post('/login', async (req, res) => {
         }
 
         const isPasswordValid = await bcrypt.compare(req.body.password, user.passwd);
-        
+
         if (!isPasswordValid) {
             return res.status(401).json({ success: false, errors: "Wrong password" });
         }
@@ -69,6 +69,35 @@ router.post('/login', async (req, res) => {
     }
 });
 
+router.post('/get-user-id', async (req, res) => {
+    try {
+        // Get the token from the request body
+        const token = req.body.token;
+
+        // Check if the token exists
+        if (!token) {
+            return res.status(400).json({ success: false, errors: "Token is required" });
+        }
+
+        // Verify the token
+        jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+            if (err) {
+                // If the token is invalid or expired, return an error response
+                return res.status(401).json({ success: false, errors: "Invalid token" });
+            }
+
+            // Extract the user ID from the decoded token
+            const userId = decoded.id;
+
+            // Return the user ID in the response
+            res.status(200).json({ success: true, userId: userId });
+        });
+    } catch (error) {
+        // Handle server errors
+        console.error(error);
+        res.status(500).json({ success: false, errors: "Server Error" });
+    }
+});
 
 router.get('/allusers', async (req, res) => {
     try {
@@ -79,11 +108,11 @@ router.get('/allusers', async (req, res) => {
     }
 });
 
-router.get('/user/:name', async(req,res)=>{
-    try{
+router.get('/user/:name', async (req, res) => {
+    try {
         const user = await User.find
     }
-    catch(error){
+    catch (error) {
         res.status(500).json({ success: false, errors: "Server Error" });
     }
 })
@@ -127,6 +156,28 @@ router.get('/search/:name', async (req, res) => {
         res.status(500).json({ success: false, errors: "Server Error" });
     }
 });
+
+router.get('/cart/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const user = await User.findById(userId);
+
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ success: false, errors: "User not found" });
+        }
+        
+        // Retrieve cart data from user object
+        const cartData = user.cartData;
+
+        // Return the cart data
+        res.status(200).json({ success: true, cartData: cartData });
+    }
+    catch (error) {
+        res.status(500).json({ success: false, errors: "Server Error" });
+    }
+});
+
 router.post('/add-to-cart/:userId', async (req, res) => {
     try {
         const userId = req.params.userId;

@@ -71,6 +71,10 @@ const Navbar = () => {
             }
         }, 100);
     };
+
+    const openCartPage=()=>{
+        navigate('/cart');
+    }
     
     
 
