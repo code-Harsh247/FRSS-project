@@ -49,7 +49,7 @@ const SignupForm = () => {
                 alert('Signup successful. Please login.');
                 const token = response.token;
                 localStorage.setItem('token', token);
-                navigate('/users/login');
+                navigate('/login');
             }
             else {
                 alert('Login failed');
