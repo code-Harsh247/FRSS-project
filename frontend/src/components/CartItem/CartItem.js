@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 import './CartItem.css';
-import Counter from '../Counter/Counter';
 import closeicon from '../assets/Icons/close.png';
 
-function CartItem({ product }) {
-  const [quantity, setQuantity] = useState(1);
+function CartItem({img,name,price, q }) {
 
-  // Function to handle count change
-  const handleCountChange = (newCount) => {
-    setQuantity(newCount);
-  };
 
   const deleteItem=()=>{
     console.log('delete item');
@@ -20,18 +14,24 @@ function CartItem({ product }) {
       <div className='CartItemImageContainer'>
         <img
           className="cart-item-image"
-          src={product.imageUrl} // Assuming you have an imageUrl property
-          alt={product.name}
+          src={img} // Assuming you have an imageUrl property
+          alt={name}
         />
       </div>
       <div className="cartiteminfo">
-        <h3 className="cartitemname">{product.name}</h3>
+        <h3 className="cartitemname">{name}</h3>
         <span className="cartitemprice">
-          ₹{(product.price * quantity).toLocaleString()}/month
+          ₹{(price * q).toLocaleString()}/month
         </span>
         <div className="cartitemquantity">
           <div className="quantity">
+<<<<<<< HEAD
             <Counter/>
+=======
+            <div className="counter">
+              
+            </div>
+>>>>>>> 1c3962e94e570142cd8bf4b58847c34d9bc2985a
           </div>
         </div>
       </div>

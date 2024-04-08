@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Counter from '../Counter/Counter';
 import "./ProductDetails.css";
 import CustomButton from "../Button/CustomButton";
 import CustomButtonSecondary from '../Button/CustomButttonSecondary';
@@ -7,6 +6,7 @@ import CustomButtonSecondary from '../Button/CustomButttonSecondary';
 const ProdDetails = ({ item }) => {
     const [mainImg, setMainImg] = useState(null);
     const [loading, setLoading] = useState(true);
+
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
     useEffect(() => {
@@ -66,7 +66,6 @@ const ProdDetails = ({ item }) => {
                     <div className='Product-Desc'>
                         <p>{item ? item.description : 'Loading...'}</p>
                     </div>
-                    <Counter />
                 </div>
                 <div className='Buttons'>
                     <CustomButton btnText="Rent now" handleClick={() => console.log("Buying now")} Btnwidth="100%" />

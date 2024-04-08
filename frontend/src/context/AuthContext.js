@@ -1,17 +1,21 @@
-// AuthContext.js
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Initial state is false
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    // Initialize isLoggedIn state with the value from localStorage, if available
+    return localStorage.getItem('isLoggedIn') === 'true';
+  });
 
   const login = () => {
-    setIsLoggedIn(true); // Update isLoggedIn state to true
+    setIsLoggedIn(true);
+    localStorage.setItem('isLoggedIn', 'true'); // Store isLoggedIn state in localStorage
   };
 
   const logout = () => {
-    setIsLoggedIn(false); // Update isLoggedIn state to false
+    setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn'); // Remove isLoggedIn state from localStorage
   };
 
   return (

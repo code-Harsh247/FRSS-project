@@ -18,7 +18,6 @@ const ShopCategory = () => {
     const CategoryName = categoryName.slice(0,-1);
     const {products} = useProducts();
     const filteredProducts = products.filter(product => product.category === CategoryName );
-    console.log(filteredProducts);
     return (
         <div>
             <Navbar />

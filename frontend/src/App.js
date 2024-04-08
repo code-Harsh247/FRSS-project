@@ -10,10 +10,21 @@ import ProductDetailsPage from "./pages/ProductDetailsPage";
 import { ProductProvider } from "./context/ProductContext";
 import { AuthProvider } from "./context/AuthContext";
 import { CategoryProvider } from "./context/CategoriesContext";
+import { CartProvider } from "./context/CartContext";
 import CheckOut from "./pages/CheckOut";
 import Cart from "./pages/Cart";
+import { useEffect } from "react";
 
 const App = () => {
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            localStorage.clear(); // Clear local storage if no token is found
+        }
+    }, []);
+    
+
     const router = createBrowserRouter([
         {
             path:"/",
@@ -54,6 +65,7 @@ const App = () => {
     ])
     return (
         <AuthProvider>
+        <CartProvider>
         <CategoryProvider>
         <ProductProvider>
         <div>
@@ -61,6 +73,7 @@ const App = () => {
         </div>
         </ProductProvider>
         </CategoryProvider>
+        </CartProvider>
         </AuthProvider>
     );
 };
