@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar/Navbar'
 import ServiceBanner from '../components/ServiceBanner/ServiceBanner'
 import Footer from '../components/Footer/Footer';
 import axios from '../context/axiosConfig'
+import ReviewSection from '../components/ReviewSection/ReviewSection'
 
 const ProductDetailsPage = () => {
   const { productID } = useParams();
@@ -29,6 +30,7 @@ const ProductDetailsPage = () => {
     <div>
       <Navbar />
       <ProdDetails item={product} />
+      <ReviewSection/>
       <ServiceBanner />
       <Footer />
     </div>

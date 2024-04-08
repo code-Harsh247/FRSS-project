@@ -31,10 +31,7 @@ function CartItem({ product }) {
         </span>
         <div className="cartitemquantity">
           <div className="quantity">
-            <div className="counter">
-              {/* Pass handleCountChange function to Counter component */}
-              <Counter onCountChange={handleCountChange} />
-            </div>
+            <Counter/>
           </div>
         </div>
       </div>

@@ -1,0 +1,108 @@
+.ReviewSectionMainContainer {
+  border: 1px solid #ddd;
+  height: 100vh;
+  width: 100vw;
+}
+.ReviewSectionTitle {
+  width: 100vw;
+  height: 100px;
+
+}
+.ReviewSectionComments {
+  border: 2px solid #ddd;
+
+  width: 70vw;
+  height: auto;
+}
+.Comment1 {
+  width: 87%;
+  margin-left: 9vw;
+  max-height: 200px;
+  height: auto;
+  overflow-y: scroll;
+  
+  padding: 20px;
+}
+.Comment2 {
+  width: 87%;
+  margin-left: 9vw;
+  overflow-y: scroll;
+  height: auto;
+  max-height: 200px;
+  
+  padding: 20px;
+}
+.ReviewSectionOverallRating {
+ 
+  width: 30vw;
+  height: 500px;
+}
+.ReviewSectionContent {
+  display: flex;
+}
+.RatingSection {
+  
+  width: 100px;
+  height: 60px;
+}
+.CommentTitle {
+
+
+  width: 80%;
+  height: 60px;
+}
+.RatingAndTitle {
+  display: flex;
+  padding-bottom: 10px;
+}
+.CommentTitle span {
+  font-size: 2rem;
+  font-weight: bold;
+  color: black;
+  margin-right: 100px;
+}
+.RatingSection pre {
+  font-size: 1.5rem;
+}
+.RatingSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.CommentTitle {
+  display: flex;
+  align-items: center;
+}
+.AverageRatingPre{
+    font-size: 400%;
+}
+.AverageRating{
+    width:20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    margin-top:15%;
+
+}
+.ReviewSectionOverallRating{
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    justify-content:flex-start;
+}
+.RateProductButton{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ReviewSectionTitle{
+  margin-left: 9vw;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.ReviewSectionTitle p{
+  font-size: 50px;
+}

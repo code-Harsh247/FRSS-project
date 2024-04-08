@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import ServiceBanner from "../components/ServiceBanner/ServiceBanner";
 import CartItem from "../components/CartItem/CartItem";
+import ReviewStar from "../components/ReviewStar/ReviewStar";
 
 
 function Cart() {
@@ -27,6 +28,7 @@ function Cart() {
             <CartItem product={product} quantity={quantity}/>
             <ServiceBanner/>
             <Footer/>
+            <ReviewStar/>
         </div>
       );
 }

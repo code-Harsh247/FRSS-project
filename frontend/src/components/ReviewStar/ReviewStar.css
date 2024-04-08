@@ -1,7 +1,7 @@
-.ReviewStarContainer  input[type=radio]{
-    display: none;
-}
-#reviewstar{
-    cursor:pointer;
-    
-}
+.active {
+    color: #fff700;
+  }
+  
+  .inactive {
+    color: #000000;
+  }

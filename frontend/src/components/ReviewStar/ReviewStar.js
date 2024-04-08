@@ -1,54 +1,39 @@
-import { FaStar, FaStarHalfAlt } from "react-icons/fa";
-import { AiOutlineStar } from "react-icons/ai";
-import styled from "styled-components";
-import React from "react";
+import React, { useState } from "react";
+import { FaStar } from "react-icons/fa";
+import './ReviewStar.css';
 
-const Star = ({ stars, reviews }) => {
-  const ratingStar = Array.from({ length: 5 }, (elem, index) => {
-    let number = index + 0.5;
-    return (
-      <span key={index}>
-        {stars >= index + 1 ? (
-          <FaStar className="icon" />
-        ) : stars >= number ? (
-          <FaStarHalfAlt className="icon" />
-        ) : (
-          <AiOutlineStar className="icon" />
-        )}
-      </span>
-    );
-  });
+export default function ReviewStar() {
+  const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
+
+  function handleClick(index) {
+    setRating(index);
+  }
+
+  function handleMouseEnter(index) {
+    setHover(index);
+  }
+
+  function handleMouseLeave() {
+    setHover(0);
+  }
 
   return (
-    <Wrapper>
-      <div className="icon-style">
-        {ratingStar}
-        <p>({reviews} customer reviews)</p>
-      </div>
-    </Wrapper>
+    <div className="star-rating">
+      {[...Array(5)].map((_, index) => {
+        const currentIndex = index + 1;
+
+        return (
+          <FaStar
+            key={currentIndex}
+            className={currentIndex <= (hover || rating) ? "active" : "inactive"}
+            onClick={() => handleClick(currentIndex)}
+            onMouseEnter={() => handleMouseEnter(currentIndex)}
+            onMouseLeave={handleMouseLeave}
+            size={40}
+          />
+        );
+      })}
+    </div>
   );
-};
-
-const Wrapper = styled.section`
-  .icon-style {
-    display: flex;
-    gap: 0.2rem;
-    align-items: center;
-    justify-content: flex-start;
-
-    .icon {
-      font-size: 2rem;
-      color: orange;
-    }
-
-    .empty-icon {
-      font-size: 2.6rem;
-    }
-    p {
-      margin: 0;
-      padding-left: 1.2rem;
-    }
-  }
-`;
-
-export default Star;
+}
