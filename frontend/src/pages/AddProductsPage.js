@@ -5,13 +5,13 @@ import AddProducts from "../components/AddProducts/AddProducts";
 import "./Css/AddProductsPage.css";
 
 function AddProductPage() {
-    return ( 
+    return (
         <div className="AddProductPageContainer">
-            <AdminNavbar/>
-            <AdminBanner name="Add Products"/>
-            <AddProducts/>
+            <AdminNavbar />
+            <AdminBanner name="Add Products" />
+            <AddProducts />
         </div>
-     );
+    );
 }
 
 export default AddProductPage;

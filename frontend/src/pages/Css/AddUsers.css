@@ -1,0 +1,43 @@
+.AddUserContent {
+  width: 50%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.AddUserContent h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.AddUserContent form {
+  display: flex;
+  flex-direction: column;
+}
+
+.AddUserContent input[type="text"],
+.AddUserContent input[type="email"],
+.AddUserContent input[type="password"] {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.AddUserContent button {
+  padding: 10px 20px;
+
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.AddUserContent button:hover {
+  background-color: black;
+  color: white;
+}
+.AddUserContent span {
+  font-size: 16px;
+}

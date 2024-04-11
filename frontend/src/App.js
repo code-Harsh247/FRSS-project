@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import AdminDashboard from "./pages/AdminDashboard";
 import Products from "./pages/Products";
 import AddProductsPage from "./pages/AddProductsPage";
+import AddUsers from "./pages/AddUsers";
 
 
 const App = () => {
@@ -49,6 +50,10 @@ const App = () => {
         {
             path:"/addproducts",
             element:<AddProductsPage/>
+        },
+        {
+            path:"/addusers",
+            element:<AddUsers/>
         },
         {
             path:"/signup",

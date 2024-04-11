@@ -1,102 +1,99 @@
 .AddProductContainer {
-    width: 90%;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .AddProductContainer h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .AddProductContainer form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .AddProductContainer input{
-    margin-bottom: 10px;
-  }
-  
-  .AddProductContainer button {
-    margin-bottom: 10px;
-    width:500px;
-    height:50px;
-  }
-  
-  .quantity-input {
-    display: flex;
-    align-items: center;
-    
-    margin-top:10px;
-  }
-  
-  .quantity-input label {
-    margin-right: 10px;
-    
-  }
-  
-  .quantity-input input {
-    width: 80px;
-    
-    padding: 8px;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    
-  }
-  
-  .image-upload {
-    display: flex;
-    flex-direction: column;
-    margin-top: 30px;
-  }
-  
-  .image-upload label {
-    cursor: pointer;
-    padding: 8px 12px;
-    background-color: black;
-    color: #fff;
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
-  
-  .image-upload input[type="file"] {
-    display: none;
-    
-  }
-  
-  .image-preview {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .preview-container {
-    margin-right: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .preview-container img {
-    width: 250px;
-    height: 250px;
-    object-fit: cover;
-  }
-  
-  .empty-box {
-    width: 250px;
-    height: 250px;
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-#short{
-    width:100vh;
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
-#ProductDescription{
-    width:100vh;
-    margin-bottom: 10px;
-    height:30vh;
+
+.AddProductContainer h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.AddProductContainer form {
+  display: flex;
+  flex-direction: column;
+}
+
+.AddProductContainer input {
+  margin-bottom: 10px;
+}
+
+.AddProductContainer button {
+  margin-bottom: 10px;
+  width: 500px;
+  height: 50px;
+}
+
+.quantity-input {
+  display: flex;
+  align-items: center;
+
+  margin-top: 10px;
+}
+
+.quantity-input label {
+  margin-right: 10px;
+}
+
+.quantity-input input {
+  width: 80px;
+
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.image-upload {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.image-upload label {
+  cursor: pointer;
+  padding: 8px 12px;
+  background-color: black;
+  color: #fff;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.image-upload input[type="file"] {
+  display: none;
+}
+
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.preview-container {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.preview-container img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+}
+
+.empty-box {
+  width: 250px;
+  height: 250px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#short {
+  width: 100vh;
+}
+#ProductDescription {
+  width: 100vh;
+  margin-bottom: 10px;
+  height: 30vh;
 }
