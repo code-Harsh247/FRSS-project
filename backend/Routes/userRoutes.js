@@ -32,7 +32,6 @@ router.post('/signup', async (req, res) => {
             passwd: hashPassword,
             cartData: cart,
         });
-
         await user.save();
 
         const data = {
