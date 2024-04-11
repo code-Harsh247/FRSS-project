@@ -1,0 +1,82 @@
+.navbar {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px;
+    font-family: Arial, sans-serif;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .logo-container{
+    width: 15%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    /* border: 1px solid red; */
+  }
+
+  .links{
+    display: flex;
+    width: 40%;
+    height: auto;
+    /* border: 1px solid red; */
+    justify-content: space-around;
+  }
+  
+  .navbar a {
+    color: #000000;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  .navbar a:hover {
+    background-color: #dddddd;
+  }
+
+  .AdminNavbarIcons{
+    display: flex;
+    justify-content: flex-end;
+    width: 15%;
+    height: auto;
+    /* border: 1px solid red; */
+  }
+  
+  .navbar-logo {
+    width: 100px;
+    height: auto;
+  }
+
+  .logout-box {
+    width: 150px; /* Set a fixed width for the box */
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 100; /* Ensure it's above other content */
+}
+
+.logout-box button {
+    height: 2.9em;
+    cursor: pointer;
+    background-color: #181A12;
+    color: white;
+    border-radius: 4px;
+    padding: 8px;
+    width: 100%;
+    text-align: left;
+    transform: scale(1);
+    transition: 0.2s;
+}
+
+.logout-box button:hover {
+  background-color: #373737;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logout-box button:active{
+  transform: scale(0.95);
+  box-shadow: none;
+}
+.AdminNavbarIcons img:hover, .profile-icon-container img:hover {
+  cursor: pointer;
+}

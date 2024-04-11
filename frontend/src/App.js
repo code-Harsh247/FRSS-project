@@ -14,6 +14,10 @@ import { CartProvider } from "./context/CartContext";
 import CheckOut from "./pages/CheckOut";
 import Cart from "./pages/Cart";
 import { useEffect } from "react";
+import AdminDashboard from "./pages/AdminDashboard";
+import Products from "./pages/Products";
+import AddProductsPage from "./pages/AddProductsPage";
+
 
 const App = () => {
 
@@ -39,12 +43,24 @@ const App = () => {
             element:<Shop/>
         },
         {
+            path:"/products",
+            element:<Products/>
+        },
+        {
+            path:"/addproducts",
+            element:<AddProductsPage/>
+        },
+        {
             path:"/signup",
             element: <SignUpPage/>
         },
         {
             path:"/admin",
             element: <AdminLoginInPage/>
+        },
+        {
+            path:"/admindashboard",
+            element: <AdminDashboard/>
         },
         {
             path:"/checkout",
