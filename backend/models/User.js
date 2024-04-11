@@ -24,11 +24,17 @@ const UserSchema = new mongoose.Schema({
     },
     cartData: {
         type: [{
-            count: {
-                type: Number,
-            },
             id: {
                 type: Number,
+                required:true,
+            },
+            count: {
+                type: Number,
+                required:true,
+            },
+            duration:{
+                type: Number,
+                required: true,
             }
         }],
         default: [] // Setting default value as empty array
@@ -39,11 +45,12 @@ const UserSchema = new mongoose.Schema({
     },
     bill: {
         type: [{
-            count: {
-                type: Number,
-            },
             id: {
                 type: Number,
+            },
+            count: {
+                type: Number,
+                required:true,
             },
         }],
         default: []
