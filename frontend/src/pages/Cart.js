@@ -18,63 +18,67 @@ function Cart() {
     const { products } = useProducts();
     const navigate = useNavigate();
 
+    const [cartProducts, setCartProducts] = useState([]);
+    
     useEffect(() => {
-        // Check if cart is empty and update loading state accordingly
-        if (cartData.length === 0) {
+        // Function to fetch and process cart data
+        const fetchCartData = async () => {
+            // Check if cartData is already available
+            if (cartData.length === 0) {
+                setLoading(false);
+                return;
+            }
+            
+            const filteredCartData = cartData.filter(
+                (item) => Object.keys(item).length !== 0
+            );
+
+            const cartProds = [];
+
+            for (const cartItem of filteredCartData) {
+                const product = products.find((product) => product.id === cartItem.id);
+                if (product) {
+                    const productWithQuantity = { ...product, 
+                        quantity: cartItem.count,
+                        duration: cartItem.duration
+                    };
+                    cartProds.push(productWithQuantity);
+                }
+            }
+
+            setCartProducts(cartProds);
             setLoading(false);
-        }
-    }, [cartData, setLoading]);
+        };
 
-    // Filter out the initial empty object
-    const filteredCartData = cartData.filter(
-        (item) => Object.keys(item).length !== 0
-    );
+        fetchCartData();
+    }, [cartData, setLoading, products]);
 
-    const handleButtonClick=()=>{
+    const handleButtonClick = () => {
         navigate('/login');
-    }
+    };
 
-    const cartProds = [];
-
-    // Iterate over each item in cartData
-    filteredCartData.forEach((cartItem) => {
-        // Find the product in the products array with matching ID
-        const product = products.find((product) => product.id === cartItem.id);
-
-        // If a matching product is found, add it to the cartProducts array
-        if (product) {
-            const productWithQuantity = { ...product, 
-                quantity: cartItem.count,
-                duration: cartItem.duration
-             };
-            cartProds.push(productWithQuantity);
-        }
-    });
-
-    const [cartProducts, setCartItems] = useState(cartProds);
-
-    const deleteProduct = async (productId)=>{
-        try{
+    const deleteProduct = async (productId) => {
+        try {
             const url = `users/delete-product/${userId}/${productId}`;
             const response = await axios.delete(url);
             console.log(response.data.message);
-        }
-        catch(error){
+        } catch (error) {
             console.error("Error deleting product from cart:", error.response ? error.response.data : error);
         }
-    }
+    };
+
+    const handleRemoveItem = (id) => {
+        deleteProduct(id);
+        setCartProducts(prevItems => prevItems.filter(item => item.id !== id));
+    };
+
+    const checkout = () => {
+        console.log("Checkout");
+        console.log(cartProducts);
+    };
 
     if (loading) {
         return <div>Loading...</div>;
-    }
-    const handleRemoveItem = (id) => {
-        deleteProduct(id);
-        setCartItems(prevItems => prevItems.filter(item => item.id !== id));
-
-      };
-
-    const checkout=()=>{
-        console.log("Checkout")
     }
 
     return (

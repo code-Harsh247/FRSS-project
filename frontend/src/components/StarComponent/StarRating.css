@@ -1,0 +1,19 @@
+.star-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0; /* Removes unwanted space between inline-block elements */
+}
+
+.star {
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+    font-size: 30px; /* Size of the stars */
+}
+
+.star:hover,
+.star:hover ~ .star { /* This will not work due to how HTML structure is formed, but you can rely on state to manage hover effect */
+    color: #ffc107; /* Gold color when hovered or active */
+}
+
+/* If using a non-hover approach based purely on click, you might want to add more dynamic styles via JavaScript or inline styles */

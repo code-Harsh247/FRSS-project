@@ -3,20 +3,28 @@ import { FaStar } from "react-icons/fa";
 import CustomButtonSecondary from '../Button/CustomButttonSecondary';
 import './ReviewSection.css';
 import Comment from '../Review/Comment';
-import InputBox from '../InputBox/InputBox'
+import StarRating from '../StarComponent/StarRating';
 
 
 function ReviewSection({ AvgRating }) {
 
     const [showAddReview, setShowAddReview] = useState(false);
     const [reviewComment, setReviewComment] = useState('');
-    const [reviewRating, setReviewRating] = useState('');
+    const [reviewRating, setReviewRating] = useState(0);
 
     const AddReview = () => {
         console.log("Review Added");
         setShowAddReview(true);
     }
 
+    const submitReview = () => {
+        console.log("Submitting Review: ", reviewComment, reviewRating);
+        // Here you would likely send this data to a server
+        setShowAddReview(false); // Hide input fields after submission
+        setReviewComment(''); // Reset comment
+        setReviewRating(''); // Reset rating
+    }
+    
     return (
         <div className='ReviewSecContainer'>
             <div className='ReviewsHeader'>
@@ -40,12 +48,15 @@ function ReviewSection({ AvgRating }) {
                         </div>
                     )}
                     {showAddReview && (
-                        <InputBox
-                            type="text"
-                            onInputChange={setReviewComment}
-                            autocomplete="off"
-                            placeholder="Enter your comment" 
-                            />
+                        <div className="ReviewInputs">
+                        <StarRating rating={reviewRating} onChange={setReviewRating} />
+                        <textarea
+                            placeholder="Enter your comment"
+                            value={reviewComment}
+                            onChange={(e) => setReviewComment(e.target.value)}
+                        />
+                        <CustomButtonSecondary btnText="Submit Review" handleClick={submitReview} Btnwidth="20vw" />
+                    </div>
                     )}
 
                 </div>
