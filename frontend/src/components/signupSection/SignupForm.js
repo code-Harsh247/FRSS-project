@@ -36,29 +36,64 @@ const SignupForm = () => {
     const navigate = useNavigate();
     const handleButtonClick = async (event) => {
         event.preventDefault();  //Prevents page refresh when button is clicked. (Happens when button is inside a form element)
-        try{
-            const response = await axios.post('/users/signup',{
+        try {
+            // Check if name, phone, email, and password are entered
+            if (!nameInput || !phoneNumber || !emailInput || !passwordInput) {
+                return alert('Please fill in all the fields');
+            }
+    
+            // Validate phone number format
+            const phoneRegex = /^\d{10}$/;
+            if (!phoneRegex.test(phoneNumber)) {
+                return alert('Please enter a valid phone number (10 digits)');
+            }
+    
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput)) {
+                return alert('Please enter a valid email address');
+            }
+    
+            // Validate password format: At least one number, one capital letter, and at least 8 characters
+            const passwordRegex = /^(?=.*\d)(?=.*[A-Z]).{8,}$/;
+            if (!passwordRegex.test(passwordInput)) {
+                return alert('Password must contain at least one number, one capital letter, and be at least 8 characters long');
+            }
+    
+            const response = await axios.post('/users/signup', {
                 name: nameInput,
                 phone: phoneNumber,
                 email: emailInput,
                 password: passwordInput,
-                cart:[]
+                cart: []
             });
-
-            if(response.status === 200){
+    
+            if (response.status === 200) {
                 alert('Signup successful. Please login.');
-                const token = response.token;
+                const token = response.data.token; // Access token from response data
                 localStorage.setItem('token', token);
                 navigate('/login');
+            } else {
+                const errorMessage = response.data.errors || 'Signup failed';
+                alert(errorMessage);
             }
-            else {
-                alert('Login failed');
+        } catch (error) {
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                alert(`Error: ${error.response.data.errors}`);
+            } else if (error.request) {
+                // The request was made but no response was received
+                alert('No response received from the server. Please try again.');
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                alert('An error occurred. Please try again.');
             }
-        }
-        catch (error){
-            alert('An error occurred. Please try again.');
         }
     };
+    
+    
+    
 
 
     return (
