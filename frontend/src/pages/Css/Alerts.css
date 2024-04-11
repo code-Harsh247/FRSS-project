@@ -1,0 +1,22 @@
+.AlertsContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+}
+.AlertsContent .OrderAlerts{
+
+    height:auto;
+    width:80vw;
+    margin:20px;
+}
+.AlertsContent .Notification{
+ 
+    height:auto;
+    width:80vw;
+    margin:20px;
+}
+.AlertsContent #Title{
+    font-size:2rem;
+    margin:10px;
+}

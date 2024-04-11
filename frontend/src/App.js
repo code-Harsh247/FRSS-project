@@ -18,6 +18,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Products from "./pages/Products";
 import AddProductsPage from "./pages/AddProductsPage";
 import AddUsers from "./pages/AddUsers";
+import Alerts from "./pages/Alerts";
 
 
 const App = () => {
@@ -46,6 +47,10 @@ const App = () => {
         {
             path:"/products",
             element:<Products/>
+        },
+        {
+            path:"/alerts",
+            element:<Alerts/>
         },
         {
             path:"/addproducts",

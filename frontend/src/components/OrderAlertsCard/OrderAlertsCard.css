@@ -1,0 +1,72 @@
+.OrderAlertsCardContainer {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 25vh;
+    width: 75vw;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    margin: 10px;
+  }
+  
+  .OrderAlertsCardImageContainer {
+    margin-left: 30px;
+    width: 140px;
+    height: 140px;
+    position: relative;
+    bottom: 0px;
+  }
+  
+  .OrderAlertsCardImageContainer img {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .order-alerts-card-info {
+    margin-left: 2%;
+    margin-right: 10%;
+    width: 70%;
+    height: 85%;
+  }
+  
+  .order-alerts-card-name {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #000000;
+  }
+  
+  .order-alerts-card-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10%;
+  }
+  
+  .order-alerts-card-user {
+    font-size: 1.25rem;
+  }
+  
+  .order-alerts-card-counter {
+    width: 20%;
+    height: 20.25%;
+  }
+  
+  .order-alerts-card-close-icon {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    position: relative;
+    bottom: 60px;
+    left: 40px;
+  }
+  
+  .order-alerts-card-close-icon:active {
+    transform: scale(0.95);
+  }
+  
+  .order-alerts-card-close-icon img {
+    height: 100%;
+    width: 100%;
+  }
+  .order-alerts-card-info p{
+    color:black;
+  }
