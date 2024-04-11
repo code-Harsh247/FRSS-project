@@ -31,19 +31,17 @@ const LoginForm = () => {
         setPasswordInput(password);
     }
 
-
     const handleButtonClick = async (event) => {
         event.preventDefault();
-
+    
         try {
             // Send a request to the backend to authenticate the user
             const response = await axios.post('/users/login', {
                 email: emailInput,
                 password: passwordInput
             });
-
-
-            if (response.status === 200) {
+    
+            if (response.data.success) {
                 // Login successful
                 const token = response.data.token;
                 localStorage.setItem('token', token); // Store token in local storage
@@ -51,12 +49,19 @@ const LoginForm = () => {
                 navigate('/'); // Redirect to dashboard or any other page
             } else {
                 // Login failed
-                alert('Login failed');
+                if (response.status === 404) {
+                    alert('No user with the given email found');
+                } else if (response.status === 401) {
+                    alert('Wrong password');
+                } else {
+                    alert('Login failed');
+                }
             }
         } catch (error) {
             alert('An error occurred. Please try again.');
         }
     }
+    
 
 
     return (
