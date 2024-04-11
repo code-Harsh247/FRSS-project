@@ -97,3 +97,7 @@
   margin-bottom: 10px;
   height: 30vh;
 }
+.AddProductsButton:hover {
+  background-color: black;
+  color: white;
+}
