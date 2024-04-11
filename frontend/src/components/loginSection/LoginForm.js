@@ -31,6 +31,7 @@ const LoginForm = () => {
         setPasswordInput(password);
     }
 
+
     const handleButtonClick = async (event) => {
         event.preventDefault();
     
@@ -40,7 +41,7 @@ const LoginForm = () => {
                 email: emailInput,
                 password: passwordInput
             });
-    
+            console.log(response.data.success);
             if (response.data.success) {
                 // Login successful
                 const token = response.data.token;
@@ -49,18 +50,15 @@ const LoginForm = () => {
                 navigate('/'); // Redirect to dashboard or any other page
             } else {
                 // Login failed
-                if (response.status === 404) {
-                    alert('No user with the given email found');
-                } else if (response.status === 401) {
-                    alert('Wrong password');
-                } else {
-                    alert('Login failed');
-                }
+                // alert(ersponse)
+                // throw new Error(response.data.errors)
             }
         } catch (error) {
-            alert('An error occurred. Please try again.');
+            alert(error);
+
         }
     }
+    
     
 
 
