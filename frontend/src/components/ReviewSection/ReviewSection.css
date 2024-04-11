@@ -25,7 +25,7 @@
 }
 .Comment2 {
   width: 87%;
-  margin-left: 9vw;
+  margin-left: 6.8vw;
   overflow-y: scroll;
   height: auto;
   max-height: 200px;
@@ -42,7 +42,7 @@
 }
 .RatingSection {
   
-  width: 100px;
+  width: 50px;
   height: 60px;
 }
 .CommentTitle {
@@ -67,7 +67,7 @@
 .RatingSection {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 .CommentTitle {
   display: flex;

@@ -25,13 +25,9 @@ function CartItem({img,name,price, q }) {
         </span>
         <div className="cartitemquantity">
           <div className="quantity">
-<<<<<<< HEAD
-            <Counter/>
-=======
             <div className="counter">
               
             </div>
->>>>>>> 1c3962e94e570142cd8bf4b58847c34d9bc2985a
           </div>
         </div>
       </div>
