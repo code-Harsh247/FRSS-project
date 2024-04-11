@@ -142,7 +142,7 @@ const AddProducts = () => {
                         </div>
                     ))}
                 </div>
-                <button type="submit">Add Product</button>
+                <button className="AddProductsButton"type="submit">Add Product</button>
             </form>
         </div>
     );
