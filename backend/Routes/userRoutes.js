@@ -32,7 +32,6 @@ router.post('/signup', async (req, res) => {
             passwd: hashPassword,
             cartData: cart,
         });
-
         await user.save();
 
         const data = {
@@ -182,12 +181,13 @@ router.post('/add-to-cart/:userId', async (req, res) => {
     try {
         const userId = req.params.userId;
         const productId = req.body.productId;
+        console.log(productId);
         const quantity = req.body.quantity;
         const rentDuration = req.body.duration;
 
         // Find the user by ID
         const user = await User.findById(userId);
-
+        // console.log(user);
         // Check if user exists
         if (!user) {
             return res.status(404).json({ success: false, errors: "User not found" });
@@ -195,6 +195,7 @@ router.post('/add-to-cart/:userId', async (req, res) => {
 
         // Check if the product already exists in the cart
         const productIndex = user.cartData.findIndex(item => item.id === productId);
+        // console.log(productIndex);
         if (productIndex !== -1) {
             // If the product already exists in the cart, update its quantity
             user.cartData[productIndex].count = quantity;
@@ -205,6 +206,7 @@ router.post('/add-to-cart/:userId', async (req, res) => {
                 count: quantity,
                 duration: rentDuration 
             };
+            console.log(product);
             // Push the product into the cartData array
             user.cartData.push(product);
         }
@@ -311,55 +313,68 @@ router.post('/rent/:userId', async (req, res) => {
     }
 });
 
-// router.post('/rent-all/:userId', async (req, res) => {
-//     try {
-//         const userId = req.params.userId;
+router.post('/move-to-rented/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
 
-//         // Find the user by ID
-//         const user = await User.findById(userId);
+        // Find the user by ID
+        const user = await User.findById(userId);
 
-//         // Check if user exists
-//         if (!user) {
-//             return res.status(404).json({ success: false, errors: "User not found" });
-//         }
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ success: false, errors: "User not found" });
+        }
 
-//         const rentItems=user.cartData;
-//         // console.log(user);
-//         // Rent each item in the rentItems array
-//         for (const item of rentItems) {
-//             const { productId, quantity, duration } = item;
-//             // Check if the product exists
-//             const product = await Product.findById(productId);
-//             // Check if the product is available for rent
-//             if (!product.available) {
-//                 return res.status(400).json({ success: false, errors: `Product ${product.name} is not available for rent` });
-//             }
+        // Retrieve cart data from user object
+        const cartData = user.cartData;
 
-//             // Add product renting information to the user's rented section
-//             const rentingInfo = {
-//                 ProductId: productId,
-//                 Quantity: quantity,
-//                 RentDuration: duration
-//             };
-//             user.Rented.push(rentingInfo);
+        // Check if the cart is empty
+        if (cartData.length === 0) {
+            return res.status(400).json({ success: false, errors: "Cart is empty" });
+        }
 
-//             // Increase unitsRented count for the product
-//             product.unitsRented += quantity;
+        // Iterate through each item in cartData and move it to the Rented array
+        for (const item of cartData) {
+            // const productId = item.id;
+            const quantity = item.count;
+            const duration = item.duration;
+            const productId = item.id; // Convert productId to string
 
-//             // Set product as unavailable for rent
-//             // product.available = false;
-//         }
+            // Find the product by ID
+            const product = await Product.findOne({id : productId});
+            // console.log(product);
+            // Check if product exists
+            if (!product) {
+                return res.status(404).json({ success: false, errors: `Product with ID ${productId} not found` });
+            }
 
-//         // Save changes
-//         await user.save();
-//         await Promise.all(rentItems.map(item => Product.findByIdAndUpdate(item.productId, { $set: { available: false }, $inc: { unitsRented: item.quantity } })));
+            // Update unitsRented count for the product
+            product.unitsRented += quantity;
 
-//         res.json({ success: true, message: "Products rented successfully", user });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ success: false, errors: "Server Error" });
-//     }
-// });
+            // Add product renting information to the user's rented section
+            const rentingInfo = {
+                ProductId: productId,
+                Quantity: quantity,
+                RentDuration: duration
+            };
+            user.Rented.push(rentingInfo);
+        }
+
+        // Empty the cartData array after moving all items to Rented
+        user.cartData = [];
+        // Save the updated user and products
+        await Promise.all(cartData.map(item => Product.findOneAndUpdate({ id: item.id }, { $inc: { unitsRented: item.count } })));
+
+        console.log("done")
+        await user.save();
+
+        res.json({ success: true, message: "Products moved from cart to Rented successfully", user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, errors: "Server Error" });
+    }
+});
+
 
 
 router.post('/products/:productId/comment', async (req, res) => {
