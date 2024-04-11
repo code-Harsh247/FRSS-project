@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "../context/axiosConfig";
 import "./Css/Cart.css";
 import ShopBanner from "../components/ShopBanner/ShopBanner";
 import Navbar from "../components/Navbar/Navbar";
@@ -8,11 +9,11 @@ import CartItem from "../components/CartItem/CartItem";
 import { useCart } from "../context/CartContext";
 import { useProducts } from "../context/ProductContext";
 import { useAuth } from "../context/AuthContext";
-import CustomButton from "../components/Button/CustomButton";
 import { NavLink, useNavigate } from "react-router-dom";
+import CustomButton from "../components/Button/CustomButton";
 
 function Cart() {
-    const { cartData, loading, setLoading } = useCart();
+    const { cartData, loading, setLoading, userId } = useCart();
     const { isLoggedIn } = useAuth();
     const { products } = useProducts();
     const navigate = useNavigate();
@@ -33,7 +34,7 @@ function Cart() {
         navigate('/login');
     }
 
-    const cartProducts = [];
+    const cartProds = [];
 
     // Iterate over each item in cartData
     filteredCartData.forEach((cartItem) => {
@@ -46,12 +47,34 @@ function Cart() {
                 quantity: cartItem.count,
                 duration: cartItem.duration
              };
-            cartProducts.push(productWithQuantity);
+            cartProds.push(productWithQuantity);
         }
     });
 
+    const [cartProducts, setCartItems] = useState(cartProds);
+
+    const deleteProduct = async (productId)=>{
+        try{
+            const url = `users/delete-product/${userId}/${productId}`;
+            const response = await axios.delete(url);
+            console.log(response.data.message);
+        }
+        catch(error){
+            console.error("Error deleting product from cart:", error.response ? error.response.data : error);
+        }
+    }
+
     if (loading) {
         return <div>Loading...</div>;
+    }
+    const handleRemoveItem = (id) => {
+        deleteProduct(id);
+        setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+
+      };
+
+    const checkout=()=>{
+        console.log("Checkout")
     }
 
     return (
@@ -81,10 +104,14 @@ function Cart() {
                             q={item.quantity}
                             d={item.duration}
                             img={item.image[0]}
+                            deleteItem={() => handleRemoveItem(item.id)}
                         />
                     ))}
                 </div>
             )}
+            <div className="CheckOut-Btn">
+                <CustomButton Btnwidth="100%" btnText="Checkout" handleClick={checkout}/>
+            </div>
             <ServiceBanner />
             <Footer />
         </div>

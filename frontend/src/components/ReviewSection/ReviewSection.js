@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaStar } from "react-icons/fa";
 import CustomButtonSecondary from '../Button/CustomButttonSecondary';
 import './ReviewSection.css';
 import Comment from '../Review/Comment';
+import InputBox from '../InputBox/InputBox'
 
 
 function ReviewSection({ AvgRating }) {
 
+    const [showAddReview, setShowAddReview] = useState(false);
+    const [reviewComment, setReviewComment] = useState('');
+    const [reviewRating, setReviewRating] = useState('');
+
     const AddReview = () => {
         console.log("Review Added");
+        setShowAddReview(true);
     }
 
     return (
@@ -27,10 +33,21 @@ function ReviewSection({ AvgRating }) {
                         <p>4.5</p>
                     </div>
                     <p>Average Rating</p>
-                    
-                    <div>
-                        <CustomButtonSecondary btnText="Add your Review" handleClick={AddReview} Btnwidth="20vw" />
-                    </div>
+
+                    {!showAddReview && (
+                        <div>
+                            <CustomButtonSecondary btnText="Add your Review" handleClick={AddReview} Btnwidth="20vw" />
+                        </div>
+                    )}
+                    {showAddReview && (
+                        <InputBox
+                            type="text"
+                            onInputChange={setReviewComment}
+                            autocomplete="off"
+                            placeholder="Enter your comment" 
+                            />
+                    )}
+
                 </div>
             </div>
         </div>

@@ -3,17 +3,11 @@ import './CartItem.css';
 import closeicon from '../assets/Icons/close.png';
 import Counter from '../Counter/Counter2';
 
-function CartItem({ img, name, price, q, d }) {
+function CartItem({ img, name, price, q, d, deleteItem }) {
 
   const [quantity, setQuantity] = useState(q);
   const [duration, setDuration] = useState(d);
 
-
-
-
-  const deleteItem = () => {
-    console.log('delete item');
-  }
 
   return (
     <div className="cartitemcontainer">
