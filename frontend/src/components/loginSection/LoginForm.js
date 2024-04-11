@@ -54,7 +54,8 @@ const LoginForm = () => {
                 // throw new Error(response.data.errors)
             }
         } catch (error) {
-            alert(error);
+            // alert(error);
+            alert(`Error: ${error.response.data.errors}`)
 
         }
     }
