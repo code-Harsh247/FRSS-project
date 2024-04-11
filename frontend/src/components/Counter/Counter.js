@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Counter.css"
 
-function Counter() {
-  const [count, setCount] = useState(1);
+function Counter({ valueFunc, defaultValue }) {
+  const [count, setCount] = useState(defaultValue);
 
   const increment = () => {
-    setCount(count + 1);
+    setCount(prevCount => prevCount + 1);
   };
 
   const decrement = () => {
     if (count > 1) {
-      setCount(count - 1);
+      setCount(prevCount => prevCount - 1);
     }
   };
+
+  useEffect(() => {
+    valueFunc(count);
+  }, [count, valueFunc]);
 
   return (
     <div className="CounterControl">

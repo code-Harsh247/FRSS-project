@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import "./ProductDetails.css";
+import axios from "../../context/axiosConfig";
 import CustomButton from "../Button/CustomButton";
 import CustomButtonSecondary from '../Button/CustomButttonSecondary';
 import Counter from '../Counter/Counter';
+import {useCart} from '../../context/CartContext';
+import {useAuth} from '../../context/AuthContext';
+
 
 const ProdDetails = ({ item }) => {
     const [mainImg, setMainImg] = useState(null);
     const [loading, setLoading] = useState(true);
+    const {userId} = useCart();
+    const { isLoggedIn } = useAuth();
+    const [duration, setDuration] = useState(1);
+    const [quantity,setQuantity] = useState(1);
 
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
@@ -24,6 +32,40 @@ const ProdDetails = ({ item }) => {
     const handleImageLoad = () => {
         setLoading(false);
     };
+
+    const rentProduct = () => {
+        console.log("Renting Now");
+    }
+
+    const AddtoCart = async () => {
+        console.log("Adding to cart");
+        try {
+
+            if(!isLoggedIn){
+                alert("You are not logged in. Log in to Add Items to Cart");
+                throw new Error("User Not Logged In")
+            }
+
+            // Prepare data for the request
+            const data = {
+                productId: item.id, // Assuming the product ID is stored in item._id
+                quantity: quantity, // Assuming you have the quantity stored in state
+                duration: duration // Assuming you have the duration stored in state
+            };
+
+            // Make a POST request to add the product to the cart
+            const response = await axios.post(`/add-to-cart/${userId}`, data);
+
+            // Handle success response
+            console.log(response.data); // Assuming you want to log the response
+
+            // Optionally, you can perform additional actions such as showing a success message or updating state
+        } catch (error) {
+            // Handle error
+            console.error("Error adding product to cart:", error);
+            // Optionally, you can show an error message to the user
+        }
+    }
 
     return (
         <div className='Product-Details-Container'>
@@ -70,16 +112,16 @@ const ProdDetails = ({ item }) => {
                 </div>
                 <div className='QuantitySelect'>
                     <span>Quantity</span>
-                <Counter/>
+                    <Counter valueFunc={setQuantity} defaultValue={quantity}/>
                 </div>
                 <div className='DurationSelect'>
                     <span>Rent Duration (in months)</span>
-                <Counter/>
+                    <Counter valueFunc={setDuration} defaultValue={duration}/>
                 </div>
-                
+
                 <div className='Buttons'>
-                    <CustomButton btnText="Rent now" handleClick={() => console.log("Buying now")} Btnwidth="100%" />
-                    <CustomButtonSecondary btnText="Add to Cart" handleClick={() => console.log("Product Added to cart")} Btnwidth="100%" />
+                    <CustomButton btnText="Rent now" handleClick={rentProduct} Btnwidth="100%" />
+                    <CustomButtonSecondary btnText="Add to Cart" handleClick={AddtoCart} Btnwidth="100%" />
                 </div>
             </div>
         </div>

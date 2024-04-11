@@ -183,6 +183,7 @@ router.post('/add-to-cart/:userId', async (req, res) => {
         const userId = req.params.userId;
         const productId = req.body.productId;
         const quantity = req.body.quantity;
+        const rentDuration = req.body.duration;
 
         // Find the user by ID
         const user = await User.findById(userId);
@@ -196,12 +197,13 @@ router.post('/add-to-cart/:userId', async (req, res) => {
         const productIndex = user.cartData.findIndex(item => item.id === productId);
         if (productIndex !== -1) {
             // If the product already exists in the cart, update its quantity
-            user.cartData[productIndex].count += quantity;
+            user.cartData[productIndex].count = quantity;
         } else {
             // If the product doesn't exist in the cart, add it with product id and count
             const product = {
                 id: productId,
-                count: quantity
+                count: quantity,
+                duration: rentDuration 
             };
             // Push the product into the cartData array
             user.cartData.push(product);
