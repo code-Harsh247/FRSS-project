@@ -46,6 +46,8 @@ const ProdDetails = ({ item }) => {
                 throw new Error("User Not Logged In")
             }
 
+            console.log(`Item ID: ${item.id} Quantity: ${quantity} Duration: ${duration}`)
+
             // Prepare data for the request
             const data = {
                 productId: item.id, // Assuming the product ID is stored in item._id
@@ -54,15 +56,16 @@ const ProdDetails = ({ item }) => {
             };
 
             // Make a POST request to add the product to the cart
-            const response = await axios.post(`/add-to-cart/${userId}`, data);
+            const response = await axios.post(`users/add-to-cart/${userId}`, data);
 
             // Handle success response
             console.log(response.data); // Assuming you want to log the response
-
+            alert("Product added to cart successfully!");
             // Optionally, you can perform additional actions such as showing a success message or updating state
         } catch (error) {
             // Handle error
             console.error("Error adding product to cart:", error);
+            alert("Product added to cart successfully!");
             // Optionally, you can show an error message to the user
         }
     }

@@ -199,6 +199,7 @@ router.post('/add-to-cart/:userId', async (req, res) => {
         if (productIndex !== -1) {
             // If the product already exists in the cart, update its quantity
             user.cartData[productIndex].count = quantity;
+            user.cartData[productIndex].duration = rentDuration;
         } else {
             // If the product doesn't exist in the cart, add it with product id and count
             const product = {

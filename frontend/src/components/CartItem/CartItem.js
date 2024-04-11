@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import './CartItem.css';
 import closeicon from '../assets/Icons/close.png';
+import Counter from '../Counter/Counter2';
 
-function CartItem({img,name,price, q }) {
+function CartItem({ img, name, price, q, d }) {
+
+  const [quantity, setQuantity] = useState(q);
+  const [duration, setDuration] = useState(d);
 
 
-  const deleteItem=()=>{
+
+
+  const deleteItem = () => {
     console.log('delete item');
   }
 
@@ -21,18 +27,23 @@ function CartItem({img,name,price, q }) {
       <div className="cartiteminfo">
         <h3 className="cartitemname">{name}</h3>
         <span className="cartitemprice">
-          ₹{(price * q).toLocaleString()}/month
+          ₹{(price * quantity).toLocaleString()}/month
         </span>
         <div className="cartitemquantity">
-          <div className="quantity">
-            <div className="counter">
-              
+          <div className='QuantityAndDuration'>
+            <div className='duration'>
+              <span>Rent Duration (months)</span>
+              <Counter valueFunc={setDuration} defaultValue={duration} />
+            </div>
+            <div className="quantity">
+              <span>Quantity</span>
+              <Counter valueFunc={setQuantity} defaultValue={quantity} />
             </div>
           </div>
         </div>
       </div>
       <div className="closeicon" onClick={deleteItem}>
-        <img src={closeicon} alt="close"/>
+        <img src={closeicon} alt="close" />
       </div>
     </div>
   );

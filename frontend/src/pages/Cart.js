@@ -42,7 +42,10 @@ function Cart() {
 
         // If a matching product is found, add it to the cartProducts array
         if (product) {
-            const productWithQuantity = { ...product, quantity: cartItem.count };
+            const productWithQuantity = { ...product, 
+                quantity: cartItem.count,
+                duration: cartItem.duration
+             };
             cartProducts.push(productWithQuantity);
         }
     });
@@ -70,11 +73,13 @@ function Cart() {
             {isLoggedIn && cartProducts.length > 0 && (
                 <div className="CartItemsContainer">
                     {cartProducts.map((item) => (
+            
                         <CartItem
                             key={item.id}
                             price={item.price}
                             name={item.name}
                             q={item.quantity}
+                            d={item.duration}
                             img={item.image[0]}
                         />
                     ))}

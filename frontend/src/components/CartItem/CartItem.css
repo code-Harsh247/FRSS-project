@@ -45,16 +45,21 @@
   width: 20%;
   height: 20.25%;
 }
-.quantity {
+.QuantityAndDuration{
+  /* border: 1px solid red; */
+  width: 90%;
+  height: auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
-.counter {
-  margin: 0;
-  padding: 10px 0 0 0;
-  border: 1px solid red;
-  width: 150px;
+.duration,.quantity{
+  padding: 0 1rem;
+  border-left: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
   height: 50px;
 }
 .closeicon {
