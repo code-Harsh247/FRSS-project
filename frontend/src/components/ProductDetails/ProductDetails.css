@@ -72,9 +72,9 @@
 
 .Product-Details{
     width: 80%;
-    height: 85%;
+    height: auto;
+    /* border: 1px solid red; */
 }
-
 .Product-Name{
     width: 100%;
     height: auto;
@@ -91,5 +91,24 @@
     margin-bottom: 0.5rem;
     
 }
-
+.QuantitySelect,.DurationSelect{
+    display: flex;
+    width: 90%;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    justify-content: space-between;
+    align-items: center;
+}
+.QuantitySelect span,.DurationSelect span{
+    font-size: 16px;
+    color: black;
+}
+.DurationSelect{
+    display: flex;
+    width: 90%;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    justify-content: space-between;
+    align-items: center;
+}
 

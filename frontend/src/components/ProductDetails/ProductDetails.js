@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "./ProductDetails.css";
 import CustomButton from "../Button/CustomButton";
 import CustomButtonSecondary from '../Button/CustomButttonSecondary';
+import Counter from '../Counter/Counter';
 
 const ProdDetails = ({ item }) => {
     const [mainImg, setMainImg] = useState(null);
@@ -67,6 +68,15 @@ const ProdDetails = ({ item }) => {
                         <p>{item ? item.description : 'Loading...'}</p>
                     </div>
                 </div>
+                <div className='QuantitySelect'>
+                    <span>Quantity</span>
+                <Counter/>
+                </div>
+                <div className='DurationSelect'>
+                    <span>Rent Duration (in months)</span>
+                <Counter/>
+                </div>
+                
                 <div className='Buttons'>
                     <CustomButton btnText="Rent now" handleClick={() => console.log("Buying now")} Btnwidth="100%" />
                     <CustomButtonSecondary btnText="Add to Cart" handleClick={() => console.log("Product Added to cart")} Btnwidth="100%" />

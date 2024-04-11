@@ -1,0 +1,33 @@
+.CounterControl {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 12vw;
+    height: 8vh;
+  }
+  
+  .CounterControl button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    height: 100%;
+    width: 29%;
+    cursor: pointer;
+  }
+  
+  .CounterControl button:hover {
+    background-color: #eee;
+  }
+
+  .CounterControl button:active {
+    background-color: black;
+    color: white;
+    transform: scale(0.9);
+  }
+  
+  .counter span {
+    font-size: 20px;
+  }
+  
