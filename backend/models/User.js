@@ -26,15 +26,12 @@ const UserSchema = new mongoose.Schema({
         type: [{
             id: {
                 type: Number,
-                required:true,
             },
             count: {
                 type: Number,
-                required:true,
             },
             duration:{
                 type: Number,
-                required: true,
             }
         }],
         default: [] // Setting default value as empty array
@@ -50,7 +47,6 @@ const UserSchema = new mongoose.Schema({
             },
             count: {
                 type: Number,
-                required:true,
             },
         }],
         default: []
@@ -64,15 +60,12 @@ const UserSchema = new mongoose.Schema({
         type: [{
             ProductId: {
                 type: Number,
-                required: true
             },
             Quantity: {
                 type: Number,
-                required: true
             },
             RentDuration: {
                 type: Number,
-                required: true
             },
             CurrentlyRenting:{
                 type: Boolean,

@@ -7,6 +7,17 @@ const Product=require("../models/Product")
 
 router.post('/signup', async (req, res) => {
     try {
+        const password = req.body.password;
+
+        // Validate password: At least one number, one capital letter, and at least 8 characters
+        const passwordRegex = /^(?=.*\d)(?=.*[A-Z]).{8,}$/;
+        if (!passwordRegex.test(password)) {
+            return res.status(400).json({
+                success: false,
+                errors: "Password must contain at least one number, one capital letter, and be at least 8 characters long"
+            });
+        }
+
         let checkEmail = await User.findOne({ email: req.body.email });
         let checkPhone = await User.findOne({ phone: req.body.phone });
 
@@ -23,7 +34,7 @@ router.post('/signup', async (req, res) => {
             cart[i] = 0;
         }
 
-        const hashPassword = await bcrypt.hash(req.body.password, 10);
+        const hashPassword = await bcrypt.hash(password, 10);
 
         const user = new User({
             name: req.body.name,
@@ -33,6 +44,7 @@ router.post('/signup', async (req, res) => {
             cartData: cart,
         });
         await user.save();
+        // console.log(user);
 
         const data = {
             user: {
@@ -47,17 +59,20 @@ router.post('/signup', async (req, res) => {
     }
 });
 
+
 router.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
 
         if (!user) {
+            // console.log("user not found")
             return res.status(404).json({ success: false, errors: "No user with the given email found" });
         }
 
         const isPasswordValid = await bcrypt.compare(req.body.password, user.passwd);
 
         if (!isPasswordValid) {
+            // console.log("password")
             return res.status(401).json({ success: false, errors: "Wrong password" });
         }
 

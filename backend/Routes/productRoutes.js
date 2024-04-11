@@ -23,7 +23,7 @@ router.post('/addproduct', async (req, res) => {
         category: req.body.category,
         available: req.body.available,
     });
-    console.log(product);
+    // console.log(product);
     await product.save();
     console.log("Saved");
     res.json({
