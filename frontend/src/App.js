@@ -73,7 +73,7 @@ const App = () => {
             element: <AdminDashboard/>
         },
         {
-            path:"/checkout",
+            path:"/rent/:productID/:quantity/:duration",
             element: <CheckOut/>
         },
         {
@@ -87,7 +87,7 @@ const App = () => {
         {
             path:"/category/:categoryName",
             element: <ShopCategory/>
-        }
+        },
     ])
     return (
         <AuthProvider>
