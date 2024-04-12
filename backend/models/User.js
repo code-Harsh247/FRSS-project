@@ -72,10 +72,6 @@ const UserSchema = new mongoose.Schema({
                 type: Number,
                 
             },
-            CurrentlyRenting:{
-                type: Boolean,
-                
-            },
             Date: {
                 type: Date,
                 default: Date.now

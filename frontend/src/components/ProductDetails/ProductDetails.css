@@ -3,7 +3,7 @@
     height: auto;
     min-height: 90vh;
     /* border: 1px solid red; */
-    width: 100vw;
+    width:99vw;
 }
 .Buttons{
     width: 90%;
@@ -68,6 +68,12 @@
     align-items: flex-start;
     flex-direction: column;
     /* border: 1px solid red; */
+}
+
+
+.Product-Rating p{
+    font-size: 1.5rem;
+    color: rgb(255, 174, 0);
 }
 
 .Product-Details{

@@ -11,6 +11,16 @@
   cursor: pointer;
 }
 
+.title-rating{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.title-rating span{
+  font-size: 1.5rem;
+  color: rgb(255, 174, 0);
+}
+
 .ShopProductCard:active{
   transform:scale(0.98);
   box-shadow: none;
