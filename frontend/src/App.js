@@ -23,7 +23,6 @@ import OrderHistory from "./pages/OrderHistory";
 import { AdminAuthProvider} from "./context/AdminAuthContext";
 
 
-
 const App = () => {
 
     useEffect(() => {
@@ -83,6 +82,10 @@ const App = () => {
         {
             path:"/cart",
             element: <Cart/>
+        },
+        {
+            path:"/admin/users",
+            element: <Users/>
         },
         {
             path:"/orders",

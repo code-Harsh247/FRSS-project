@@ -36,5 +36,15 @@
     margin-top: 15vh;
     padding-left: 10%;
     width:50vw;
-    border: 1px solid red;
+    
+}
+.Total .GrandTotal{
+    font-size: 30px;
+}
+.Total {
+    border-top:1px solid #ddd;
+    width:100%;
+}
+.Total .Disclaimer{
+    font-size:10px;
 }

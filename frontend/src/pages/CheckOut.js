@@ -74,7 +74,15 @@ const CheckOut = () => {
   const handlePhoneChange = (phone) => {
     setPhoneInput(phone);
   }
+  const [total, setTotal] = useState(0);
 
+  useEffect(() => {
+    // Calculate total when product, quantity, or duration changes
+    if (product && quantity && duration) {
+      const totalPrice = product.price * quantity * duration;
+      setTotal(totalPrice);
+    }
+  }, [product, quantity, duration]);
 
 
 
@@ -128,21 +136,26 @@ const CheckOut = () => {
 
         </div>
         <div className="RightPart">
-          {loading ?
-            (<p>Loading ... </p>)
-            :
-            error ? (
-              <p>Error: {error}</p>
-            ) : (
-              <>
-                <CheckoutCard name={product.name} quantity={quantity} rentDuration={duration} imgUrl={product.image[0]}/>
-              </>
-            )
-             }
-             <div className="Total">
-              
-             </div>
-        </div>
+      {loading ? (
+        <p>Loading ... </p>
+      ) : error ? (
+        <p>Error: {error}</p>
+      ) : (
+        <>
+          <CheckoutCard
+            price={product.price}
+            name={product.name}
+            quantity={quantity}
+            rentDuration={duration}
+            imgUrl={product.image[0]}
+          />
+        </>
+      )}
+      <div className="Total">
+        <p className="Disclaimer">**Total shown here is equal to Price x Quantity x Rent Duration for each product**</p>
+        <span className="GrandTotal">Total: ₹{total.toLocaleString()}</span>
+      </div>
+    </div>
 
 
       </div>
