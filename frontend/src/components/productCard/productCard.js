@@ -12,7 +12,11 @@ function ProductCard({ id,imageUrl, productName, price }) {
     <div className="ShopProductCard"  onClick={handleClick}>
       <img src={imageUrl} alt={productName} />
       <div className="card-content">
+        <div className='title-rating'>
         <h3 className="card-title">{productName}</h3>
+        
+        </div>
+        
         <p className="card-text">
           Rs {price}/month
         </p>

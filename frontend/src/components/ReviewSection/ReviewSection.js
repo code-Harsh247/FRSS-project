@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from "../../context/axiosConfig"
 import { FaStar } from "react-icons/fa";
 import CustomButtonSecondary from '../Button/CustomButttonSecondary';
+import CustomButton from '../Button/CustomButton';
 import './ReviewSection.css';
 import Comment from '../Review/Comment';
 import StarRating from '../StarComponent/StarRating';
@@ -30,6 +31,12 @@ function ReviewSection({ product }) {
         }
     }, [product]);
 
+    const CancelReview = () => {
+        setShowAddReview(false);
+        setReviewComment(''); // Reset comment
+        setReviewTitle('');
+        setReviewRating('');
+    }
 
     const submitReview = async () => {
 
@@ -117,7 +124,8 @@ function ReviewSection({ product }) {
                                 value={reviewComment}
                                 onChange={(e) => setReviewComment(e.target.value)}
                             />
-                            <CustomButtonSecondary btnText="Submit Review" handleClick={submitReview} Btnwidth="100%" />
+                            <CustomButton btnText="Submit Review" handleClick={submitReview} Btnwidth="100%" />
+                            <CustomButtonSecondary btnText="Cancel" handleClick={CancelReview} Btnwidth="100%" />
                         </div>
                     )}
 

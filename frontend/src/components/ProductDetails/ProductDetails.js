@@ -108,6 +108,9 @@ const ProdDetails = ({ item }) => {
                     </div>
                     <div className='Product-Price'>
                         <p>{item ? `Rs ${item.price} / month` : 'Loading...'}</p>
+                        <div className='Product-Rating'>
+                        <p>{item ? `★ ${item.ratings}` : 'Loading...'}</p>
+                    </div>
                     </div>
                     <div className='Product-Desc'>
                         <p>{item ? item.description : 'Loading...'}</p>

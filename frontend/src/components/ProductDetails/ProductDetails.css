@@ -70,6 +70,12 @@
     /* border: 1px solid red; */
 }
 
+
+.Product-Rating p{
+    font-size: 1.5rem;
+    color: rgb(255, 174, 0);
+}
+
 .Product-Details{
     width: 80%;
     height: auto;
