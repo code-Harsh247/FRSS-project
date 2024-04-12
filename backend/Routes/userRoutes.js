@@ -305,7 +305,6 @@ router.post('/rent/:userId', async (req, res) => {
             RentDuration:duration,
         }
         user.Rented.push(product);
-        const findproduct = await Product.findOne({id : productId});
         findproduct.unitsRented+=quantity;
         findproduct.available-=quantity;
         await user.save();
