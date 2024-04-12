@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Product=require("../models/Product")
 
+
 router.post('/signup', async (req, res) => {
     try {
         let checkEmail = await User.findOne({ email: req.body.email });
