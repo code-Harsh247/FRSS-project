@@ -20,7 +20,7 @@ import AddProductsPage from "./pages/AddProductsPage";
 import AddUsers from "./pages/AddUsers";
 import Alerts from "./pages/Alerts";
 import OrderHistory from "./pages/OrderHistory";
-import { AdminAuthProvider, useAdminAuth } from "./context/AdminAuthContext";
+import { AdminAuthProvider} from "./context/AdminAuthContext";
 
 
 
