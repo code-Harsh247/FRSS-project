@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const productRoutes = require('./Routes/productRoutes');
 const userRoutes = require('./Routes/userRoutes');
 const categoriesRoutes = require('./Routes/CategoriesRoutes');
+const adminRoutes = require('./Routes/AdminRoutes');
 const multer = require('multer');
 
 
@@ -25,7 +26,7 @@ app.get('/', (req, res) => {
 app.use('/products', productRoutes);
 app.use('/users', userRoutes);
 app.use('/categories',categoriesRoutes);
-app.use('/admin',)
+app.use('/admin',adminRoutes);
 
 const path = require('path');
 
