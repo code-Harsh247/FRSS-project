@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 app.use('/products', productRoutes);
 app.use('/users', userRoutes);
 app.use('/categories',categoriesRoutes);
-
+app.use('/admin',)
 
 const path = require('path');
 

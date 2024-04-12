@@ -305,7 +305,9 @@ router.post('/rent/:userId', async (req, res) => {
             RentDuration:duration,
         }
         user.Rented.push(product);
-
+        const findproduct = await Product.findOne({id : productId});
+        findproduct.unitsRented+=quantity;
+        findproduct.available-=quantity;
         await user.save();
 
         res.json({ success: true, message: "Product rented successfully", user });
@@ -351,7 +353,7 @@ router.post('/move-to-rented/:userId', async (req, res) => {
 
             // Update unitsRented count for the product
             product.unitsRented += quantity;
-
+            product.available-=quantity;
             // Add product renting information to the user's rented section
             const rentingInfo = {
                 ProductId: productId,
