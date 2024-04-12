@@ -1,0 +1,42 @@
+.rental-label {
+    width: 30vw;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  .rental-label-details-wrapper{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .rental-label__name {
+    flex: 1;
+    font-size: 20px;
+    margin-left: 1rem;
+    font-weight: bold;
+  }
+  
+  .rental-label-img{
+    height: 100px;
+    width: 100px;
+  }
+
+  .rental-label-img img{
+    height: 100%;
+    width: 100%;
+  }
+
+  .rental-label__details {
+    margin-left: 1rem;
+    width: 20vw;
+  }
+
+
+  .rental-label__details div{
+    display: flex;
+    justify-content: space-between;
+  }
+  

@@ -74,7 +74,7 @@ const App = () => {
             element: <AdminDashboard/>
         },
         {
-            path:"/checkout",
+            path:"/rent/:productID/:quantity/:duration",
             element: <CheckOut/>
         },
         {
