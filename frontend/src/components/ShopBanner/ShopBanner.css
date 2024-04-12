@@ -14,8 +14,8 @@
 }
 .shopBannerContainer img{
     object-fit: contain;
-    opacity: 50%;
-    filter: blur(2px);
+    opacity: 40%;
+    filter: blur(1px);
     width: 100vw; 
     height: auto;  
     z-index: -1;
