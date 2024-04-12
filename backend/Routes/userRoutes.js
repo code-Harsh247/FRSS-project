@@ -305,7 +305,9 @@ router.post('/rent/:userId', async (req, res) => {
             RentDuration:duration,
         }
         user.Rented.push(product);
-
+        const findproduct = await Product.findOne({id : productId});
+        findproduct.unitsRented+=quantity;
+        findproduct.available-=quantity;
         await user.save();
 
         res.json({ success: true, message: "Product rented successfully", user });
@@ -351,7 +353,7 @@ router.post('/move-to-rented/:userId', async (req, res) => {
 
             // Update unitsRented count for the product
             product.unitsRented += quantity;
-
+            product.available-=quantity;
             // Add product renting information to the user's rented section
             const rentingInfo = {
                 ProductId: productId,
@@ -415,6 +417,29 @@ router.post('/products/:productId/comment', async (req, res) => {
     }
 });
 
+router.get('/rented-products/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        // Find the user by ID
+        const user = await User.findById(userId);
+
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ success: false, errors: "User not found" });
+        }
+
+        // Get the list of rented products
+        const rentedProducts = user.Rented;
+
+        // Return the list of rented products
+        res.status(200).json({ success: true, rentedProducts });
+    } catch (error) {
+        res.status(500).json({ success: false, errors: "Server Error" });
+    }
+});
+
+
 router.get('/products/:productId/comments', async (req, res) => {
     try {
         const productId = req.params.productId;
@@ -432,5 +457,8 @@ router.get('/products/:productId/comments', async (req, res) => {
         res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
 });
+
+module.exports = router;
+
 
 module.exports = router;
