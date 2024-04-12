@@ -29,6 +29,9 @@ const ProductSchema = new mongoose.Schema({
             min: 0, // 0 is the lowest rating
             max: 5, // 5 is the highest rating
         },
+        commentTitle:{
+            type: String
+        },
         comment: {
             type: String,
             // required: true,

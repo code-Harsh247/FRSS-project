@@ -12,6 +12,7 @@ const ProductDetailsPage = () => {
   const [product, setProduct] = useState(null);
 
 
+
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
@@ -30,7 +31,7 @@ const ProductDetailsPage = () => {
     <div>
       <Navbar />
       <ProdDetails item={product} />
-      <ReviewSection/>
+      <ReviewSection product={product}/>
       <ServiceBanner />
       <Footer />
     </div>
