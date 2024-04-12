@@ -20,7 +20,7 @@ import AddProductsPage from "./pages/AddProductsPage";
 import AddUsers from "./pages/AddUsers";
 import Alerts from "./pages/Alerts";
 import OrderHistory from "./pages/OrderHistory";
-import Users from "./pages/Users";
+import { AdminAuthProvider} from "./context/AdminAuthContext";
 
 
 const App = () => {
@@ -31,6 +31,7 @@ const App = () => {
             localStorage.clear(); // Clear local storage if no token is found
         }
     }, []);
+
     
 
     const router = createBrowserRouter([
@@ -47,19 +48,19 @@ const App = () => {
             element:<Shop/>
         },
         {
-            path:"/products",
+            path:"admin/products",
             element:<Products/>
         },
         {
-            path:"/alerts",
+            path:"admin/alerts",
             element:<Alerts/>
         },
         {
-            path:"/addproducts",
+            path:"admin/addproducts",
             element:<AddProductsPage/>
         },
         {
-            path:"/addusers",
+            path:"admin/addusers",
             element:<AddUsers/>
         },
         {
@@ -71,7 +72,7 @@ const App = () => {
             element: <AdminLoginInPage/>
         },
         {
-            path:"/admindashboard",
+            path:"admin/dashboard",
             element: <AdminDashboard/>
         },
         {
@@ -99,19 +100,26 @@ const App = () => {
             element: <ShopCategory/>
         },
     ])
+
+
     return (
+        <AdminAuthProvider>
         <AuthProvider>
         <CartProvider>
         <CategoryProvider>
         <ProductProvider>
         <div>
-            <RouterProvider router={router}/>   
+            <RouterProvider router={router}/>
         </div>
         </ProductProvider>
         </CategoryProvider>
         </CartProvider>
         </AuthProvider>
+        </AdminAuthProvider>
     );
+
+
 };
+
 
 export default App;

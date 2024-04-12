@@ -9,36 +9,32 @@ const AdminSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    isAdmin:{
+        type:Boolean,
+        default:true,
+    },
     Order:{
         type:[{
             image:{
                 type: String,
-                required:true,
-                validate: [ImgarrayLimit, '{PATH} exceeds the limit of 4'],
             },
             ProductID:{
                 type: Number,
-                required: true
             },
             Username:{
                 type:String,
-                required: true
             },
             UserID:{
                 type: String,
-                required: true
             },
             Duration:{
                 type: Number,
-                required: true
             },
             Price:{
                 type: Number,
-                required: true
             },
             Quantity:{
                 type: Number,
-                required: true
             }
         }],
         default:[]
@@ -46,8 +42,6 @@ const AdminSchema = new mongoose.Schema({
     Notification:[{
         image:{
             type: String,
-            required: true,
-            validate: [ImgarrayLimit, '{PATH} exceeds the limit of 4'],
         },
         ProductID:{
             type: Number,
@@ -63,5 +57,6 @@ const AdminSchema = new mongoose.Schema({
 
 
 
-const Admin = mongoose.model("User", AdminSchema);
+
+const Admin = mongoose.model("Admin", AdminSchema);
 module.exports = Admin;
