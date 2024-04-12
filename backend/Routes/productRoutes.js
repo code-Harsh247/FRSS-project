@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
 require('dotenv').config()
-const multer=require('multer')
 router.post('/addproduct', async (req, res) => {
     let products = await Product.find({});
     let id;
@@ -124,5 +123,33 @@ router.put('/updateproduct/:id', async (req, res) => {
         res.status(500).json({ success: false, message: "Internal server error" });
     }
 });
+
+router.post('/addcomment/:productId', async (req, res) => {
+    try {
+        const productId = req.params.productId;
+        const { rating, commentTitle, comment } = req.body;
+
+        // Find the product by ID
+        const product = await Product.findOne({ id: productId });
+
+        if (!product) {
+            return res.status(404).json({ success: false, message: "Product not found" });
+        }
+
+        // Add the new comment to the comments array
+        product.comments.push({ rating,commentTitle,comment });
+
+        // Save the updated product document
+        await product.save();
+
+        res.json({ success: true, message: "Comment added successfully", product });
+    } catch (error) {
+        console.error("Error adding comment:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+});
+
+
+
 
 module.exports = router;

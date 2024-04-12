@@ -5,6 +5,7 @@ import "./ProductContainer.css"
 
 const ProductContainer = () => {
     const { products } = useProducts();
+
     return (
         <div className='Product-Card-Container'>
             {products.map((item) => (
@@ -14,6 +15,7 @@ const ProductContainer = () => {
                     productName={item.name}
                     price={item.price}
                     imageUrl={item.image}
+
                 />
             ))}
         </div>

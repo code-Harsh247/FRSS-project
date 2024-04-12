@@ -75,6 +75,9 @@ const Navbar = () => {
     const openCartPage=()=>{
         navigate('/cart');
     }
+    const openOrders=()=>{
+        navigate('/orders');
+    }
     
     
 
@@ -114,6 +117,7 @@ const Navbar = () => {
                     ):(
                         <button onClick={handleLogIn}>Log In</button>
                     )}
+                    <button onClick={openOrders}>Orders</button>
                 </div>
             )}
         </>

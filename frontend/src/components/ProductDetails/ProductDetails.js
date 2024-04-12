@@ -6,6 +6,7 @@ import CustomButtonSecondary from '../Button/CustomButttonSecondary';
 import Counter from '../Counter/Counter';
 import {useCart} from '../../context/CartContext';
 import {useAuth} from '../../context/AuthContext';
+import {useNavigate} from 'react-router-dom';
 
 
 const ProdDetails = ({ item }) => {
@@ -17,6 +18,8 @@ const ProdDetails = ({ item }) => {
     const [quantity,setQuantity] = useState(1);
 
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (item && item.image && item.image.length > 0) {
@@ -35,6 +38,7 @@ const ProdDetails = ({ item }) => {
 
     const rentProduct = () => {
         console.log("Renting Now");
+        navigate(`/rent/${item._id}/${quantity}/${duration}`);
     }
 
     const AddtoCart = async () => {
@@ -108,6 +112,9 @@ const ProdDetails = ({ item }) => {
                     </div>
                     <div className='Product-Price'>
                         <p>{item ? `Rs ${item.price} / month` : 'Loading...'}</p>
+                        <div className='Product-Rating'>
+                        <p>{item ? `★ ${item.ratings.toFixed(1)}` : 'Loading...'}</p>
+                    </div>
                     </div>
                     <div className='Product-Desc'>
                         <p>{item ? item.description : 'Loading...'}</p>

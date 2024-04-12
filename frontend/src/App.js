@@ -19,6 +19,7 @@ import Products from "./pages/Products";
 import AddProductsPage from "./pages/AddProductsPage";
 import AddUsers from "./pages/AddUsers";
 import Alerts from "./pages/Alerts";
+import OrderHistory from "./pages/OrderHistory";
 
 
 const App = () => {
@@ -73,12 +74,16 @@ const App = () => {
             element: <AdminDashboard/>
         },
         {
-            path:"/checkout",
+            path:"/rent/:productID/:quantity/:duration",
             element: <CheckOut/>
         },
         {
             path:"/cart",
             element: <Cart/>
+        },
+        {
+            path:"/orders",
+            element: <OrderHistory/>
         },
         {
             path:"/product/:productID",
@@ -87,7 +92,7 @@ const App = () => {
         {
             path:"/category/:categoryName",
             element: <ShopCategory/>
-        }
+        },
     ])
     return (
         <AuthProvider>

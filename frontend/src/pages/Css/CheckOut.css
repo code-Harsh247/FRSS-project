@@ -33,6 +33,8 @@
     font-weight: bold;
 }
 .RightPart{
+    margin-top: 15vh;
     padding-left: 10%;
     width:50vw;
+    border: 1px solid red;
 }
