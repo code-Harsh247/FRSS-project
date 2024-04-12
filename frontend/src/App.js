@@ -20,6 +20,7 @@ import AddProductsPage from "./pages/AddProductsPage";
 import AddUsers from "./pages/AddUsers";
 import Alerts from "./pages/Alerts";
 import OrderHistory from "./pages/OrderHistory";
+import Users from "./pages/Users";
 
 
 const App = () => {
@@ -80,6 +81,10 @@ const App = () => {
         {
             path:"/cart",
             element: <Cart/>
+        },
+        {
+            path:"/admin/users",
+            element: <Users/>
         },
         {
             path:"/orders",

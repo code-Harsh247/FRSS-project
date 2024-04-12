@@ -54,7 +54,7 @@ const AdminNavbar = () => {
                 </div>
                 <div className="links">
                     <NavLink to="/admindashboard" >Dashboard</NavLink>
-                    <NavLink to="/users">Users</NavLink>
+                    <NavLink to="/admin/users">Users</NavLink>
                     <NavLink to="/products">Products</NavLink>
                     <NavLink to="/alerts">Alerts</NavLink>
                    
