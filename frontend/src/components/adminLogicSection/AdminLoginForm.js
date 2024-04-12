@@ -45,7 +45,7 @@ const AdminLoginForm = () => {
                 const token = response.data.token;
                 localStorage.setItem('AdminToken', token); // Store token in local storage
                 adminLogin(); // <-- Corrected function call
-                navigate('admin/dashboard'); // Redirect to dashboard or any other page
+                navigate('/admin/dashboard'); // Redirect to dashboard or any other page
             } 
         } catch (error) {
             alert(`Error: ${error.response.data.errors}`)

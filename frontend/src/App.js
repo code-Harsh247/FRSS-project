@@ -20,6 +20,7 @@ import AddProductsPage from "./pages/AddProductsPage";
 import AddUsers from "./pages/AddUsers";
 import Alerts from "./pages/Alerts";
 import OrderHistory from "./pages/OrderHistory";
+import Users from "./pages/Users";
 import { AdminAuthProvider} from "./context/AdminAuthContext";
 
 
@@ -72,7 +73,7 @@ const App = () => {
             element: <AdminLoginInPage/>
         },
         {
-            path:"admin/dashboard",
+            path:"/admin/dashboard",
             element: <AdminDashboard/>
         },
         {
