@@ -4,7 +4,7 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Product=require("../models/Product")
-
+const Admin=require("../models/Admin")
 router.post('/signup', async (req, res) => {
     try {
         let checkEmail = await User.findOne({ email: req.body.email });
@@ -296,7 +296,10 @@ router.post('/rent/:userId', async (req, res) => {
         if (!user) {
             return res.status(404).json({ success: false, errors: "User not found" });
         }
-
+        const findproduct = await Product.findOne({id : productId});
+        if(findproduct.stock<quantity){
+            return res.status(404).json({success:false, errors: "Quantity not available"});
+        }
         // Check if the product already exists in the cart
         // const productIndex = user.cartData.findIndex(item => item.id === productId);
         const product={
@@ -306,9 +309,27 @@ router.post('/rent/:userId', async (req, res) => {
         }
         user.Rented.push(product);
         findproduct.unitsRented+=quantity;
-        findproduct.available-=quantity;
+        findproduct.stock-=quantity;
         await user.save();
-
+        const admin=await Admin.findOne();
+        const newOrder={
+            image:findproduct.image[0],
+            ProductID:findproduct.id,
+            Username:user.name,
+            UserID:user.email,
+            Duration:duration,
+            Price: findproduct.price,
+            Quantity: quantity
+        }
+        if(findproduct.stock<20){
+            findproduct.available=false;
+            const newNotification={
+                image:findproduct.image[0],
+                ProductID: findproduct.id,
+                ProductName: findproduct.name,
+                Quantity: findproduct.stock
+            }
+        }
         res.json({ success: true, message: "Product rented successfully", user });
     } catch (error) {
         res.status(500).json({ success: false, errors: "Server Error" });
