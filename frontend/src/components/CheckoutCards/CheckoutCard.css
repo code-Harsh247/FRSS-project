@@ -38,5 +38,9 @@
   .rental-label__details div{
     display: flex;
     justify-content: space-between;
+
+  }
+  .Quantity div, .Price div, .Duration div{
+    width:50%;
   }
   

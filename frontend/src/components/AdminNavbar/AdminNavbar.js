@@ -53,6 +53,8 @@ const AdminNavbar = () => {
                     <img src={logo} alt="Company Logo" className="navbar-logo" />
                 </div>
                 <div className="links">
+
+
                     <NavLink to="admin/dashboard" >Dashboard</NavLink>
                     <NavLink to="admin/users">Users</NavLink>
                     <NavLink to="admin/products">Products</NavLink>

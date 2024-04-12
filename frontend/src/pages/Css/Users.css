@@ -1,0 +1,35 @@
+.UsersList {
+  display: flex;
+  flex-direction: row;
+}
+
+.UsersContainer button {
+  padding: 10px 20px;
+
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.UsersContainer button:hover {
+  background-color: black;
+  color: white;
+}
+.AddNewUsers {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  align-items: center;
+}
+.UsersListTitle{
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    align-items: center;
+    border-top:1px  solid black;
+    border-bottom: 1px solid black; 
+}
+.UsersListTitle span{
+    font-size: 40px;
+}
