@@ -20,7 +20,7 @@ router.post('/addproduct', async (req, res) => {
         cost: req.body.cost,
         price: req.body.price,
         category: req.body.category,
-        available: req.body.available,
+        stock:req.body.stock
     });
     console.log(product);
     await product.save();
