@@ -288,7 +288,7 @@ router.post('/rent/:userId', async (req, res) => {
         const userId = req.params.userId;
         const productId = req.body.productId;
         const quantity = req.body.quantity;
-        const duration=req.body.duration;
+        const duration = req.body.duration;
 
         // Find the user by ID
         const user = await User.findById(userId);
@@ -297,45 +297,61 @@ router.post('/rent/:userId', async (req, res) => {
         if (!user) {
             return res.status(404).json({ success: false, errors: "User not found" });
         }
-        const findproduct = await Product.findOne({id : productId});
-        if(findproduct.stock<quantity){
-            return res.status(404).json({success:false, errors: "Quantity not available"});
+
+        // Find the product by ID
+        const product = await Product.findOne({ id: productId });
+
+        // Check if product exists
+        if (!product) {
+            return res.status(404).json({ success: false, errors: "Product not found" });
         }
-        // Check if the product already exists in the cart
-        // const productIndex = user.cartData.findIndex(item => item.id === productId);
-        const product={
-            ProductId:productId,
-            Quantity:quantity,
-            RentDuration:duration,
+
+        // Check if requested quantity is available in stock
+        if (product.stock < quantity) {
+            return res.status(400).json({ success: false, errors: "Requested quantity not available in stock" });
         }
-        user.Rented.push(product);
-        findproduct.unitsRented+=quantity;
-        findproduct.stock-=quantity;
+
+        // Update user's rented items
+        const rentedProduct = {
+            ProductId: productId,
+            Quantity: quantity,
+            RentDuration: duration,
+        };
+        user.Rented.push(rentedProduct);
+
+        // Update product's stock and units rented
+        product.unitsRented += quantity;
+        product.stock -= quantity;
+
+        // Save changes to user and product
         await user.save();
-        const admin=await Admin.findOne();
-        const newOrder={
-            image:findproduct.image[0],
-            ProductID:findproduct.id,
-            Username:user.name,
-            UserID:user.email,
-            Duration:duration,
-            Price: findproduct.price,
-            Quantity: quantity
-        }
-        if(findproduct.stock<20){
-            findproduct.available=false;
-            const newNotification={
-                image:findproduct.image[0],
-                ProductID: findproduct.id,
-                ProductName: findproduct.name,
-                Quantity: findproduct.stock
+        await product.save();
+
+        // Check if stock falls below threshold and update availability
+        if (product.stock < 20) {
+            product.available = false;
+
+            // Notify admin about low stock
+            const admin = await Admin.findOne();
+            if (admin) {
+                const newNotification = {
+                    image: product.image[0],
+                    ProductID: product.id,
+                    ProductName: product.name,
+                    Quantity: product.stock
+                };
+                admin.Notification.push(newNotification);
+                await admin.save();
             }
         }
+
         res.json({ success: true, message: "Product rented successfully", user });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ success: false, errors: "Server Error" });
     }
 });
+
 
 router.post('/move-to-rented/:userId', async (req, res) => {
     try {
