@@ -95,6 +95,16 @@ const AddProducts = () => {
                     onChange={handleProductPriceChange}
                     required
                 />
+                <div className="OriginalCost">
+                    <span>Original Cost</span>
+                </div>
+                <input
+                    type="number"
+                    id="short"
+                    value={originalCost}
+                    onChange={handleOriginalCostChange}
+                    required
+                />
 
                 <div className="ProdctDescription">
                     <span>Product Description</span>
