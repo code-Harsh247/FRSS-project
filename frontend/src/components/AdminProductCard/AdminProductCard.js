@@ -2,14 +2,16 @@ import React from 'react'
 import "./AdminProductCard.css"
 import CustomButton from '../Button/CustomButton'
 import CustomButtonSecondary from '../Button/CustomButttonSecondary';
+import { useNavigate } from 'react-router-dom';
 
 const AdminProductCard = ({ img, name, id, price,cost,stock }) => {
 
+    const navigate = useNavigate();
     const handleProdEdit=()=>{
-
+        navigate(`/admin/editProduct/${id}`)
     }
     const handleDeleteProduct=()=>{
-        
+
     }
 
     return (
