@@ -1,6 +1,12 @@
 .UsersList {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+}
+.UsersContainer{
+  width:100vw;
 }
 
 .UsersContainer button {

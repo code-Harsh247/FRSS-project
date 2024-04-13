@@ -22,6 +22,8 @@ import Alerts from "./pages/Alerts";
 import OrderHistory from "./pages/OrderHistory";
 import Users from "./pages/Users";
 import { AdminAuthProvider} from "./context/AdminAuthContext";
+import { UserProvider } from "./context/UserContext";
+import EditProduct from "./pages/EditProduct";
 
 
 const App = () => {
@@ -100,6 +102,10 @@ const App = () => {
             path:"/category/:categoryName",
             element: <ShopCategory/>
         },
+        {
+            path:"/admin/editProduct/:prodID",
+            element: <EditProduct/>
+        }
     ])
 
 
@@ -108,11 +114,13 @@ const App = () => {
         <AuthProvider>
         <CartProvider>
         <CategoryProvider>
+        <UserProvider>
         <ProductProvider>
         <div>
             <RouterProvider router={router}/>
         </div>
         </ProductProvider>
+        </UserProvider>
         </CategoryProvider>
         </CartProvider>
         </AuthProvider>
