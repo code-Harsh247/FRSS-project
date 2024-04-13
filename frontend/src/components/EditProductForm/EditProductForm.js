@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../context/axiosConfig";
-import "./EditProductForm.css"
+import "../AddProducts/AddProducts.css"
 
 const EditProduct = ({ productId }) => {
     const [productName, setProductName] = useState("");
@@ -12,22 +12,23 @@ const EditProduct = ({ productId }) => {
     const [originalCost, setOriginalCost] = useState("");
     const [id, setID] = useState(null);
     const [imagePreviews, setImagePreviews] = useState(Array.from({ length: 4 }, () => null)); // Add this line
+    
 
     useEffect(() => {
         axios.get(`/products/${productId}`)
             .then(response => {
-                
+
                 const productData = response.data;
-                console.log(productData);
                 setProductName(productData.name);
                 setProductPrice(productData.price);
-                setProductQuantity(productData.quantity);
+                setProductQuantity(productData.stock);
                 setProductDescription(productData.description);
                 setProductCategory(productData.category);
                 setOriginalCost(productData.cost);
                 setID(productData.id);
                 // Assuming productImages and imagePreviews are stored in productData
                 setProductImages(productData.image);
+                setImagePreviews(productData.image);
             })
             .catch(error => {
                 console.error("Error fetching product data:", error);
@@ -35,6 +36,7 @@ const EditProduct = ({ productId }) => {
     }, [productId]);
 
     // console.log(productImages);
+    // setImagePreviews(productImages);
 
     const handleProductNameChange = (e) => {
         setProductName(e.target.value);
@@ -60,6 +62,7 @@ const EditProduct = ({ productId }) => {
         setOriginalCost(e.target.value);
     };
 
+
     const handleImageChange = (e, index) => {
         const imageFile = e.target.files[0];
 
@@ -80,106 +83,165 @@ const EditProduct = ({ productId }) => {
         reader.readAsDataURL(imageFile);
     };
 
+    const handleEditProduct = async () => {
+        
+        let imageUrls = [...productImages];
+        
+        for (let i = 0; i < productImages.length; i++) {
+            const image = productImages[i];
+            
+            if (image && typeof image === 'object') { // Check if it's a File object, which indicates a new image.
+                try {
+                    const formData = new FormData();
+                    formData.append('product', image);
+    
+                    const response = await axios.post('/upload', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
+    
+                    const imageUrl = response.data.image_url;
+                    imageUrls[i] = imageUrl; // Replace or add new image URL at the correct index.
+                } catch (error) {
+                    console.error("Error uploading image:", error.response ? error.response.data : error);
+                }
+            }
+        }
+    
+        console.log("All images handled. Image URLs:", imageUrls);
+        
+        try {
+            console.log(id);
+            const response = await axios.put(`/products/updateproduct/${id}`, {
+                name: productName,
+                price: productPrice,
+                description: productDescription,
+                image: imageUrls,
+                cost: originalCost,
+                category: productCategory,
+                stock: productQuantity
+            });
+            
+            alert("Product updated!");
+            // Optionally, redirect to product details page or list
+        } catch (error) {
+            console.error("Error updating product:", error.response ? error.response.data : error);
+        }
+    }
+    
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Send updated product details to the backend
-        const updatedProduct = {
-            name: productName,
-            price: productPrice,
-            quantity: productQuantity,
-            description: productDescription,
-            category: productCategory,
-            originalCost: originalCost,
-            images: productImages,
-        };
-        axios.put(`/products/updateproduct/${id}`, updatedProduct)
-            .then(response => {
-                console.log("Product updated successfully:", response.data);
-                // Optionally, redirect to product details page or show a success message
-            })
-            .catch(error => {
-                console.error("Error updating product:", error);
-            });
+    
     };
 
     return (
-        <div className="EditProductContainer">
-            <h2>Edit Product</h2>
+        <div className="AddProductContainer">
+            <h2>Edit Product Details</h2>
             <form onSubmit={handleSubmit}>
-                <div className="ProductName">
-                    <label>Product Name</label>
+                <div className="ProdctField">
+                    <div>
+                        <span>Product Name :</span>
+                    </div>
                     <input
                         type="text"
+                        id="short"
+                        width={10}
                         value={productName}
                         onChange={handleProductNameChange}
                         required
                     />
                 </div>
-                <div className="ProductPrice">
-                    <label>Product Price</label>
+                <div className="ProdctField">
+                    <div className="ProductPrice">
+                        <span>Rent per month:</span>
+                    </div>
                     <input
                         type="number"
+                        id="short"
                         value={productPrice}
                         onChange={handleProductPriceChange}
                         required
                     />
                 </div>
-                <div className="OriginalCost">
-                    <label>Original Cost</label>
+                <div className="ProdctField">
+                    <div className="OriginalCost">
+                        <span>Original Cost:</span>
+                    </div>
                     <input
                         type="number"
+                        id="short"
                         value={originalCost}
                         onChange={handleOriginalCostChange}
                         required
                     />
                 </div>
-                <div className="ProductQuantity">
-                    <label>Product Quantity</label>
-                    <input
-                        type="number"
-                        value={productQuantity}
-                        onChange={handleProductQuantityChange}
-                        required
-                    />
-                </div>
-                <div className="ProductDescription">
-                    <label>Product Description</label>
+
+                <div className="ProdctField">
+                    <div className="ProdctDescription">
+                        <span>Product Description:</span>
+                    </div>
                     <textarea
+                        id="ProductDescription"
+
                         value={productDescription}
                         onChange={handleProductDescriptionChange}
                         required
                     ></textarea>
                 </div>
-                <div className="ProductCategory">
-                    <label>Product Category</label>
-                    <select value={productCategory} onChange={handleProductCategoryChange}>
+
+                <div className="ProdctField">
+                    <div className="ProductCategory " >
+                        <span>Product Category:</span>
+                    </div>
+                    <select value={productCategory} onChange={handleProductCategoryChange} id="short">
                         <option value="Sofas">Sofas</option>
                         <option value="Chairs">Chairs</option>
                         <option value="Beds">Beds</option>
                         <option value="Tables">Tables</option>
                     </select>
                 </div>
-                <div className="ImageUploads">
-                    {productImages && productImages.map((image, index) => (
+
+                <div className="ProdctField">
+                    <span>Product Count In Inventory:</span>
+                    <div className="quantity-input">
+                        <input
+
+                            type="number"
+                            min="20"
+                            value={productQuantity}
+                            onChange={handleProductQuantityChange}
+                            required
+                        />
+                    </div>
+
+                </div>
+                <div className="image-preview">
+                    {imagePreviews.map((preview, index) => (
                         <div key={index} className="preview-container">
-                            {image ? (
-                                <img src={image} alt={`Product Image ${index + 1}`} />
+                            {preview ? (
+                                <img src={preview} alt={`Product Preview ${index + 1}`} />
                             ) : (
-                                <div className="empty-box">No Image</div>
+                                <div className="empty-box">Upload Image</div>
                             )}
                             <div className="image-upload">
                                 <input
                                     type="file"
                                     accept="image/*"
+                                    id={`image${index + 1}`}
                                     onChange={(e) => handleImageChange(e, index)}
                                     required
                                 />
-                                <label>Upload Image {index + 1}</label>
+                                <label className="uploadImgLabel" htmlFor={`image${index + 1}`}>Upload Image {index + 1}</label>
                             </div>
                         </div>
                     ))}
                 </div>
-                <button type="submit">Save Changes</button>
+                <div className="AddProductBTN">
+                    <button className="AddProductsButton" type="submit" onClick={handleEditProduct}>Save Changes</button>
+                </div>
+
             </form>
         </div>
     );

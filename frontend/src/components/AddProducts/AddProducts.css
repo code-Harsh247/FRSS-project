@@ -12,6 +12,14 @@
   text-align: center;
 }
 
+.ProdctField{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
 .AddProductContainer form {
   display: flex;
   flex-direction: column;
@@ -34,14 +42,12 @@
   margin-top: 10px;
 }
 
-.quantity-input label {
-  margin-right: 10px;
+.quantity-input{
+  width: 52.5%;
 }
 
-.quantity-input input {
-  width: 80px;
-
-  padding: 8px;
+.quantity-input input{
+  width: 200px;
   margin-top: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -51,6 +57,9 @@
   display: flex;
   flex-direction: column;
   margin-top: 30px;
+}
+.uploadImgLabel :active{
+  transform: scale(0.97);
 }
 
 .image-upload label {
@@ -69,6 +78,7 @@
 .image-preview {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .preview-container {
@@ -98,7 +108,16 @@
   margin-bottom: 10px;
   height: 30vh;
 }
+.AddProductBTN{
+  display: flex;
+  margin: 2rem;
+  justify-content: center;
+}
 .AddProductsButton:hover {
   background-color: black;
   color: white;
+}
+
+.AddProductsButton:active{
+  transform: scale(0.97);
 }

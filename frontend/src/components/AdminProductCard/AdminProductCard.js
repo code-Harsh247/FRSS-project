@@ -2,7 +2,7 @@ import React from 'react'
 import "./AdminProductCard.css"
 import { useNavigate } from 'react-router-dom';
 
-const AdminProductCard = ({ img, name, id, price, cost, stock,deleteProduct }) => {
+const AdminProductCard = ({ img, name, id, price, cost, stock,deleteProduct,category,description }) => {
 
     const navigate = useNavigate();
     const handleProdEdit = () => {
@@ -19,9 +19,12 @@ const AdminProductCard = ({ img, name, id, price, cost, stock,deleteProduct }) =
                 />
             </div>
             <div className="iteminfo">
+                
                 <h3 className="itemname">{name}</h3>
                 <span className='item-id'><span className='font-Admin-Prod-Card'>id : </span>{id}</span>
                 <br />
+                <span><span className='font-Admin-Prod-Card'>category : </span>{category}</span>
+                <br/>
                 <span className="itemprice">
                     <span className='font-Admin-Prod-Card'>rent :</span> ₹{(price).toLocaleString()}/month
                 </span>

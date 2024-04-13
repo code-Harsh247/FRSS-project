@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import AdminNavbar from '../components/AdminNavbar/AdminNavbar';
 import AdminBanner from '../components/AdminBanner/AdminBanner';
 import axios from '../context/axiosConfig';
@@ -16,23 +16,30 @@ function Products() {
     const { products } = useProducts();
     const [ProdArray, setProdArray] = useState(null);
 
-    useEffect(()=>{
+    useEffect(() => {
         setProdArray(products);
-    },[products]);
+    }, [products]);
 
-    const handleDeleteProduct = async (id)=>{
+    const handleDeleteProduct = async (id) => {
         try {
             const url = `products/removeproduct/`;
-            const response = await axios.post(url,{id});
+            const response = await axios.post(url, { id });
             setProdArray(prevProdArray => prevProdArray.filter(product => product.id !== id));
-            console.log("Product deleted:",response.data.success);
+            console.log("Product deleted:", response.data.success);
         } catch (error) {
             console.error("Error deleting product from cart:", error.response ? error.response.data : error);
         }
     }
 
-    // console.log(products);
-    // console.log(ProdArray);
+    const categories = ['Sofa', 'Chair', 'Bed', 'Table'];
+    const categoryArrays = categories.map(category => {
+        return ProdArray && ProdArray.filter(prod => prod.category === category);
+    });
+
+
+
+
+
 
     const handleAddProducts = () => {
         navigate('/admin/addproducts');
@@ -46,13 +53,12 @@ function Products() {
                 <div className="AddNewProducts">
                     <button onClick={handleAddProducts} >Add New Product</button>
                 </div>
-                <div className="ProductsListTitle">
-                    <span>Products</span>
-                </div>
-                {/* <AdminProductCard id="4" name="Harsh" price="10000" /> */}
-                <div>
-                    {
-                        ProdArray && ProdArray.map((prod) => (
+                {categoryArrays.map((categoryArray, index) => (
+                    <div key={index}>
+                        <div className="ProductsListTitle">
+                            <span>{categories[index]}s</span>
+                        </div>
+                        {categoryArray && categoryArray.map((prod) => (
                             <AdminProductCard
                                 key={prod._id}
                                 id={prod._id}
@@ -61,13 +67,13 @@ function Products() {
                                 img={prod.image[0]}
                                 cost={prod.cost}
                                 stock={prod.stock}
-                                deleteProduct={()=>handleDeleteProduct(prod.id)}
+                                deleteProduct={() => handleDeleteProduct(prod.id)}
+                                category={prod.category}
+                                description={prod.description}
                             />
-                        ))
-                    }
-
-
-                </div>
+                        ))}
+                    </div>
+                ))}
 
             </div>
         );
