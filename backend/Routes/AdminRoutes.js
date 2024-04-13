@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Admin = require('../models/Admin');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Product=require("../models/Product");
@@ -8,21 +9,13 @@ const Product=require("../models/Product");
 router.post('/signup', async (req, res) => {
     try {
         const { email, password } = req.body;
-
-        // Check if the user already exists
-        const existingUser = await User.findOne({ email });
-
-        if (existingUser) {
-            return res.status(400).json({ success: false, errors: "User already exists" });
-        }
-
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Create a new user
-        const newUser = new User({
+        const newUser = new Admin({
             email,
-            password: hashedPassword,
+            passwd: hashedPassword,
             isAdmin: true // Set isAdmin to true for admin users
         });
 
@@ -42,10 +35,10 @@ router.post('/signup', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.body.email });
+        const user = await Admin.findOne({ email: req.body.email });
 
         if (!user) {
-            return res.status(404).json({ success: false, errors: "No user with the given email found" });
+            return res.status(404).json({ success: false, errors: "No Admin with the given email found" });
         }
 
         const isPasswordValid = await bcrypt.compare(req.body.password, user.passwd);

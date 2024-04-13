@@ -3,6 +3,10 @@ import "./UserCard.css";
 import deleteicon from "../assets/Icons/bin.png";
 
 function UserCard() {
+    
+    const handleDeleteUser=()=>{
+        console.log("User Deleted");
+    }
     return (
         <div className="UserCardContainer">
             
@@ -18,7 +22,7 @@ function UserCard() {
                 </div>
             </div>
             <div className="UserDelete">
-            <img src={deleteicon} />
+            <img src={deleteicon} onClick={handleDeleteUser}/>
             </div>
 
         </div>

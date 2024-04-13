@@ -1,18 +1,22 @@
 import React, { useState } from "react";
+import axios from "../../context/axiosConfig";
 import "./AdminLoginForm.css"
 import "../assets/fonts/fonts.css"
 import hideIcon from "../assets/Icons/hide.png"
 import viewIcon from "../assets/Icons/view.png"
 import InputBox from "../InputBox/InputBox";
 import CustomButton from "../Button/CustomButton";
-
-
+import { useNavigate } from "react-router-dom";
+import { useAdminAuth } from "../../context/AdminAuthContext";
 
 const AdminLoginForm = () => {
 
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const {adminLogin, isAdminLoggedIn } = useAdminAuth();
+
+    const navigate = useNavigate();
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -25,12 +29,28 @@ const AdminLoginForm = () => {
         setPasswordInput(password);
     }
 
-    const handleButtonClick = (event) => {
-        event.preventDefault();  //Prevents page refresh when button is clicked. (Happens when button is inside a form element)
-        console.log("Email : ", emailInput);
-        console.log("Password : ", passwordInput);
+    const handleButtonClick = async (event) => {
+        event.preventDefault();     
+        try {
+            console.log(emailInput);
+            console.log(passwordInput);
+            // Send a request to the backend to authenticate the admin
+            const response = await axios.post('/admin/login', {
+                email: emailInput,
+                password: passwordInput
+            });
+            console.log(response.data.success);
+            if (response.data.success) {
+                // Login successful
+                const token = response.data.token;
+                localStorage.setItem('AdminToken', token); // Store token in local storage
+                adminLogin(); // <-- Corrected function call
+                navigate('/admin/dashboard'); // Redirect to dashboard or any other page
+            } 
+        } catch (error) {
+            alert(`Error: ${error.response.data.errors}`)
+        }
     };
-
 
     return (
         <div className="Container">
@@ -59,11 +79,8 @@ const AdminLoginForm = () => {
                         <div className="LoginBtn">
                             <CustomButton btnText="Log in" handleClick={handleButtonClick} Btnwidth="8.5em"/>
                         </div>
-                        
-
                     </form>
                 </div>
-
             </div>
         </div>
     )
