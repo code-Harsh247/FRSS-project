@@ -14,7 +14,6 @@ function Admin() {
             <div className="AdminContainer">
                 <AdminNavbar/>
                 <AdminBanner name="Admin Dashboard"/>
-                <UserCard/>
             </div>
         );
     }
