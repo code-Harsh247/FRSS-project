@@ -30,8 +30,12 @@ const App = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
+        const AdminToken = localStorage.getItem('AdminToken');
         if (!token) {
-            localStorage.clear(); // Clear local storage if no token is found
+            localStorage.removeItem('isLoggedIn');
+        }
+        if (!AdminToken) {
+            localStorage.removeItem('isAdminLoggedIn');
         }
     }, []);
 

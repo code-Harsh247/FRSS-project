@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import AdminNavbar from '../components/AdminNavbar/AdminNavbar';
 import AdminBanner from '../components/AdminBanner/AdminBanner';
-import ProductCard from "../components/ProductCard/ProductCard";
+import axios from '../context/axiosConfig';
 import "./Css/Products.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAdminAuth } from "../context/AdminAuthContext";
 import AdminLoginPage from "./AdminLoginPage";
 import { useProducts } from '../context/ProductContext';
@@ -14,10 +14,29 @@ import AdminProductCard from '../components/AdminProductCard/AdminProductCard';
 function Products() {
     const navigate = useNavigate();
     const { products } = useProducts();
+    const [ProdArray, setProdArray] = useState(null);
+
+    useEffect(()=>{
+        setProdArray(products);
+    },[products]);
+
+    const handleDeleteProduct = async (id)=>{
+        try {
+            const url = `products/removeproduct/`;
+            const response = await axios.post(url,{id});
+            setProdArray(prevProdArray => prevProdArray.filter(product => product.id !== id));
+            console.log("Product deleted:",response.data.success);
+        } catch (error) {
+            console.error("Error deleting product from cart:", error.response ? error.response.data : error);
+        }
+    }
+
+    // console.log(products);
+    // console.log(ProdArray);
+
     const handleAddProducts = () => {
         navigate('/admin/addproducts');
     }
-    console.log(products);
     const { isAdminLoggedIn } = useAdminAuth();
     if (isAdminLoggedIn) {
         return (
@@ -33,7 +52,7 @@ function Products() {
                 {/* <AdminProductCard id="4" name="Harsh" price="10000" /> */}
                 <div>
                     {
-                        products.map((prod) => (
+                        ProdArray && ProdArray.map((prod) => (
                             <AdminProductCard
                                 key={prod._id}
                                 id={prod._id}
@@ -42,6 +61,7 @@ function Products() {
                                 img={prod.image[0]}
                                 cost={prod.cost}
                                 stock={prod.stock}
+                                deleteProduct={()=>handleDeleteProduct(prod.id)}
                             />
                         ))
                     }

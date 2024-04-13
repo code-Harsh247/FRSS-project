@@ -36,7 +36,7 @@ function Users() {
             <div className="UsersList">
                 {
                     temp && temp.map((user) => {
-                        return <UserCard name={user.name} email={user.email} phone={user.phone} id={user._id} setTemp={setTemp} />
+                        return <UserCard key={user._id} name={user.name} email={user.email} phone={user.phone} id={user._id} setTemp={setTemp} />
                     })
                 }
 

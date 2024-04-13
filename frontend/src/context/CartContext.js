@@ -38,6 +38,7 @@ export const CartProvider = ({ children }) => {
     if (userId) {
       const fetchCartData = async () => {
         try {
+          console.log(userId)
           // Fetch cart data from backend using user ID
           const response = await axios.get(`/users/cart/${userId}`);
           setCartData(response.data.cartData);
