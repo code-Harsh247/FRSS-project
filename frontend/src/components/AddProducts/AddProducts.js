@@ -9,6 +9,7 @@ const AddProducts = () => {
     const [imagePreviews, setImagePreviews] = useState(Array.from({ length: 4 }, () => null));
     const [productDescription, setProductDescription] = useState("");
     const [productCategory, setProductCategory] = useState("Sofas");
+    const [originalCost, setOriginalCost] = useState("");
 
     const handleProductNameChange = (e) => {
         setProductName(e.target.value);
@@ -65,6 +66,9 @@ const AddProducts = () => {
         setProductImages(Array.from({ length: 4 }, () => null));
         setImagePreviews(Array.from({ length: 4 }, () => null));
     };
+    const handleOriginalCostChange = (e) => {
+        setOriginalCost(e.target.value);
+    };
 
     return (
         <div className="AddProductContainer">
@@ -81,7 +85,7 @@ const AddProducts = () => {
                     onChange={handleProductNameChange}
                     required
                 />
-                <div className="ProdctPrice">
+                <div className="ProductPrice">
                     <span>Product Price</span>
                 </div>
                 <input
@@ -89,6 +93,16 @@ const AddProducts = () => {
                     id="short"
                     value={productPrice}
                     onChange={handleProductPriceChange}
+                    required
+                />
+                <div className="OriginalCost">
+                    <span>Original Cost</span>
+                </div>
+                <input
+                    type="number"
+                    id="short"
+                    value={originalCost}
+                    onChange={handleOriginalCostChange}
                     required
                 />
 
