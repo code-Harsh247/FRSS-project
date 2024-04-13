@@ -312,6 +312,7 @@ router.post('/rent/:userId', async (req, res) => {
             ProductId: productId,
             Quantity: quantity,
             RentDuration: duration,
+            TimeDue: duration
         };
         user.Rented.push(rentedProduct);
 
@@ -349,7 +350,6 @@ router.post('/rent/:userId', async (req, res) => {
         }
 
         // Save changes to user, product, and admin
-        console.log('hi');
         await user.save();
         await product.save();
         await admin.save();
@@ -465,6 +465,50 @@ router.post('/move-to-rented/:userId', async (req, res) => {
         res.status(500).json({ success: false, errors: "Server Error" });
     }
 });
+
+// API endpoint to update the loan of the rented product
+router.put('/update-loan/:userId/:productId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const productId = parseInt(req.params.productId); // Convert productId to integer
+        const user = await User.findById(userId);
+        
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ success: false, errors: "User not found" });
+        }
+
+        // Find the rented product in the user's Rented array
+        const rentedProduct = user.Rented.find(item => item.ProductId === productId);
+
+        // Check if the rented product exists
+        if (!rentedProduct) {
+            return res.status(404).json({ success: false, errors: "Rented product not found" });
+        }
+
+        // Calculate loan if TimeDue is negative
+        if (rentedProduct.TimeDue < 0) {
+            const price = rentedProduct.price; // Replace with the actual price of the product
+            const quantity = rentedProduct.Quantity;
+            const loan = (price + 0.15 * price) * Math.abs(rentedProduct.TimeDue) * quantity;
+
+            // Update the loan of the rented product
+            rentedProduct.Loan = loan;
+
+            // Save the changes to the user document
+            await user.save();
+
+            return res.json({ success: true, message: "Loan updated successfully", loan });
+        } else {
+            return res.json({ success: false, message: "TimeDue is not negative, loan remains unchanged" });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, errors: "Server Error" });
+    }
+});
+
+module.exports = router;
 
 
 module.exports = router;
