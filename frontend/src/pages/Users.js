@@ -4,6 +4,7 @@ import UserCard from "../components/UserCard/UserCard";
 import AdminBanner from "../components/AdminBanner/AdminBanner";
 import "./Css/Users.css";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 function Users() {
     const navigate = useNavigate();
@@ -11,7 +12,8 @@ function Users() {
     const handleAddUsers=()=>{
         navigate('admin/addusers');
     }
-
+    const {user} = useUser();
+    
     return (  
         <div className="UsersContainer">
             <AdminNavbar/>
@@ -23,8 +25,12 @@ function Users() {
                 <span>Users</span>
             </div>
            <div className="UsersList">
+            {
+                user && user.map((user)=>{
+                    return <UserCard name={user.name} email={user.email} phone={user.phone}/>
+                })
+            }
             
-            <UserCard/>
            </div>
         </div>
     );

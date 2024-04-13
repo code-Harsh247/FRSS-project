@@ -2,7 +2,7 @@
     border:2px solid #ddd;
     border-radius: 10px;
     width:45vw;
-    
+    margin: 1rem 0;
     display:flex;
     justify-content: space-between;
 }
@@ -30,4 +30,10 @@
 .UserDelete img{
     width:100%;
     height:100%;
+}
+.UserCardContainer:hover{
+    background-color: #f9f9f9;
+}
+.UserCardContainer:active{
+    transform: scale(0.98);
 }

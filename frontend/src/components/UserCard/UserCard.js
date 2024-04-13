@@ -2,7 +2,7 @@ import React from "react";
 import "./UserCard.css";
 import deleteicon from "../assets/Icons/bin.png";
 
-function UserCard() {
+function UserCard({name,email,phone}) {
     
     const handleDeleteUser=()=>{
         console.log("User Deleted");
@@ -12,13 +12,13 @@ function UserCard() {
             
             <div className="UserContent">
                 <div className="UserName">
-                    <span>Name: John Doe</span>
+                    <span>Name: {name}</span>
                 </div>
                 <div className="UserEmail">
-                    <span>Email: johndoe@gmail.com</span>
+                    <span>Email: {email}</span>
                 </div>
                 <div className="UserPhone">
-                    <span>Phone: 27564990756</span>
+                    <span>Phone: {phone}</span>
                 </div>
             </div>
             <div className="UserDelete">

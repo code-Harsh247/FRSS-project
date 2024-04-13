@@ -22,6 +22,7 @@ import Alerts from "./pages/Alerts";
 import OrderHistory from "./pages/OrderHistory";
 import Users from "./pages/Users";
 import { AdminAuthProvider} from "./context/AdminAuthContext";
+import { UserProvider } from "./context/UserContext";
 
 
 const App = () => {
@@ -108,11 +109,13 @@ const App = () => {
         <AuthProvider>
         <CartProvider>
         <CategoryProvider>
+        <UserProvider>
         <ProductProvider>
         <div>
             <RouterProvider router={router}/>
         </div>
         </ProductProvider>
+        </UserProvider>
         </CategoryProvider>
         </CartProvider>
         </AuthProvider>
