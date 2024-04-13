@@ -6,16 +6,18 @@ import "./Css/Products.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAdminAuth } from "../context/AdminAuthContext";
 import AdminLoginPage from "./AdminLoginPage";
-
+import { useProducts } from '../context/ProductContext';
+import AdminProductCard from '../components/AdminProductCard/AdminProductCard';
 
 
 
 function Products() {
     const navigate = useNavigate();
-
+    const { products } = useProducts();
     const handleAddProducts = () => {
         navigate('/admin/addproducts');
     }
+    console.log(products);
     const { isAdminLoggedIn } = useAdminAuth();
     if (isAdminLoggedIn) {
         return (
@@ -28,9 +30,23 @@ function Products() {
                 <div className="ProductsListTitle">
                     <span>Products</span>
                 </div>
-                <div className="ProductsList">
+                {/* <AdminProductCard id="4" name="Harsh" price="10000" /> */}
+                <div>
+                    {
+                        products.map((prod) => (
+                            <AdminProductCard
+                                key={prod._id}
+                                id={prod._id}
+                                name={prod.name}
+                                price={prod.price}
+                                img={prod.image[0]}
+                                cost={prod.cost}
+                                stock={prod.stock}
+                            />
+                        ))
+                    }
 
-                    <ProductCard />
+
                 </div>
 
             </div>
