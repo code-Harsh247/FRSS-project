@@ -4,8 +4,12 @@ import AdminBanner from "../components/AdminBanner/AdminBanner";
 import "./Css/Alerts.css";
 import OrderAlertsCard from "../components/OrderAlertsCard/OrderAlertsCard";
 import InventoryNotificationCard from "../components/InventoryNotificationCard/InventoryNotificationCard";
+import AdminLoginPage from "./AdminLoginPage";
+import { useAdminAuth } from "../context/AdminAuthContext";
 
 function Alerts() {
+    const { isAdminLoggedIn } = useAdminAuth();
+    if(isAdminLoggedIn){
     return ( 
         <div className="AlertsContainer">
             <AdminNavbar/>
@@ -31,6 +35,8 @@ function Alerts() {
             </div>
         </div>
      );
+    }
+    else return <AdminLoginPage/>
 }
 
 export default Alerts;

@@ -3,15 +3,25 @@ import AdminNavbar from "../components/AdminNavbar/AdminNavbar";
 import AdminBanner from "../components/AdminBanner/AdminBanner";
 import AddProducts from "../components/AddProducts/AddProducts";
 import "./Css/AddProductsPage.css";
+import { useAdminAuth } from "../context/AdminAuthContext";
+import AdminLoginPage from "./AdminLoginPage";
 
 function AddProductPage() {
-    return (
-        <div className="AddProductPageContainer">
-            <AdminNavbar />
-            <AdminBanner name="Add Products" />
-            <AddProducts />
-        </div>
-    );
+
+    const { isAdminLoggedIn } = useAdminAuth();
+
+    if (isAdminLoggedIn) {
+        return (
+            <div className="AddProductPageContainer">
+                <AdminNavbar />
+                <AdminBanner name="Add Products" />
+                <AddProducts />
+            </div>
+
+        );
+    }
+    else return <AdminLoginPage />
 }
+
 
 export default AddProductPage;
