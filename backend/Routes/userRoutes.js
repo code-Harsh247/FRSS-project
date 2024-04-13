@@ -317,6 +317,32 @@ router.post('/rent/:userId', async (req, res) => {
     }
 });
 
+router.get('/rented/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        // Find the user by ID
+        const user = await User.findById(userId);
+
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ success: false, errors: "User not found" });
+        }
+
+        // Retrieve rented products from user object
+        const rentedProducts = user.Rented;
+
+        // Return the rented products
+        res.status(200).json({ success: true, rentedProducts });
+    } catch (error) {
+        // If there's any error, send server error response
+        console.error(error);
+        res.status(500).json({ success: false, errors: "Server Error" });
+    }
+});
+
+
+
 router.post('/move-to-rented/:userId', async (req, res) => {
     try {
         const userId = req.params.userId;

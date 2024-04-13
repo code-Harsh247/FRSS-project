@@ -9,19 +9,23 @@ import HistoryProductCard from "../components/HistoryProductCard/HistoryProductC
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import CustomButton from "../components/Button/CustomButton";
+import { useProducts } from "../context/ProductContext";
 
 function OrderHistory() {
     const { loading, setLoading, userId } = useCart(); // Removed cartData since we're not fetching it here
     const { isLoggedIn } = useAuth();
     const [orderHistory, setOrderHistory] = useState([]);
+    const [orderedProducts, setOrderedProducts] = useState([]);
+
+    const {products} = useProducts();
 
     useEffect(() => {
         const fetchOrderHistory = async () => {
             // Fetch order history data from the backend
             try {
                 // Assuming the API endpoint to fetch order history is '/users/order-history/:userId'
-                const response = await axios.get(`/users/order-history/${userId}`);
-                setOrderHistory(response.data.orderHistory);
+                const response = await axios.get(`/users/rented/${userId}`);
+                setOrderHistory(response.data.rentedProducts);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching order history:", error);
@@ -29,8 +33,36 @@ function OrderHistory() {
             }
         };
 
+
         fetchOrderHistory();
     }, [userId, setLoading]);
+
+    useEffect(() => {
+        const fetchOrderedProducts = () => {
+            // Filter products based on rented IDs
+            const filteredProducts = products.filter((product) =>
+                orderHistory.some((item) => item.ProductId === product.id)
+            );
+
+            // Map filtered products to include quantity and duration
+            const orderedProductsData = filteredProducts.map((product) => {
+                const matchingItem = orderHistory.find(
+                    (item) => item.ProductId === product.id
+                );
+                return {
+                    ...product,
+                    quantity: matchingItem.Quantity,
+                    duration: matchingItem.RentDuration // Assuming RentDuration is the property name in order history
+                };
+            });
+
+            setOrderedProducts(orderedProductsData);
+        };
+
+        fetchOrderedProducts();
+    }, [orderHistory, products]);
+
+    console.log(orderedProducts);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -45,7 +77,7 @@ function OrderHistory() {
                 <div id="LogInOrderHistory">
                     <p>Please login to view your order history</p>
                     <div className="LoginBtn">
-                        <CustomButton btnText="Log in" handleClick={() => {/* Handle login */}} Btnwidth="8.5em"/>
+                        <CustomButton btnText="Log in" handleClick={() => {/* Handle login */ }} Btnwidth="8.5em" />
                     </div>
                 </div>
             )}
@@ -58,10 +90,10 @@ function OrderHistory() {
 
             {isLoggedIn && orderHistory.length > 0 && (
                 <div className="OrderHistoryItemsContainer">
-                    {orderHistory.map((item) => (
+                    {orderedProducts.map((item) => (
                         <HistoryProductCard
-                            key={item.id}
-                            img={item.image}
+                            key={item.ProductId}
+                            img={item.image[0]}
                             name={item.name}
                             price={item.price}
                             quantity={item.quantity}
@@ -71,7 +103,7 @@ function OrderHistory() {
                 </div>
             )}
 
-            <ServiceBanner  />
+            <ServiceBanner />
             <Footer />
         </div>
     );
