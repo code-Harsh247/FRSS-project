@@ -13,8 +13,7 @@ const AdminSchema = new mongoose.Schema({
         type:[{
             image:{
                 type: String,
-                required:true,
-                validate: [ImgarrayLimit, '{PATH} exceeds the limit of 4'],
+                required:true
             },
             ProductID:{
                 type: Number,
@@ -46,8 +45,7 @@ const AdminSchema = new mongoose.Schema({
     Notification:[{
         image:{
             type: String,
-            required: true,
-            validate: [ImgarrayLimit, '{PATH} exceeds the limit of 4'],
+            required: true
         },
         ProductID:{
             type: Number,

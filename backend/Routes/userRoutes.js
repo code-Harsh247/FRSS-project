@@ -4,7 +4,7 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Product=require("../models/Product")
-
+const Admin=require("../models/Admin");
 
 router.post('/signup', async (req, res) => {
     try {
