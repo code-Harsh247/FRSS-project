@@ -2,6 +2,7 @@
 
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { isEqual } from 'lodash';
 
 // Create the Cart Context
 const CartContext = createContext();
@@ -14,6 +15,7 @@ export const CartProvider = ({ children }) => {
   const [cartData, setCartData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState(null);
+  const [cacheCart, setCacheCart] = useState([]);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -35,26 +37,36 @@ export const CartProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (userId) {
+    if (userId || cacheCart) {
       const fetchCartData = async () => {
         try {
-          console.log(userId)
-          // Fetch cart data from backend using user ID
+          console.log("Current User ID", userId);
+          
           const response = await axios.get(`/users/cart/${userId}`);
           setCartData(response.data.cartData);
           setLoading(false);
+          console.log("Updated Cart : ", response.data.cartData );
+  
+          // Check if cartData is different from cacheCart before updating cacheCart
+          console.log("Server Response : ",response.data.cartData);
+          console.log("Cache Cart : ",cacheCart);
+          if (!isEqual(response.data.cartData, cacheCart)) {
+            setCacheCart(response.data.cartData);
+          }
         } catch (error) {
           console.error('Error fetching cart data:', error);
           setLoading(false);
         }
       };
-
+  
       fetchCartData();
     }
-  }, [userId]);
+  }, [userId, cacheCart]); // Ensure cacheCart is in the dependency array
+  
+  
 
   return (
-    <CartContext.Provider value={{ cartData, loading, setLoading, userId }}>
+    <CartContext.Provider value={{ cartData, loading, setLoading, userId, setCartData, setCacheCart}}>
       {children}
     </CartContext.Provider>
   );

@@ -1,14 +1,16 @@
-import React, { useState, useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import AdminNavbar from "../components/AdminNavbar/AdminNavbar";
 import UserCard from "../components/UserCard/UserCard";
 import AdminBanner from "../components/AdminBanner/AdminBanner";
 import "./Css/Users.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
+import { useAdminAuth } from "../context/AdminAuthContext";
+import AdminLoginPage from "./AdminLoginPage";
 
 function Users() {
     const navigate = useNavigate();
-
+    const { isAdminLoggedIn } = useAdminAuth();
     const handleAddUsers = () => {
         navigate('/admin/addusers');
     }
@@ -22,27 +24,30 @@ function Users() {
             setTemp(user);
         }
     }, [user]);
+    if (isAdminLoggedIn) {
+        return (
+            <div className="UsersContainer">
+                <AdminNavbar />
+                <AdminBanner name="Users" />
+                <div className="AddNewUsers">
+                    <button onClick={handleAddUsers} >Add New User</button>
+                </div>
+                <div className="UsersListTitle">
+                    <span>Users</span>
+                </div>
+                <div className="UsersList">
+                    {
+                        temp && temp.map((user) => {
+                            return <UserCard key={user._id} name={user.name} email={user.email} phone={user.phone} id={user._id} setTemp={setTemp} />
+                        })
+                    }
 
-    return (
-        <div className="UsersContainer">
-            <AdminNavbar />
-            <AdminBanner name="Users" />
-            <div className="AddNewUsers">
-                <button onClick={handleAddUsers} >Add New User</button>
+                </div>
             </div>
-            <div className="UsersListTitle">
-                <span>Users</span>
-            </div>
-            <div className="UsersList">
-                {
-                    temp && temp.map((user) => {
-                        return <UserCard key={user._id} name={user.name} email={user.email} phone={user.phone} id={user._id} setTemp={setTemp} />
-                    })
-                }
+        );
+    }
+    else return <AdminLoginPage/>
 
-            </div>
-        </div>
-    );
 }
 
 export default Users;

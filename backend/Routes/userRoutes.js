@@ -178,6 +178,39 @@ router.get('/cart/:userId', async (req, res) => {
     }
 });
 
+router.put('/update-cart/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const { id, count, duration } = req.body.cartItem; // Destructure cartItem from request body
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ success: false, errors: "User not found" });
+        }
+
+        // Find the index of the product in cartData array by its ID
+        const index = user.cartData.findIndex(item => item.id === id);
+
+        // If the product is found, update its count and duration
+        if (index !== -1) {
+            user.cartData[index].count = count;
+            user.cartData[index].duration = duration;
+        } else {
+            // If the product is not found, you can choose to handle it as per your application logic
+            // For example, you can add the product to the cart here
+            user.cartData.push({ id, count, duration });
+        }
+
+        await user.save();
+
+        res.json({ success: true, message: "Cart updated successfully", user });
+    } catch (error) {
+        res.status(500).json({ success: false, errors: "Server Error" });
+    }
+});
+
+
+
 router.post('/add-to-cart/:userId', async (req, res) => {
     try {
         const userId = req.params.userId;
