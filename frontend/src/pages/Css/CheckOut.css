@@ -42,9 +42,28 @@
     font-size: 30px;
 }
 .Total {
-    border-top:1px solid #ddd;
-    width:100%;
+    border-top:1px solid black;
+    border-bottom:1px solid black;
+    width:75%;
+    display: flex;
+    justify-content: space-between;
 }
-.Total .Disclaimer{
-    font-size:10px;
+
+.totalamt{
+    font-size: 32px;
+    color: gray;
+}
+
+.Total div{
+    width: 40%;
+}
+
+.bill{
+    font-size: 32px;
+    color: black;
+}
+
+
+.disclaimer{
+    font-size:12px;
 }

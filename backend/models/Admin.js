@@ -35,7 +35,30 @@ const AdminSchema = new mongoose.Schema({
             },
             Quantity:{
                 type: Number,
+            },
+            Street:{
+                type: String,
+            },
+            City:{
+                type: String,
+            },
+            Province: {
+                type: String,
+            },
+            Phone: {
+                type: Number,
+            },
+            Email: {
+                type: String,
+            },
+            ZipCode:{
+                type:Number,
+            },
+            Country:{
+                type: String
             }
+            
+
         }],
         default:[]
     },

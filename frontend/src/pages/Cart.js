@@ -75,8 +75,7 @@ function Cart() {
     };
 
     const checkout = () => {
-        console.log("Checkout");
-        console.log(cartProducts);
+        navigate("/rent/null/null/null")
     };
 
     if (loading) {
