@@ -1,7 +1,7 @@
 // CartContext.js
 
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import axios from '../context/axiosConfig';
 import { isEqual } from 'lodash';
 
 // Create the Cart Context
@@ -37,15 +37,13 @@ export const CartProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (userId || cacheCart) {
+    if (userId) {
       const fetchCartData = async () => {
         try {
-          console.log("Current User ID", userId);
-          
+          console.log(userId);
           const response = await axios.get(`/users/cart/${userId}`);
           setCartData(response.data.cartData);
           setLoading(false);
-          console.log("Updated Cart : ", response.data.cartData );
   
           // Check if cartData is different from cacheCart before updating cacheCart
           if (!isEqual(response.data.cartData, cacheCart)) {
