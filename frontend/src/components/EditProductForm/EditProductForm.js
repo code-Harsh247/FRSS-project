@@ -12,7 +12,7 @@ const EditProduct = ({ productId }) => {
     const [originalCost, setOriginalCost] = useState("");
     const [id, setID] = useState(null);
     const [imagePreviews, setImagePreviews] = useState(Array.from({ length: 4 }, () => null)); // Add this line
-    
+
 
     useEffect(() => {
         axios.get(`/products/${productId}`)
@@ -65,13 +65,20 @@ const EditProduct = ({ productId }) => {
 
     const handleImageChange = (e, index) => {
         const imageFile = e.target.files[0];
+        console.log(imageFile);
 
         // Update the productImages state with the new image file at the specified index
+        console.log(index);
+
         setProductImages(prevImages => {
+            console.log(prevImages);
             const newImages = [...prevImages];
             newImages[index] = imageFile;
+            console.log(newImages);
             return newImages;
+
         });
+
 
         // Optionally, you can also update the image preview for immediate feedback
         const reader = new FileReader();
@@ -84,23 +91,23 @@ const EditProduct = ({ productId }) => {
     };
 
     const handleEditProduct = async () => {
-        
+
         let imageUrls = [...productImages];
-        
+
         for (let i = 0; i < productImages.length; i++) {
             const image = productImages[i];
-            
+
             if (image && typeof image === 'object') { // Check if it's a File object, which indicates a new image.
                 try {
                     const formData = new FormData();
                     formData.append('product', image);
-    
+
                     const response = await axios.post('/upload', formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
                     });
-    
+
                     const imageUrl = response.data.image_url;
                     imageUrls[i] = imageUrl; // Replace or add new image URL at the correct index.
                 } catch (error) {
@@ -108,9 +115,9 @@ const EditProduct = ({ productId }) => {
                 }
             }
         }
-    
+
         console.log("All images handled. Image URLs:", imageUrls);
-        
+
         try {
             console.log(id);
             const response = await axios.put(`/products/updateproduct/${id}`, {
@@ -122,19 +129,21 @@ const EditProduct = ({ productId }) => {
                 category: productCategory,
                 stock: productQuantity
             });
-            
+
             alert("Product updated!");
             // Optionally, redirect to product details page or list
         } catch (error) {
             console.error("Error updating product:", error.response ? error.response.data : error);
         }
     }
-    
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
-    
+
     };
+
+
 
     return (
         <div className="AddProductContainer">
@@ -145,6 +154,7 @@ const EditProduct = ({ productId }) => {
                         <span>Product Name :</span>
                     </div>
                     <input
+
                         type="text"
                         id="short"
                         width={10}
@@ -158,6 +168,7 @@ const EditProduct = ({ productId }) => {
                         <span>Rent per month:</span>
                     </div>
                     <input
+
                         type="number"
                         id="short"
                         value={productPrice}
@@ -170,6 +181,7 @@ const EditProduct = ({ productId }) => {
                         <span>Original Cost:</span>
                     </div>
                     <input
+
                         type="number"
                         id="short"
                         value={originalCost}
