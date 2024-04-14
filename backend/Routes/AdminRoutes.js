@@ -205,10 +205,20 @@ router.get('/total-inventory', async (req, res) => {
 router.get('/revenue', async (req, res) => {
     try {
         // Calculate revenue from product sales
-        const productRevenue = await Product.aggregate([
+        const revenue = await User.aggregate([
+            {
+                $unwind: "$Rented" // Unwind the Rented array
+            },
+            {
+                $match: {
+                    "Rented.Live": true // Match documents where Live status is true
+                }
+            },
             {
                 $project: {
-                    totalRevenue: { $multiply: ["$cost", "$unitsRented"] }
+                    totalRevenue: {
+                        $multiply: ["$Rented.Quantity", "$Rented.Price", "$Rented.RentDuration"]
+                    }
                 }
             },
             {
@@ -219,25 +229,13 @@ router.get('/revenue', async (req, res) => {
             }
         ]);
 
-        // Calculate total loan
-        const totalLoan = await User.aggregate([
-            {
-                $group: {
-                    _id: null,
-                    totalLoan: { $sum: "$Rented.Loan" }
-                }
-            }
-        ]);
-
-        // Calculate total revenue
-        const revenue = productRevenue[0].revenue + totalLoan[0].totalLoan;
-
-        res.json({ revenue: revenue });
+        res.json({ revenue: revenue.length > 0 ? revenue[0].revenue : 0 });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server Error" });
     }
 });
+
 
 router.get('/total-customers', async (req, res) => {
     try {

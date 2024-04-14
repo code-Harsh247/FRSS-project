@@ -106,19 +106,46 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.methods.calculateDueTime = function() {
     this.Rented.forEach(item => {
-        const rentDuration = item.RentDuration; // Rent duration in months
-        const startDate = item.Date; // Date the product was rented
-        const currentDate = new Date(); // Current date
-        
-        // Calculate due time in months
-        const dueTime = rentDuration - Math.floor((currentDate - startDate) / (30 * 24 * 60 * 60 * 1000));
-        
-        // Update TimeDue field with the calculated due time
-        item.TimeDue = dueTime;
+        if (item.Live) {
+            const rentDuration = item.RentDuration; // Rent duration in months
+            const startDate = item.Date; // Date the product was rented
+            const currentDate = new Date(); // Current date
+            
+            // Calculate due time in months
+            const dueTime = rentDuration - Math.floor((currentDate - startDate) / (30 * 24 * 60 * 60 * 1000));
+            
+            // Update TimeDue field with the calculated due time
+            item.TimeDue = dueTime;
+        }
     });
     // Save the changes to the user document
     return this.save();
 };
+
+UserSchema.methods.calculateLoan = function() {
+    this.Rented.forEach(item => {
+        if (item.Live) {
+            const rentDuration = item.RentDuration; // Rent duration in months
+            const startDate = item.Date; // Date the product was rented
+            const currentDate = new Date(); // Current date
+            
+            // Calculate due time in months
+            const dueTime = rentDuration - Math.floor((currentDate - startDate) / (30 * 24 * 60 * 60 * 1000));
+
+            // If due time is negative, calculate loan
+            if (dueTime < 0) {
+                item.Loan = Math.abs(dueTime) * item.Quantity * item.Price;
+            } else {
+                item.Loan = 0; // If due time is not negative, set loan to 0
+            }
+        } else {
+            item.Loan = 0; // If status is not live, set loan to 0
+        }
+    });
+    // Save the changes to the user document
+    return this.save();
+};
+
 
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
