@@ -14,7 +14,7 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const { isLoggedIn, login, logout } = useAuth();
-    console.log(isLoggedIn);
+    console.log("User Logged In : ",isLoggedIn);
 
     const handleProfileClick = (event) => {
         event.stopPropagation();

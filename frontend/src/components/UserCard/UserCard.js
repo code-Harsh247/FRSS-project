@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./UserCard.css";
 import deleteicon from "../assets/Icons/bin.png";
-import axios from "../../context/axiosConfig"; // Import axios for making HTTP requests
+import axios from "../../context/axiosConfig"; 
+
 
 function UserCard({ name, email, phone, id, setTemp}) {
-    const [deleted, setDeleted] = useState(false); // State to track if the user is deleted
+    const [deleted, setDeleted] = useState(false); 
 
     const handleDeleteUser = async () => {
         setTemp(prevTemp => prevTemp.filter(user => user._id !== id));

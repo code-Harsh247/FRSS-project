@@ -48,8 +48,6 @@ export const CartProvider = ({ children }) => {
           console.log("Updated Cart : ", response.data.cartData );
   
           // Check if cartData is different from cacheCart before updating cacheCart
-          console.log("Server Response : ",response.data.cartData);
-          console.log("Cache Cart : ",cacheCart);
           if (!isEqual(response.data.cartData, cacheCart)) {
             setCacheCart(response.data.cartData);
           }
