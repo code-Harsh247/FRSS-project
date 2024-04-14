@@ -4,6 +4,10 @@ import closeicon from '../assets/Icons/close.png';
 
 function HistoryProductCard({ img, name, price, quantity, duration }) {
 
+  const handleReturnProduct = ()=>{
+    alert("")
+  }
+
   return (
     <div className="history-product-card">
       
@@ -27,7 +31,7 @@ function HistoryProductCard({ img, name, price, quantity, duration }) {
           </div>
         </div>
       </div>
-      <button className='ReturnBtn'>Return</button>
+      <button className='ReturnBtn' onClick={handleReturnProduct}>Return</button>
       {/* Close icon */}
       {/* Note: Since this is a history product card, there's no need for the delete functionality */}
       
