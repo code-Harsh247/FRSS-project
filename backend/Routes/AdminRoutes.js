@@ -97,6 +97,42 @@ router.post('/empty-notifications', async (req, res) => {
     }
 });
 
+router.get('/orders', async (req, res) => {
+    try {
+        // Find the admin
+        const admin = await Admin.findOne({ isAdmin: true });
+        
+        if (!admin) {
+            return res.status(404).json({ message: "Admin not found" });
+        }
+        
+        // Retrieve the order array from the admin document
+        const orders = admin.Order;
+        
+        res.status(200).json({ orders: orders });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
 
+router.get('/notifications', async (req, res) => {
+    try {
+        // Find the admin
+        const admin = await Admin.findOne({ isAdmin: true });
+        
+        if (!admin) {
+            return res.status(404).json({ message: "Admin not found" });
+        }
+        
+        // Retrieve the notifications array from the admin document
+        const notifications = admin.Notification;
+        
+        res.status(200).json({ notifications: notifications });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
 
 module.exports = router;

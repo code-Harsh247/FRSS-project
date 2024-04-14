@@ -91,7 +91,15 @@ const UserSchema = new mongoose.Schema({
         default: []
     },
     Notification:{
-        type:[String],
+        type:[{
+            Message:{
+                type:String,
+            },
+            Date:{
+                type:Date,
+                default:Date.now
+            }
+        }],
         default:[]
     }
 });

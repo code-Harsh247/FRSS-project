@@ -569,7 +569,7 @@ router.put('/update-loan/:userId/:productId', async (req, res) => {
 
 router.post('/add-notification/:userId', async (req, res) => {
     const userId = req.params.userId;
-    const { message } = req.body; // Assuming the request body contains the 'message' for the notification
+    const message = req.body.message; // Assuming the request body contains the 'message' for the notification
     // console.log(message);
     try {
         // Find the user by ID
@@ -580,7 +580,10 @@ router.post('/add-notification/:userId', async (req, res) => {
         }
         
         // Add the notification to the user's notification array
-        user.Notification.push(message);
+        const newNotification={
+            Message:message
+        }
+        user.Notification.push(newNotification);
         // Save the user with the updated notification array
         await user.save();
 
