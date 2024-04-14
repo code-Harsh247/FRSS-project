@@ -15,7 +15,7 @@ const AdminLoginForm = () => {
     const [passwordInput, setPasswordInput] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const {adminLogin, isAdminLoggedIn } = useAdminAuth();
-
+    console.log("Is Admin Logged in? : ",isAdminLoggedIn);
     const navigate = useNavigate();
 
     const togglePasswordVisibility = () => {
@@ -32,8 +32,6 @@ const AdminLoginForm = () => {
     const handleButtonClick = async (event) => {
         event.preventDefault();     
         try {
-            console.log(emailInput);
-            console.log(passwordInput);
             // Send a request to the backend to authenticate the admin
             const response = await axios.post('/admin/login', {
                 email: emailInput,

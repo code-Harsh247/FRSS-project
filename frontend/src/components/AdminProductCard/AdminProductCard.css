@@ -1,14 +1,16 @@
 .AdminProdCardContainer{
+    margin: 10px 0;
     border: 1px solid #ddd;
     border-radius: 4px;
-    height: 25vh;
-    width:98.8vw;
+    height: 32vh;
+    width:100%;
     flex-direction: row;
     display: flex;
-    align-items: center;
-    margin:10px;
+    align-items: flex-start;
 }
+
 .ProdImageContainer{
+    margin-top: 1rem;
     margin-left: 30px;
     width: 140px;
     height: 140px;
@@ -33,8 +35,10 @@
 .iteminfo{
     margin-left: 2%;
     margin-right: 10%;
+    margin-top: 1rem;
     width: 70%;
     height: 85%;
+
 }
 
 .EditProductBtn{
@@ -66,7 +70,7 @@
 .control-btns{
     position: relative;
     left: 90%;
-    bottom:90%;
+    bottom:65%;
     height: 100%;
     width: 20vw;
     

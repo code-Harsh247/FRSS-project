@@ -1,15 +1,61 @@
 import React, { useState } from "react";
+import axios from '../../context/axiosConfig';
 import "./AddProducts.css";
 
 const AddProducts = () => {
     const [productName, setProductName] = useState("");
     const [productPrice, setProductPrice] = useState("");
-    const [productQuantity, setProductQuantity] = useState(1);
+    const [productQuantity, setProductQuantity] = useState(20);
     const [productImages, setProductImages] = useState(Array.from({ length: 4 }, () => null));
     const [imagePreviews, setImagePreviews] = useState(Array.from({ length: 4 }, () => null));
     const [productDescription, setProductDescription] = useState("");
     const [productCategory, setProductCategory] = useState("Sofas");
     const [originalCost, setOriginalCost] = useState("");
+    const imageUrls = [];
+
+    const handelAddProduct = async () => {
+        
+        for (let i = 0; i < productImages.length; i++) {
+            const image = productImages[i];
+    
+            if (image) {
+                try {
+                    const formData = new FormData();
+                    formData.append('product', image);
+    
+                    const response = await axios.post('/upload', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
+    
+                    const imageUrl = response.data.image_url;
+                    imageUrls.push(imageUrl);
+                } catch (error) {
+                    console.error("Error uploading image:", error.response ? error.response.data : error);
+                    // Handle error (e.g., display an error message to the user)
+                }
+            }
+        }
+    
+        console.log("All images uploaded. Image URLs:", imageUrls);
+        try {
+            const response = await axios.post('/products/addproduct', {
+                name: productName,
+                price: productPrice,
+                description: productDescription,
+                image: imageUrls,
+                cost: originalCost,
+                category: productCategory,
+                stock: productQuantity
+            });
+            alert("Product added!");
+            // Optionally, you can redirect the user to another page or show a success message
+        } catch (error) {
+            console.error("Error adding product:", error.response ? error.response.data : error);
+            // Handle error (e.g., display an error message to the user)
+        }
+    }
 
     const handleProductNameChange = (e) => {
         setProductName(e.target.value);
@@ -49,19 +95,20 @@ const AddProducts = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log({
-            name: productName,
-            price: productPrice,
-            quantity: productQuantity,
-            description: productDescription,
-            category: productCategory,
-            images: productImages,
-        });
+        // console.log({
+        //     name: productName,
+        //     price: productPrice,
+        //     quantity: productQuantity,
+        //     description: productDescription,
+        //     category: productCategory,
+        //     images: imageUrls,
+        // });
 
         setProductName("");
         setProductPrice("");
-        setProductQuantity(1);
+        setProductQuantity(20);
         setProductDescription("");
+        setOriginalCost("");
         setProductCategory("Sofas");
         setProductImages(Array.from({ length: 4 }, () => null));
         setImagePreviews(Array.from({ length: 4 }, () => null));
@@ -74,66 +121,82 @@ const AddProducts = () => {
         <div className="AddProductContainer">
             <h2>Add New Product</h2>
             <form onSubmit={handleSubmit}>
-                <div className="ProdctName">
-                    <span>Product Name</span>
-                </div>
-                <input
-                    type="text"
-                    id="short"
-                    width={10}
-                    value={productName}
-                    onChange={handleProductNameChange}
-                    required
-                />
-                <div className="ProductPrice">
-                    <span>Product Price</span>
-                </div>
-                <input
-                    type="number"
-                    id="short"
-                    value={productPrice}
-                    onChange={handleProductPriceChange}
-                    required
-                />
-                <div className="OriginalCost">
-                    <span>Original Cost</span>
-                </div>
-                <input
-                    type="number"
-                    id="short"
-                    value={originalCost}
-                    onChange={handleOriginalCostChange}
-                    required
-                />
-
-                <div className="ProdctDescription">
-                    <span>Product Description</span>
-                </div>
-                <textarea
-                    id="ProductDescription"
-
-                    value={productDescription}
-                    onChange={handleProductDescriptionChange}
-                    required
-                ></textarea>
-                <div className="ProductCategory " >
-                    <span>Product Category</span>
-                </div>
-                <select value={productCategory} onChange={handleProductCategoryChange} id="short">
-                    <option value="Sofas">Sofas</option>
-                    <option value="Chairs">Chairs</option>
-                    <option value="Beds">Beds</option>
-                    <option value="Tables">Tables</option>
-                </select>
-                <div className="quantity-input">
-                    <label>Products Count In Inventory:</label>
+                <div className="ProdctField">
+                    <div>
+                        <span>Product Name :</span>
+                    </div>
                     <input
-                        type="number"
-                        min="1"
-                        value={productQuantity}
-                        onChange={handleProductQuantityChange}
+                        type="text"
+                        id="short"
+                        width={10}
+                        value={productName}
+                        onChange={handleProductNameChange}
                         required
                     />
+                </div>
+                <div className="ProdctField">
+                    <div className="ProductPrice">
+                        <span>Rent per month:</span>
+                    </div>
+                    <input
+                        type="number"
+                        id="short"
+                        value={productPrice}
+                        onChange={handleProductPriceChange}
+                        required
+                    />
+                </div>
+                <div className="ProdctField">
+                    <div className="OriginalCost">
+                        <span>Original Cost:</span>
+                    </div>
+                    <input
+                        type="number"
+                        id="short"
+                        value={originalCost}
+                        onChange={handleOriginalCostChange}
+                        required
+                    />
+                </div>
+
+                <div className="ProdctField">
+                    <div className="ProdctDescription">
+                        <span>Product Description:</span>
+                    </div>
+                    <textarea
+                        id="ProductDescription"
+
+                        value={productDescription}
+                        onChange={handleProductDescriptionChange}
+                        required
+                    ></textarea>
+                </div>
+
+                <div className="ProdctField">
+                    <div className="ProductCategory " >
+                        <span>Product Category:</span>
+                    </div>
+                    <select value={productCategory} onChange={handleProductCategoryChange} id="short">
+                        <option value="Sofa">Sofa</option>
+                        <option value="Chair">Chair</option>
+                        <option value="Bed">Bed</option>
+                        <option value="Table">Table</option>
+                    </select>
+                </div>
+
+                <div className="ProdctField">
+                    <span>Product Count In Inventory:</span>
+                    <div className="quantity-input">
+                        <input
+
+                            type="number"
+                            min="20"
+                            value={productQuantity}
+                            onChange={handleProductQuantityChange}
+                            required
+                        />
+                    </div>
+
                 </div>
                 <div className="image-preview">
                     {imagePreviews.map((preview, index) => (
@@ -151,12 +214,15 @@ const AddProducts = () => {
                                     onChange={(e) => handleImageChange(e, index)}
                                     required
                                 />
-                                <label htmlFor={`image${index + 1}`}>Upload Image {index + 1}</label>
+                                <label className="uploadImgLabel" htmlFor={`image${index + 1}`}>Upload Image {index + 1}</label>
                             </div>
                         </div>
                     ))}
                 </div>
-                <button className="AddProductsButton"type="submit">Add Product</button>
+                <div className="AddProductBTN">
+                    <button className="AddProductsButton" type="submit" onClick={handelAddProduct}>Add Product</button>
+                </div>
+
             </form>
         </div>
     );
