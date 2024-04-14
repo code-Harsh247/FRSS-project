@@ -33,7 +33,7 @@ const UserSchema = new mongoose.Schema({
             },
             duration:{
                 type: Number,
-            }
+            },
         }],
         default: [] // Setting default value as empty array
     },

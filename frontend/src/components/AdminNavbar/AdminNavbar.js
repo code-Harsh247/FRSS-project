@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "./AdminNavbar.css";
 import logo from "../assets/Logo/Logo (black).png";
 import profile from "../assets/Icons/profile.png";
-import { useAuth } from "../../context/AuthContext";
+import { useAdminAuth } from "../../context/AdminAuthContext";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const AdminNavbar = () => {
@@ -11,11 +11,11 @@ const AdminNavbar = () => {
     const profileIconRef = useRef(null);
     const navigate = useNavigate();
 
-    const { isLoggedIn, login, logout } = useAuth();
-    console.log(isLoggedIn);
+    const { isAdminLoggedIn, adminLogin, adminLogout } = useAdminAuth();
 
     const handleProfileClick = (event) => {
         event.stopPropagation();
+        console.log("is")
         const iconRect = profileIconRef.current.getBoundingClientRect();
         setLogoutBoxPosition({
             top: iconRect.bottom + window.scrollY + 25,
@@ -36,8 +36,8 @@ const AdminNavbar = () => {
     }, []);
 
     const handleLogOut = ()=>{
-        logout();
-        localStorage.removeItem('token');
+        adminLogout();
+        localStorage.removeItem('AdminToken');
         navigate('/admin');
     }
 
@@ -76,7 +76,7 @@ const AdminNavbar = () => {
                         left: `${logoutBoxPosition.left}px`,
                     }}
                 >
-                    {isLoggedIn? (
+                    {isAdminLoggedIn? (
                         <button onClick={handleLogOut}>Log Out</button>
                     ):(
                         <button onClick={handleLogIn}>Log In</button>

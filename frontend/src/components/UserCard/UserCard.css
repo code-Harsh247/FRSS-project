@@ -1,8 +1,8 @@
 .UserCardContainer{
     border:2px solid #ddd;
     border-radius: 10px;
+    margin: 10px 0;;
     width:45vw;
-    margin: 1rem 0;
     display:flex;
     justify-content: space-between;
 }

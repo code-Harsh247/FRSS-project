@@ -29,7 +29,7 @@ function ServiceBanner() {
                 <img src={shipping} alt='shipping' />
                 <p className='servicetitle'>
                     Free Shipping</p>
-                <p> Order over 150$</p>
+                <p> Order over 2 products</p>
 
             </div>
 
