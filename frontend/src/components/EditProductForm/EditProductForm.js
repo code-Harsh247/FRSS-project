@@ -62,13 +62,20 @@ const EditProduct = ({ productId }) => {
 
     const handleImageChange = (e, index) => {
         const imageFile = e.target.files[0];
+        console.log(imageFile);
 
         // Update the productImages state with the new image file at the specified index
+        console.log(index);
+        
         setProductImages(prevImages => {
+            console.log(prevImages);
             const newImages = [...prevImages];
             newImages[index] = imageFile;
+            console.log(newImages);
             return newImages;
+            
         });
+        
 
         // Optionally, you can also update the image preview for immediate feedback
         const reader = new FileReader();
@@ -82,6 +89,16 @@ const EditProduct = ({ productId }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+    
+        // Check if any of the file input fields are empty
+        const hasEmptyImages = productImages.some(image => !image);
+    
+        if (hasEmptyImages) {
+            // Display an error message or handle the empty images case accordingly
+            console.error("Please upload all images");
+            return; // Prevent form submission
+        }
+    
         // Send updated product details to the backend
         const updatedProduct = {
             name: productName,
@@ -89,9 +106,10 @@ const EditProduct = ({ productId }) => {
             quantity: productQuantity,
             description: productDescription,
             category: productCategory,
-            originalCost: originalCost,
+            cost: originalCost,
             images: productImages,
         };
+    
         axios.put(`/products/updateproduct/${id}`, updatedProduct)
             .then(response => {
                 console.log("Product updated successfully:", response.data);
@@ -101,14 +119,19 @@ const EditProduct = ({ productId }) => {
                 console.error("Error updating product:", error);
             });
     };
+    
+    
 
     return (
         <div className="EditProductContainer">
             <h2>Edit Product</h2>
             <form onSubmit={handleSubmit}>
                 <div className="ProductName">
-                    <label>Product Name</label>
+                <div className="ProductName">
+                    <span>Product Name</span>
+                </div>
                     <input
+                    id="short"
                         type="text"
                         value={productName}
                         onChange={handleProductNameChange}
@@ -116,8 +139,11 @@ const EditProduct = ({ productId }) => {
                     />
                 </div>
                 <div className="ProductPrice">
-                    <label>Product Price</label>
+                <div className="ProductPrice">
+                    <span>Product Price</span>
+                </div>
                     <input
+                    id="short"
                         type="number"
                         value={productPrice}
                         onChange={handleProductPriceChange}
@@ -125,26 +151,24 @@ const EditProduct = ({ productId }) => {
                     />
                 </div>
                 <div className="OriginalCost">
-                    <label>Original Cost</label>
+                <div className="ProductPrice">
+                    <span>Product Price</span>
+                </div>
                     <input
+                    id="short"
                         type="number"
                         value={originalCost}
                         onChange={handleOriginalCostChange}
                         required
                     />
                 </div>
-                <div className="ProductQuantity">
-                    <label>Product Quantity</label>
-                    <input
-                        type="number"
-                        value={productQuantity}
-                        onChange={handleProductQuantityChange}
-                        required
-                    />
-                </div>
+                
                 <div className="ProductDescription">
-                    <label>Product Description</label>
+                <div className="ProductPrice">
+                    <span>Product Price</span>
+                </div>
                     <textarea
+                    id="ProductDescription"
                         value={productDescription}
                         onChange={handleProductDescriptionChange}
                         required
@@ -158,6 +182,16 @@ const EditProduct = ({ productId }) => {
                         <option value="Beds">Beds</option>
                         <option value="Tables">Tables</option>
                     </select>
+                </div>
+                <div className="ProductQuantity">
+                    <label>Product Quantity</label>
+                    <input
+                        type="number"
+                        value={productQuantity}
+                        onChange={handleProductQuantityChange}
+                        required
+                        min="1"
+                    />
                 </div>
                 <div className="ImageUploads">
                     {productImages && productImages.map((image, index) => (

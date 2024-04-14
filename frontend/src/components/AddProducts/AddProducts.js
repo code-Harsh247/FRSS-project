@@ -74,7 +74,7 @@ const AddProducts = () => {
         <div className="AddProductContainer">
             <h2>Add New Product</h2>
             <form onSubmit={handleSubmit}>
-                <div className="ProdctName">
+                <div className="ProductName">
                     <span>Product Name</span>
                 </div>
                 <input
@@ -95,8 +95,8 @@ const AddProducts = () => {
                     onChange={handleProductPriceChange}
                     required
                 />
-                <div className="OriginalCost">
-                    <span>Original Cost</span>
+               <div className="ProductPrice">
+                    <span>Product Price</span>
                 </div>
                 <input
                     type="number"
@@ -106,8 +106,8 @@ const AddProducts = () => {
                     required
                 />
 
-                <div className="ProdctDescription">
-                    <span>Product Description</span>
+<div className="ProductPrice">
+                    <span>Product Price</span>
                 </div>
                 <textarea
                     id="ProductDescription"
@@ -116,8 +116,8 @@ const AddProducts = () => {
                     onChange={handleProductDescriptionChange}
                     required
                 ></textarea>
-                <div className="ProductCategory " >
-                    <span>Product Category</span>
+                <div className="ProdctDescription">
+                    <span>Product Description</span>
                 </div>
                 <select value={productCategory} onChange={handleProductCategoryChange} id="short">
                     <option value="Sofas">Sofas</option>
