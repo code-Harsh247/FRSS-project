@@ -4,18 +4,20 @@ import axios from "../../context/axiosConfig";
 import CustomButton from "../Button/CustomButton";
 import CustomButtonSecondary from '../Button/CustomButttonSecondary';
 import Counter from '../Counter/Counter';
-import {useCart} from '../../context/CartContext';
-import {useAuth} from '../../context/AuthContext';
-import {useNavigate} from 'react-router-dom';
+import { useCart } from '../../context/CartContext';
+import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 
 const ProdDetails = ({ item }) => {
     const [mainImg, setMainImg] = useState(null);
     const [loading, setLoading] = useState(true);
-    const {userId} = useCart();
+    const { userId } = useCart();
     const { isLoggedIn } = useAuth();
     const [duration, setDuration] = useState(1);
-    const [quantity,setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(1);
+
+    const {setCacheCart} = useCart();
 
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
@@ -37,15 +39,20 @@ const ProdDetails = ({ item }) => {
     };
 
     const rentProduct = () => {
-        console.log("Renting Now");
-        navigate(`/rent/${item._id}/${quantity}/${duration}`);
+        if (isLoggedIn) {
+            console.log("Renting Now");
+            navigate(`/rent/${item._id}/${quantity}/${duration}`);
+        }else{
+            alert("You are not logged in. Log in Rent Products.")
+        }
+
     }
 
     const AddtoCart = async () => {
         console.log("Adding to cart");
         try {
 
-            if(!isLoggedIn){
+            if (!isLoggedIn) {
                 alert("You are not logged in. Log in to Add Items to Cart");
                 throw new Error("User Not Logged In")
             }
@@ -59,9 +66,10 @@ const ProdDetails = ({ item }) => {
                 duration: duration // Assuming you have the duration stored in state
             };
 
+            
             // Make a POST request to add the product to the cart
             const response = await axios.post(`users/add-to-cart/${userId}`, data);
-
+            setCacheCart(prevCacheCart => [...prevCacheCart, response.data.newCartItem]);
             // Handle success response
             console.log(response.data); // Assuming you want to log the response
             alert("Product added to cart successfully!");
@@ -69,7 +77,6 @@ const ProdDetails = ({ item }) => {
         } catch (error) {
             // Handle error
             console.error("Error adding product to cart:", error);
-            alert("Product added to cart successfully!");
             // Optionally, you can show an error message to the user
         }
     }
@@ -113,8 +120,8 @@ const ProdDetails = ({ item }) => {
                     <div className='Product-Price'>
                         <p>{item ? `Rs ${item.price} / month` : 'Loading...'}</p>
                         <div className='Product-Rating'>
-                        <p>{item ? `★ ${item.ratings.toFixed(1)}` : 'Loading...'}</p>
-                    </div>
+                            <p>{item ? `★ ${item.ratings.toFixed(1)}` : 'Loading...'}</p>
+                        </div>
                     </div>
                     <div className='Product-Desc'>
                         <p>{item ? item.description : 'Loading...'}</p>
@@ -122,11 +129,11 @@ const ProdDetails = ({ item }) => {
                 </div>
                 <div className='QuantitySelect'>
                     <span>Quantity</span>
-                    <Counter valueFunc={setQuantity} defaultValue={quantity}/>
+                    <Counter valueFunc={setQuantity} defaultValue={quantity} />
                 </div>
                 <div className='DurationSelect'>
                     <span>Rent Duration (in months)</span>
-                    <Counter valueFunc={setDuration} defaultValue={duration}/>
+                    <Counter valueFunc={setDuration} defaultValue={duration} />
                 </div>
 
                 <div className='Buttons'>

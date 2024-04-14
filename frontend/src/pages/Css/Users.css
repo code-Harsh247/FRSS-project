@@ -3,10 +3,11 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+  margin-bottom: 100px;
 
 }
 .UsersContainer{
-  width:100vw;
+  width:100%;
 }
 
 .UsersContainer button {
@@ -25,13 +26,12 @@
 .AddNewUsers {
   display: flex;
   justify-content: center;
-  margin: 20px;
   align-items: center;
+  margin: 20px 0;
 }
 .UsersListTitle{
     display: flex;
     justify-content: center;
-    margin: 20px;
     align-items: center;
     border-top:1px  solid black;
     border-bottom: 1px solid black; 

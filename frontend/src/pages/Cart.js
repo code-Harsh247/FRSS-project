@@ -13,7 +13,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import CustomButton from "../components/Button/CustomButton";
 
 function Cart() {
-    const { cartData, loading, setLoading, userId } = useCart();
+    const { cartData, loading, setLoading, userId, setCartData } = useCart(); // Add setCartData to update cartData
     const { isLoggedIn } = useAuth();
     const { products } = useProducts();
     const navigate = useNavigate();
@@ -70,6 +70,8 @@ function Cart() {
     const handleRemoveItem = (id) => {
         deleteProduct(id);
         setCartProducts(prevItems => prevItems.filter(item => item.id !== id));
+        // Update cartData by removing the item
+        setCartData(prevCartData => prevCartData.filter(item => item.id !== id));
     };
 
     const checkout = () => {
@@ -100,9 +102,9 @@ function Cart() {
             {isLoggedIn && cartProducts.length > 0 && (
                 <div className="CartItemsContainer">
                     {cartProducts.map((item) => (
-            
                         <CartItem
                             key={item.id}
+                            ID = {item.id}
                             price={item.price}
                             name={item.name}
                             q={item.quantity}

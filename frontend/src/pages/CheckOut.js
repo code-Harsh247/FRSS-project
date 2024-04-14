@@ -8,31 +8,35 @@ import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import ServiceBanner from "../components/ServiceBanner/ServiceBanner";
 import CheckoutCard from "../components/CheckoutCards/CheckoutCard";
+import { useCart } from "../context/CartContext";
 
 const CheckOut = () => {
 
   const { productID, quantity, duration } = useParams();
   const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading2, setLoading2] = useState(true);
   const [error, setError] = useState(null);
+  const [rentItem, setRentItem] = useState(null);
+  const { cartData, loading, setLoading, userId } = useCart();
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`/products/${productID}`);
         setProduct(response.data);
-        setLoading(false);
+        setRentItem(true);
+        setLoading2(false);
       } catch (error) {
         setError(error.message);
-        setLoading(false);
+        setRentItem(false);
+        setLoading2(false);
       }
     };
 
     fetchProduct();
   }, [productID]);
 
-  console.log(product);
-
+    console.log(cartData);
 
   const [ProvinceInput, setProvinceInput] = useState("");
   const [FirstNameInput, setFirstNameInput] = useState("");
@@ -136,7 +140,7 @@ const CheckOut = () => {
 
         </div>
         <div className="RightPart">
-      {loading ? (
+      {loading2 ? (
         <p>Loading ... </p>
       ) : error ? (
         <p>Error: {error}</p>
