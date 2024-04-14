@@ -62,9 +62,7 @@ const CheckOut = () => {
   const handleFirstNameChange = (firstName) => {
     setFirstNameInput(firstName);
   }
-  const handleLastNameChange = (lastName) => {
-    setLastNameInput(lastName);
-  }
+
   const handleCountryRegionChange = (countryRegion) => {
     setCountryRegionInput(countryRegion);
   }
@@ -126,17 +124,13 @@ const CheckOut = () => {
           <p>Billing Details</p>
           <div className="Name">
             <div className="FirstName">
-              <span> First Name</span>
+              <span>Name</span>
               <InputBox onInputChange={handleFirstNameChange} />
-            </div>
-            <div className="LastName">
-              <span> Last Name</span>
-              <InputBox onInputChange={handleLastNameChange} />
             </div>
           </div>
           <div className="CountryRegion">
             <span> Country/Region</span>
-            <InputBox onInputChange={handleCountryRegionChange} />
+            <InputBox onInputChange={handleCountryRegionChange}/>
           </div>
           <div className="StreetAddress">
             <span> Street Address</span>
