@@ -107,7 +107,7 @@ router.get('/orders', async (req, res) => {
         }
         
         // Retrieve the order array from the admin document
-        const orders = admin.Order;
+        const orders = admin.Order.reverse();
         
         res.status(200).json({ orders: orders });
     } catch (error) {
@@ -126,7 +126,7 @@ router.get('/notifications', async (req, res) => {
         }
         
         // Retrieve the notifications array from the admin document
-        const notifications = admin.Notification;
+        const notifications = admin.Notification.reverse();
         
         res.status(200).json({ notifications: notifications });
     } catch (error) {

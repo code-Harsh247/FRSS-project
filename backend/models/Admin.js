@@ -58,7 +58,6 @@ const AdminSchema = new mongoose.Schema({
                 type: String
             }
             
-
         }],
         default:[]
     },
