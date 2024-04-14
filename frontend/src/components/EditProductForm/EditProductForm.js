@@ -181,7 +181,6 @@ const EditProduct = ({ productId }) => {
                         <span>Original Cost:</span>
                     </div>
                     <input
-
                         type="number"
                         id="short"
                         value={originalCost}
