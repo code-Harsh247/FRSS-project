@@ -6,6 +6,7 @@ function HistoryProductCard({ img, name, price, quantity, duration }) {
 
   return (
     <div className="history-product-card">
+      
       <div className='product-image-container'>
         <img
           className="product-image"
@@ -20,15 +21,13 @@ function HistoryProductCard({ img, name, price, quantity, duration }) {
         </span>
         <div className="product-details">
           <div className='detail'>
-            <span>Quantity:{quantity}</span>
-            
-          </div>
-          <div className='detail'>
-            <span>Rent Duration (months):{duration}</span>
-           
+            <span style={{color:"black"}}><span className='font-Admin-Prod-Card'>Quantity:</span>{quantity}</span>
+            <br/>
+            <span style={{color:"black"}}><span className='font-Admin-Prod-Card'>Rent Duration (months):</span>{duration}</span>
           </div>
         </div>
       </div>
+      <button className='ReturnBtn'>Return</button>
       {/* Close icon */}
       {/* Note: Since this is a history product card, there's no need for the delete functionality */}
       

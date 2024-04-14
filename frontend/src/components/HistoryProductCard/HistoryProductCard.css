@@ -43,13 +43,26 @@
 
 .product-details {
   display: flex;
+
   justify-content: space-between;
 }
 
-.detail {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  height: 50px;
-  align-items: flex-start;
+.ReturnBtn{
+  position: relative;
+  right: 5%;
+  width: 150px;
+  height: 35px;
+  bottom: 22%;
+  color: white;
+  background-color: black;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
+.ReturnBtn:hover{
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+}
+.ReturnBtn:active{
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+
