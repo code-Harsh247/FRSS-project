@@ -196,10 +196,10 @@ const EditProduct = ({ productId }) => {
                         <span>Product Category:</span>
                     </div>
                     <select value={productCategory} onChange={handleProductCategoryChange} id="short">
-                        <option value="Sofas">Sofas</option>
-                        <option value="Chairs">Chairs</option>
-                        <option value="Beds">Beds</option>
-                        <option value="Tables">Tables</option>
+                        <option value="Sofa">Sofa</option>
+                        <option value="Chair">Chair</option>
+                        <option value="Bed">Bed</option>
+                        <option value="Table">Table</option>
                     </select>
                 </div>
 
