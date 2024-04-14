@@ -47,7 +47,7 @@ const AdminSchema = new mongoose.Schema({
             type: Number,
         },
         ProductName:{
-            type: Number,
+            type: String,
         },
         Quantity:{
             type: Number

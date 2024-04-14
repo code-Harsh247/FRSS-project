@@ -78,5 +78,15 @@ ProductSchema.pre('save', function(next) {
     next();
 });
 
+ProductSchema.pre('save', function(next) {
+    if (this.stock > 20) {
+        this.available = true;
+    }
+    else{
+        this.available=false;
+    }
+    next();
+});
+
 const Product = mongoose.model("Product", ProductSchema);
 module.exports = Product;

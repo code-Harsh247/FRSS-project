@@ -61,7 +61,7 @@ const UserSchema = new mongoose.Schema({
     Rented: {
         type: [{
             ProductId: {
-                type: Number,
+                type: Number
                 
             },
             Quantity: {
@@ -75,13 +75,42 @@ const UserSchema = new mongoose.Schema({
             Date: {
                 type: Date,
                 default: Date.now
+            },
+            TimeDue:{
+                type:Number
+            },
+            Live:{
+                type:Boolean,
+                default:true
+            },
+            Loan:{
+                type: Number,
+                default:0
             }
         }],
         default: []
+    },
+    Notification:{
+        type:[String],
+        default:[]
     }
 });
 
-
+UserSchema.methods.calculateDueTime = function() {
+    this.Rented.forEach(item => {
+        const rentDuration = item.RentDuration; // Rent duration in months
+        const startDate = item.Date; // Date the product was rented
+        const currentDate = new Date(); // Current date
+        
+        // Calculate due time in months
+        const dueTime = rentDuration - Math.floor((currentDate - startDate) / (30 * 24 * 60 * 60 * 1000));
+        
+        // Update TimeDue field with the calculated due time
+        item.TimeDue = dueTime;
+    });
+    // Save the changes to the user document
+    return this.save();
+};
 
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
