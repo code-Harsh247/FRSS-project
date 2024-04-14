@@ -20,3 +20,55 @@
     font-size:2rem;
     margin:10px;
 }
+.OrderAlertsTitle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.ClearOrderAlerts{
+    margin-right:10px;
+}
+.ClearOrderAlerts button{
+    background-color:white;
+    color: black;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.ClearOrderAlerts button{
+    margin: 5px 0;
+    width: 100%;
+}
+.ClearOrderAlerts button:hover{
+    color:white;
+    background-color: red !important;
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.ClearOrderAlerts button:active{
+    transform: scale(0.98);
+}
+.NotificationTitle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.NotificationList, .OrderAlertsList{
+    border:1px solid #ddd;
+    min-height:30vh;
+}
+.NoAlertsMessage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:30vh;
+}
+.NoAlertsMessage span{
+    font-size:3rem;
+}
