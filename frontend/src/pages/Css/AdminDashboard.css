@@ -1,0 +1,61 @@
+.AdminDashboardContent{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.TotalInvestment{
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 40vh;
+    width:95vw;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    
+}
+.InvestmentStat{
+    display: flex;
+    flex-direction: row;;
+}
+.TotalInvestmentTitle{
+
+    width:63vw;
+    height:30%;
+
+}
+.TotalInvestmentAmount{
+
+    width:27vw;
+    height:40%;
+}
+
+
+.TotalInvestmentTitle span{
+    font-size: 5rem;
+    font-weight: bold;
+    margin-left: 1rem;
+}
+.TotalInvestmentAmount span{
+    font-size: 4rem;
+    font-weight: bold;
+    margin-left: 1rem;
+}
+.ProductInvestment span{
+    font-size: 1.25rem;
+    margin-left: 1rem;
+}
+
+#inumber{
+    color:black;
+}
+.profit{
+    color:#16FF00;
+}
+.loss{
+    color:#FF004D;
+    
+}
