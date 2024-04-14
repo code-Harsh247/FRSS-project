@@ -615,5 +615,86 @@ router.get('/notifications/:userId', async (req, res) => {
     }
 });
 
+router.get('/time-due/:userId/:orderId', async (req, res) => {
+    const userId = req.params.userId;
+    const orderId = req.params.orderId;
+
+    try {
+        // Find the user by ID
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Find the order by ID in the user's rented array
+        const order = user.Rented.find(order => order._id.toString() === orderId);
+
+        if (!order) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+        // Check if live status is true
+        if (order.Live) {
+            // Calculate time due in months
+            const rentDuration = order.RentDuration; // Rent duration in months
+            const startDate = new Date(order.Date); // Date the product was rented
+            const currentDate = new Date(); // Current date
+            const monthsDiff = (currentDate.getFullYear() - startDate.getFullYear()) * 12 + (currentDate.getMonth() - startDate.getMonth());
+            const timeDue = rentDuration - monthsDiff;
+
+            res.json({ timeDue: timeDue });
+        } else {
+            res.json({ message: "Order is not active" });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
+router.get('/total-loan/:userId/:orderId', async (req, res) => {
+    const userId = req.params.userId;
+    const orderId = req.params.orderId;
+
+    try {
+        // Find the user by ID
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Find the order by ID in the user's rented array
+        const order = user.Rented.find(order => order._id.toString() === orderId);
+
+        if (!order) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+        // Calculate total loan
+        let totalLoan = 0;
+
+        if (order.Live) {
+            const rentDuration = order.RentDuration; // Rent duration in months
+            const startDate = new Date(order.Date); // Date the product was rented
+            const currentDate = new Date(); // Current date
+            const monthsDiff = (currentDate.getFullYear() - startDate.getFullYear()) * 12 + (currentDate.getMonth() - startDate.getMonth());
+            const timeDue = rentDuration - monthsDiff;
+
+            // If time due is negative, calculate total loan
+            if (timeDue < 0) {
+                totalLoan = Math.abs(timeDue) * order.Quantity * order.Price;
+            }
+        }
+
+        res.json({ totalLoan: totalLoan });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
+
 module.exports = router;
  
