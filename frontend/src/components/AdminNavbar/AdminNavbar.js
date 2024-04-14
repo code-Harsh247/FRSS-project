@@ -4,8 +4,9 @@ import logo from "../assets/Logo/Logo (black).png";
 import profile from "../assets/Icons/profile.png";
 import { useAdminAuth } from "../../context/AdminAuthContext";
 import { NavLink, useNavigate } from "react-router-dom";
+import reddot from "../assets/Icons/bin.png";
 
-const AdminNavbar = () => {
+const AdminNavbar = ({alert}) => {
     const [profileListVisibility, setProfileListVisibility] = useState(false);
     const [logoutBoxPosition, setLogoutBoxPosition] = useState({ top: 0, left: 0 });
     const profileIconRef = useRef(null);
@@ -58,9 +59,17 @@ const AdminNavbar = () => {
                     <NavLink to="/admin/dashboard" >Dashboard</NavLink>
                     <NavLink to="/admin/users">Users</NavLink>
                     <NavLink to="/admin/products">Products</NavLink>
+                    {alert && (
+                        <div className="AlertsDot">
+                          
+                        </div>
+                    )}
                     <NavLink to="/admin/alerts">Alerts</NavLink>
                    
                 </div>
+                
+                   
+                
                 <div className="AdminNavbarIcons">
                     <div ref={profileIconRef} className="profile-icon-container" onClick={handleProfileClick}>
                         <img src={profile} alt="profile" className="profile-icon" />

@@ -91,6 +91,7 @@ function OrderHistory() {
             {isLoggedIn && orderHistory.length > 0 && (
                 <div className="OrderHistoryItemsContainer">
                     {orderedProducts.map((item) => (
+                        console.log(item),
                         <HistoryProductCard
                             key={item.ProductId}
                             img={item.image[0]}
