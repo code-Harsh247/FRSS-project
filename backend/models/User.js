@@ -89,6 +89,10 @@ const UserSchema = new mongoose.Schema({
             }
         }],
         default: []
+    },
+    Notification:{
+        type:[String],
+        default:[]
     }
 });
 

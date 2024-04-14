@@ -534,8 +534,50 @@ router.put('/update-loan/:userId/:productId', async (req, res) => {
     }
 });
 
-module.exports = router;
+router.post('/add-notification/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    const { message } = req.body; // Assuming the request body contains the 'message' for the notification
+    // console.log(message);
+    try {
+        // Find the user by ID
+        const user = await User.findById(userId);
+        
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        
+        // Add the notification to the user's notification array
+        user.Notification.push(message);
+        // Save the user with the updated notification array
+        await user.save();
 
+        res.status(200).json({ message: "Notification added successfully", user: user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
+router.get('/notifications/:userId', async (req, res) => {
+    const userId = req.params.userId;
+
+    try {
+        // Find the user by ID
+        const user = await User.findById(userId);
+        
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        
+        // Retrieve the notifications from the user document
+        const notifications = user.Notification.reverse();
+        
+        res.status(200).json({ notifications: notifications });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
 
 module.exports = router;
  
