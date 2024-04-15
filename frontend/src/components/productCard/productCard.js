@@ -2,7 +2,7 @@ import React from 'react';
 import './ProductCard.css';
 import { useNavigate } from 'react-router-dom';
 
-function ProductCard({ id,imageUrl, productName, price }) {
+function ProductCard({ id,imageUrl, productName, price ,availability}) {
   const navigate = useNavigate();
 
   const handleClick = ()=>{
@@ -20,6 +20,9 @@ function ProductCard({ id,imageUrl, productName, price }) {
         <p className="card-text">
           Rs {price}/month
         </p>
+        <div className="availability">
+          {availability ? '' : 'Out of Stock'}
+          </div>
       </div>
     </div>
   );

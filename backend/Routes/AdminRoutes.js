@@ -253,9 +253,10 @@ router.get('/total-investments', async (req, res) => {
 // Get total categories (total number of distinct categories)
 router.get('/total-categories', async (req, res) => {
     try {
-        const totalCategories = await Product.distinct("category").count();
+        const totalCategories = await Product.distinct("category");
 
-        res.json({ totalCategories: totalCategories });
+
+        res.json({ totalCategories: totalCategories.length });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server Error" });
@@ -304,16 +305,16 @@ router.get('/revenue', async (req, res) => {
             },
             {
                 $match: {
-                    "Rented.Status": "active" // Filter documents where Live is true
+                    "Rented.Status": "active" // Filter documents where Status is active
                 }
             },
             {
                 $project: {
-                    userId: "$_id", // Include userId for grouping
+                    userId: null, // Include userId for grouping
                     totalRevenue: {
                         $multiply: [
                             { $toInt: "$Rented.Quantity" }, // Convert Quantity to integer
-                            { $toDouble: "$Rented.Price" }, // Convert Price to double
+                            { $toDouble: "$Rented.Price" }, // Correctly access Price field
                             { $toInt: "$Rented.RentDuration" } // Convert RentDuration to integer
                         ]
                     }
@@ -327,12 +328,14 @@ router.get('/revenue', async (req, res) => {
             }
         ]);
 
+
         res.json({ revenue });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server Error" });
     }
 });
+
 
 
 
@@ -371,13 +374,16 @@ router.get('/total-loan', async (req, res) => {
     try {
         const totalLoan = await User.aggregate([
             {
+                $unwind:"$Rented"
+            },
+            {
                 $group: {
                     _id: null,
                     totalLoan: { $sum: "$Rented.Loan" }
                 }
             }
         ]);
-
+        console.log(totalLoan);
         res.json({ totalLoan: totalLoan[0].totalLoan });
     } catch (error) {
         console.error(error);
@@ -404,7 +410,7 @@ router.get('/total-products-rented', async (req, res) => {
             }
         ]);
 
-        res.json({ totalProductsRented: totalProductsRented[0].totalProductsRented });
+        res.json({ totalProductsRented: totalProductsRented.totalProductsRented });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server Error" });
