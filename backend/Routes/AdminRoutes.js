@@ -278,7 +278,7 @@ router.get('/revenue', async (req, res) => {
             },
             {
                 $project: {
-                    userId: "$_id", // Include userId for grouping
+                    userId: null, // Include userId for grouping
                     totalRevenue: {
                         $multiply: [
                             { $toInt: "$Rented.Quantity" }, // Convert Quantity to integer
@@ -342,13 +342,16 @@ router.get('/total-loan', async (req, res) => {
     try {
         const totalLoan = await User.aggregate([
             {
+                $unwind:"$Rented"
+            },
+            {
                 $group: {
                     _id: null,
                     totalLoan: { $sum: "$Rented.Loan" }
                 }
             }
         ]);
-
+        console.log(totalLoan);
         res.json({ totalLoan: totalLoan[0].totalLoan });
     } catch (error) {
         console.error(error);
