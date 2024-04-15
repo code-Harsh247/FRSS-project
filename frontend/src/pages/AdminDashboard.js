@@ -53,7 +53,6 @@ function Admin() {
             } catch (error) {
                 console.error("Error fetching dashboard data:", error);
             }
-            console.log("Server ", dashboardData.revenue);
         };
 
         if (isAdminLoggedIn) {
