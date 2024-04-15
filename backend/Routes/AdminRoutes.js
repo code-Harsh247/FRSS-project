@@ -195,6 +195,37 @@ router.post('/create-return-requests', async (req, res) => {
     }
 });
 
+router.post('/initiate-return-request', async (req, res) => {
+    try {
+        // Extract necessary data from the request body
+        const { orderId, userId } = req.body;
+
+        // Find the user based on the provided user ID
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        // Update the status of the rented item with the given order ID to "inactive"
+        for (const item of user.Rented) {
+            if (item.orderId === orderId) {
+                item.Status = 'inactive';
+                break; // Exit the loop once the item is found and updated
+            }
+        }
+
+        // Save the changes to the user document
+        await user.save();
+
+        // Return success response
+        res.status(200).json({ success: true, message: 'Return request initiated successfully' });
+    } catch (error) {
+        console.error('Error initiating return request:', error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+});
+
+
 
 router.get('/total-investments', async (req, res) => {
     try {
