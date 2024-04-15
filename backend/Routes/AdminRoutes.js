@@ -117,6 +117,36 @@ router.get('/orders', async (req, res) => {
     }
 });
 
+router.delete('/delete-order/:orderID', async (req, res) => {
+    try {
+        const orderID = req.params.orderID;
+
+        // Find the admin and update
+        const admin = await Admin.findOne({ isAdmin: true });
+        if (!admin) {
+            return res.status(404).json({ success: false, message: 'Admin not found' });
+        }
+
+        // Filter out the order with the given orderID
+        const updatedOrders = admin.Order.filter(order => Number(order.OrderID) !== Number(orderID));
+
+        if (admin.Order.length === updatedOrders.length) {
+            return res.status(404).json({ success: false, message: 'Order not found' });
+        }
+
+        // Update the orders array in the admin document
+        admin.Order = updatedOrders;
+        await admin.save();
+
+        res.json({ success: true, message: 'Order deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+});
+
+
+
 router.get('/notifications', async (req, res) => {
     try {
         // Find the admin

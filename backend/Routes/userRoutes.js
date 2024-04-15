@@ -491,8 +491,6 @@ router.post('/rent/cart/:userId', async (req, res) => {
             let id = lastOrderID + temp;
             temp=temp+1;
 
-            
-
             // Update user's rented items
             const rentedProduct = {
                 ProductId: productId,
