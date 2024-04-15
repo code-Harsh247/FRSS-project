@@ -1,8 +1,8 @@
 .OrderAlertsCardContainer {
     border: 1px solid #ddd;
     border-radius: 4px;
-    height: 25vh;
-    width: 75vw;
+    height: 27vh;
+    width: 98.5%;
     flex-direction: row;
     display: flex;
     align-items: center;
@@ -25,8 +25,9 @@
   .order-alerts-card-info {
     margin-left: 2%;
     margin-right: 10%;
-    width: 70%;
+    width: 30%;
     height: 85%;
+
   }
   
   .order-alerts-card-name {
