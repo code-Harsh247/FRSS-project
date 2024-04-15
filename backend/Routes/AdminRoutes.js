@@ -108,7 +108,7 @@ router.get('/orders', async (req, res) => {
         }
         
         // Retrieve the order array from the admin document
-        const orders = admin.Order.reverse();
+        const orders = admin.Order;
         
         res.status(200).json({ orders: orders });
     } catch (error) {
@@ -127,7 +127,7 @@ router.get('/notifications', async (req, res) => {
         }
         
         // Retrieve the notifications array from the admin document
-        const notifications = admin.Notification.reverse();
+        const notifications = admin.Notification;
         
         res.status(200).json({ notifications: notifications });
     } catch (error) {
@@ -375,47 +375,6 @@ router.get('/total-products-rented', async (req, res) => {
         ]);
 
         res.json({ totalProductsRented: totalProductsRented.totalProductsRented });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server Error" });
-    }
-});
-
-// -------------------------------------------------------------------------
-
-router.get('/total-profit', async (req, res) => {
-    try {
-        const totalRevenue = await Product.aggregate([
-            {
-                $project: {
-                    totalRevenue: { $multiply: ["$price", "$unitsRented"] }
-                }
-            },
-            {
-                $group: {
-                    _id: null,
-                    revenue: { $sum: "$totalRevenue" }
-                }
-            }
-        ]);
-
-        const totalInvestment = await Product.aggregate([
-            {
-                $project: {
-                    totalInvestment: { $multiply: ["$cost", "$stock"] }
-                }
-            },
-            {
-                $group: {
-                    _id: null,
-                    totalInvestments: { $sum: "$totalInvestment" }
-                }
-            }
-        ]);
-
-        const totalProfit = totalRevenue[0].revenue - totalInvestment[0].totalInvestments;
-
-        res.json({ totalProfit: totalProfit });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server Error" });

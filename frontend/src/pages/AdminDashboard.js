@@ -54,7 +54,6 @@ function Admin() {
             } catch (error) {
                 console.error("Error fetching dashboard data:", error);
             }
-            
         };
 
         if (isAdminLoggedIn) {
