@@ -3,8 +3,8 @@ const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const Product=require("../models/Product")
-const Admin=require("../models/Admin");
+const Product = require("../models/Product")
+const Admin = require("../models/Admin");
 
 router.post('/signup', async (req, res) => {
     try {
@@ -166,7 +166,7 @@ router.get('/cart/:userId', async (req, res) => {
         if (!user) {
             return res.status(404).json({ success: false, errors: "User not found" });
         }
-        
+
         // Retrieve cart data from user object
         const cartData = user.cartData;
 
@@ -239,7 +239,7 @@ router.post('/add-to-cart/:userId', async (req, res) => {
             const product = {
                 id: productId,
                 count: quantity,
-                duration: rentDuration 
+                duration: rentDuration
             };
             console.log(product);
             // Push the product into the cartData array
@@ -322,6 +322,15 @@ router.post('/rent/:userId', async (req, res) => {
         const productId = req.body.productId;
         const quantity = req.body.quantity;
         const duration = req.body.duration;
+        const price = req.body.price;
+        const street = req.body.street;
+        const city = req.body.city;
+        const province = req.body.province;
+        const phone = req.body.phone;
+        const email = req.body.email;
+        const zipcode = req.body.zipcode;
+        const country = req.body.country;
+        const userName = req.body.userName;
 
         // Find the user by ID
         const user = await User.findById(userId);
@@ -339,13 +348,29 @@ router.post('/rent/:userId', async (req, res) => {
         if (product.stock < quantity || !product.available) {
             return res.status(400).json({ success: false, errors: "Requested quantity not available in stock" });
         }
+        const admin = await Admin.findOne();
+        if (!admin) {
+            return res.status(500).json({ success: false, errors: "Admin not found" });
+        }
+        let id;
+        if (admin.Order.length > 0) {
+            let last_order_array = admin.Order.slice(-1);
+            let last_order = last_order_array[0];
+            id = last_order.OrderID + 1;
+        }
+        else {
+            id = 1;
+        }
 
         // Update user's rented items
         const rentedProduct = {
             ProductId: productId,
             Quantity: quantity,
             RentDuration: duration,
-            TimeDue: duration
+            Price: price,
+            Status: 'active',
+            TimeDue: duration,
+            orderId: id
         };
         user.Rented.push(rentedProduct);
 
@@ -353,26 +378,30 @@ router.post('/rent/:userId', async (req, res) => {
         product.unitsRented += quantity;
         product.stock -= quantity;
 
-        // Add order to admin
-        const admin = await Admin.findOne();
-        if (!admin) {
-            return res.status(500).json({ success: false, errors: "Admin not found" });
-        }
 
         const newOrder = {
+            OrderID: id,
             image: product.image[0],
             ProductID: product.id,
-            Username: user.name,
-            UserID: user.email,
+            Username: userName,
+            UserID: email,
             Duration: duration,
-            Price: product.price,
-            Quantity: quantity
+            Price: price,
+            Quantity: quantity,
+            Street: street,
+            City: city,
+            Province: province,
+            Phone: phone,
+            Email: email,
+            ZipCode: zipcode,
+            Country: country,
+
         };
         admin.Order.push(newOrder);
 
         // Check if stock falls below threshold and update availability
         if (product.stock < 20) {
-            product.available=false;
+            product.available = false;
             const newNotification = {
                 image: product.image[0],
                 ProductID: product.id,
@@ -397,133 +426,145 @@ router.post('/rent/:userId', async (req, res) => {
 router.get('/rented/:userId', async (req, res) => {
     try {
         const userId = req.params.userId;
-
-        // Find the user by ID
         const user = await User.findById(userId);
 
-        // Check if user exists
         if (!user) {
-            return res.status(404).json({ success: false, errors: "User not found" });
+            return res.status(404).json({ success: false, message: 'User not found' });
         }
 
-        // Retrieve rented products from user object
-        const rentedProducts = user.Rented;
+        const rentedItems = user.Rented;
 
-        // Return the rented products
-        res.status(200).json({ success: true, rentedProducts });
+        res.status(200).json({ success: true, rentedItems: rentedItems });
     } catch (error) {
-        // If there's any error, send server error response
-        console.error(error);
+        console.error("Error:", error);
         res.status(500).json({ success: false, errors: "Server Error" });
     }
 });
 
-
-
-router.post('/move-to-rented/:userId', async (req, res) => {
+router.post('/rent/cart/:userId', async (req, res) => {
     try {
         const userId = req.params.userId;
+        const street = req.body.street;
+        const city = req.body.city;
+        const province = req.body.province;
+        const phone = req.body.phone;
+        const email = req.body.email;
+        const zipcode = req.body.zipcode;
+        const country = req.body.country;
+        const userName = req.body.userName;
+        const cartItems = req.body.cartItems; // Assuming cartItems is an array of objects containing productId, quantity, duration, price, etc.
 
         // Find the user by ID
         const user = await User.findById(userId);
-
-        // Check if user exists
         if (!user) {
             return res.status(404).json({ success: false, errors: "User not found" });
         }
 
-        // Retrieve cart data from user object
-        const cartData = user.cartData;
-
-        // Check if the cart is empty
-        if (cartData.length === 0) {
-            return res.status(400).json({ success: false, errors: "Cart is empty" });
-        }
-
-        // Initialize arrays to store orders and notifications for admin
+        // Initialize an array to store orders for the admin
         const adminOrders = [];
-        const adminNotifications = [];
-
-        // Iterate through each item in cartData and move it to the Rented array
-        for (const item of cartData) {
-            const productId = item.id;
-            const quantity = item.count;
-            const duration = item.duration;
+        const admin = await Admin.findOne();
+        // Iterate through each item in the cart
+        for (const cartItem of cartItems) {
+            const productId = cartItem.id;
+            const quantity = cartItem.count;
+            const duration = cartItem.duration;
+            const price = cartItem.price;
 
             // Find the product by ID
             const product = await Product.findOne({ id: productId });
-
-            // Check if product exists
             if (!product) {
-                return res.status(404).json({ success: false, errors: `Product with ID ${productId} not found` });
+                return res.status(404).json({ success: false, errors: "Product not found" });
+            }
+            else console.log("product found : ", productId);
+
+            // Check if requested quantity is available in stock and product is available
+            if (product.stock < quantity || !product.available) {
+                return res.status(400).json({ success: false, errors: "Requested quantity not available in stock" });
+            }
+            let id;
+            if (adminOrders.length > 0) {
+                let last_order_array = adminOrders.slice(-1);
+                let last_order = last_order_array[0];
+                id = last_order.OrderID + 1;
+            }
+            else {
+                let temp = admin.Order.slice(-1);
+                let temp2 = temp[0];
+                id = temp2.OrderID + 1;
             }
 
-            // Update unitsRented count for the product
+            // Update user's rented items
+            const rentedProduct = {
+                ProductId: productId,
+                Quantity: quantity,
+                RentDuration: duration,
+                Price: price,
+                Status: 'active',
+                TimeDue: duration,
+                orderId: id
+            };
+            user.Rented.push(rentedProduct);
+
+            // Update product's stock and units rented
             product.unitsRented += quantity;
             product.stock -= quantity;
 
-            // Add product renting information to the user's rented section
-            const rentingInfo = {
-                ProductId: productId,
-                Quantity: quantity,
-                RentDuration: duration
-            };
-            user.Rented.push(rentingInfo);
-
-            // Add order information for admin
-            const orderInfo = {
+            // Create an order for the admin
+            const newOrder = {
+                OrderID: id,
                 image: product.image[0],
                 ProductID: productId,
-                Username: user.name,
-                UserID: user.email,
+                Username: userName, // Assuming user has a userName property
+                UserID: email, // Assuming user has an email property
                 Duration: duration,
-                Price: product.price,
-                Quantity: quantity
+                Price: price,
+                Quantity: quantity,
+                Street: street,
+                City: city,
+                Province: province,
+                Phone: phone,
+                Email: email,
+                ZipCode: zipcode,
+                Country: country,
             };
-            adminOrders.push(orderInfo);
+            adminOrders.push(newOrder);
 
             // Check if stock falls below threshold and update availability
             if (product.stock < 20) {
                 product.available = false;
-
-                // Add notification for admin
-                const notificationInfo = {
+                const newNotification = {
                     image: product.image[0],
-                    ProductID: productId,
+                    ProductID: product.id,
                     ProductName: product.name,
                     Quantity: product.stock
                 };
-                adminNotifications.push(notificationInfo);
+                if (admin) {
+                    admin.Notification.push(newNotification);
+                    await admin.save();
+                }
             }
+
+            // Save changes to product
+            await product.save();
         }
 
-        // Empty the cartData array after moving all items to Rented
-        user.cartData = [];
-
-        // Save the updated user
+        // Save changes to user
         await user.save();
 
-        // Save the updated products
-        await Promise.all(cartData.map(item => Product.findOneAndUpdate({ id: item.id }, { $inc: { unitsRented: item.count } })));
-
-        // Update admin's order list and notification list
-        const admin = await Admin.findOne();
         if (!admin) {
             return res.status(500).json({ success: false, errors: "Admin not found" });
         }
-
-        admin.Order.push(...adminOrders);
-        admin.Notification.push(...adminNotifications);
-
-        // Save the updated admin
+        admin.Order = admin.Order.concat(adminOrders);
         await admin.save();
 
-        res.json({ success: true, message: "Products moved from cart to Rented successfully", user });
+        res.json({ success: true, message: "Products rented successfully", user });
     } catch (error) {
-        console.error(error);
+        console.error("Error:", error);
         res.status(500).json({ success: false, errors: "Server Error" });
     }
 });
+
+
 
 // API endpoint to update the loan of the rented product
 router.put('/update-loan/:userId/:productId', async (req, res) => {
@@ -531,7 +572,7 @@ router.put('/update-loan/:userId/:productId', async (req, res) => {
         const userId = req.params.userId;
         const productId = parseInt(req.params.productId); // Convert productId to integer
         const user = await User.findById(userId);
-        
+
         // Check if user exists
         if (!user) {
             return res.status(404).json({ success: false, errors: "User not found" });
@@ -574,14 +615,14 @@ router.post('/add-notification/:userId', async (req, res) => {
     try {
         // Find the user by ID
         const user = await User.findById(userId);
-        
+
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        
+
         // Add the notification to the user's notification array
-        const newNotification={
-            Message:message
+        const newNotification = {
+            Message: message
         }
         user.Notification.push(newNotification);
         // Save the user with the updated notification array
@@ -600,14 +641,14 @@ router.get('/notifications/:userId', async (req, res) => {
     try {
         // Find the user by ID
         const user = await User.findById(userId);
-        
+
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        
+
         // Retrieve the notifications from the user document
         const notifications = user.Notification.reverse();
-        
+
         res.status(200).json({ notifications: notifications });
     } catch (error) {
         console.error(error);
@@ -635,7 +676,7 @@ router.get('/time-due/:userId/:orderId', async (req, res) => {
         }
 
         // Check if live status is true
-        if (order.Live) {
+        if (order.Status === 'active') {
             // Calculate time due in months
             const rentDuration = order.RentDuration; // Rent duration in months
             const startDate = new Date(order.Date); // Date the product was rented
@@ -675,7 +716,7 @@ router.get('/total-loan/:userId/:orderId', async (req, res) => {
         // Calculate total loan
         let totalLoan = 0;
 
-        if (order.Live) {
+        if (order.Status === 'active') {
             const rentDuration = order.RentDuration; // Rent duration in months
             const startDate = new Date(order.Date); // Date the product was rented
             const currentDate = new Date(); // Current date
@@ -697,4 +738,3 @@ router.get('/total-loan/:userId/:orderId', async (req, res) => {
 
 
 module.exports = router;
- 

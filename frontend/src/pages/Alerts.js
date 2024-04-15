@@ -65,7 +65,7 @@ function Alerts() {
     if (isAdminLoggedIn) {
         return (
             <div className="AlertsContainer">
-                <AdminNavbar />
+                <AdminNavbar  />
                 <AdminBanner name="Alerts" />
                 <div className="AlertsContent">
                     <div className="OrderAlerts">

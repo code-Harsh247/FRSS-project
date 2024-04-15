@@ -15,6 +15,9 @@ const AdminSchema = new mongoose.Schema({
     },
     Order:{
         type:[{
+            OrderID:{
+                type:Number,
+            },
             image:{
                 type: String,
             },
@@ -57,7 +60,6 @@ const AdminSchema = new mongoose.Schema({
             Country:{
                 type: String
             }
-            
         }],
         default:[]
     },
@@ -74,7 +76,13 @@ const AdminSchema = new mongoose.Schema({
         Quantity:{
             type: Number
         }
+    }],
+    ReturnRequests:[{
+        OrderID:{
+            type:String
+        }
     }]
+    
 });
 
 

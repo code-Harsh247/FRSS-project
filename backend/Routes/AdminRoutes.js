@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Product=require("../models/Product");
 
+
 router.post('/signup', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -135,6 +136,66 @@ router.get('/notifications', async (req, res) => {
     }
 });
 
+router.get('/return-requests', async (req, res) => {
+    try {
+        const admin = await Admin.findOne({ isAdmin: true });
+        if (!admin) {
+            return res.status(404).json({ success: false, message: 'Admin not found' });
+        }
+        const returnRequests = admin.ReturnRequests;
+        res.status(200).json({ success: true, returnRequests });
+    } catch (error) {
+        console.error('Error fetching return requests:', error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+});
+
+router.post('/create-return-requests', async (req, res) => {
+    try {
+        // Extract necessary data from the request body
+        const { orderId, userId } = req.body;
+
+        // Find the admin document
+        const admin = await Admin.findOne({ isAdmin: true });
+        if (!admin) {
+            return res.status(404).json({ success: false, message: 'Admin not found' });
+        }
+
+        // Create the return request object
+        const returnRequest = { OrderID: orderId };
+
+        // Add the return request to the ReturnRequests array
+        admin.ReturnRequests.push(returnRequest);
+
+        // Save the updated admin document
+        await admin.save();
+
+        // Find the user based on the provided user ID
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        // Update the status of the rented item with the given order ID to "pending"
+        for (const item of user.Rented) {
+            if (item.orderId === orderId) {
+                item.Status = 'pending';
+                break; // Exit the loop once the item is found and updated
+            }
+        }
+
+        // Save the changes to the user document
+        await user.save();
+
+        // Return success response
+        res.status(201).json({ success: true, message: 'Return request created successfully' });
+    } catch (error) {
+        console.error('Error creating return request:', error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+});
+
+
 router.get('/total-investments', async (req, res) => {
     try {
         const totalInvestments = await Product.aggregate([
@@ -182,6 +243,7 @@ router.get('/total-products', async (req, res) => {
     }
 });
 
+
 // Get total inventory (sum of quantity of each product in database)
 router.get('/total-inventory', async (req, res) => {
     try {
@@ -204,26 +266,46 @@ router.get('/total-inventory', async (req, res) => {
 
 router.get('/revenue', async (req, res) => {
     try {
-        const revenue = await Product.aggregate([
+        // Calculate revenue from product sales for each user
+        const revenue = await User.aggregate([
+            {
+                $unwind: "$Rented" // Unwind the Rented array
+            },
+            {
+                $match: {
+                    "Rented.Status": "active" // Filter documents where Live is true
+                }
+            },
             {
                 $project: {
-                    totalRevenue: { $multiply: ["$price", "$unitsRented"] }
+                    userId: "$_id", // Include userId for grouping
+                    totalRevenue: {
+                        $multiply: [
+                            { $toInt: "$Rented.Quantity" }, // Convert Quantity to integer
+                            { $toDouble: "$Rented.Price" }, // Convert Price to double
+                            { $toInt: "$Rented.RentDuration" } // Convert RentDuration to integer
+                        ]
+                    }
                 }
             },
             {
                 $group: {
-                    _id: null,
+                    _id: "$userId", // Group by userId
                     revenue: { $sum: "$totalRevenue" }
                 }
             }
         ]);
 
-        res.json({ revenue: revenue[0].revenue });
+        res.json({ revenue });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server Error" });
     }
 });
+
+
+
+
 
 router.get('/total-customers', async (req, res) => {
     try {
@@ -280,7 +362,7 @@ router.get('/total-products-rented', async (req, res) => {
             },
             {
                 $match: {
-                    "Rented.Live": true // Match documents where Live status is true
+                    "Rented.Status": "active" // Match documents where Live status is true
                 }
             },
             {

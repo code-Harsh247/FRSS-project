@@ -18,7 +18,7 @@ const BRsection = () => {
       </div>
       <div className='categories'>
         {categories.map((crd) => (
-          <CategoryCard key={crd.id} title={crd.name} imgURL={crd.ImgUrl}/>
+          <CategoryCard key={crd._id} title={crd.name} imgURL={crd.ImgUrl}/>
         ))}
       </div>
     </div>

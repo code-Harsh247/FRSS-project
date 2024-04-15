@@ -80,3 +80,18 @@
 .AdminNavbarIcons img:hover, .profile-icon-container img:hover {
   cursor: pointer;
 }
+.AlertsDot{
+  position: absolute;
+  background-color: red;
+  border-radius: 50%;
+  z-index: 1;
+  width: 10px;
+  height: 10px;
+  top: 10px;
+  right: 475px;
+  margin: 5px;
+}
+.AlertsDot img{
+  height: 100%;
+  width: 100%;
+}
