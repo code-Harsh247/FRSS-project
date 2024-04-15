@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
+
 const ProdDetails = ({ item }) => {
     const [mainImg, setMainImg] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -17,8 +18,7 @@ const ProdDetails = ({ item }) => {
     const { isLoggedIn } = useAuth();
     const [duration, setDuration] = useState(1);
     const [quantity, setQuantity] = useState(1);
-
-    const {setCacheCart} = useCart();
+    const { setCacheCart } = useCart();
 
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
@@ -43,7 +43,7 @@ const ProdDetails = ({ item }) => {
         if (isLoggedIn) {
             console.log("Renting Now");
             navigate(`/rent/${item._id}/${quantity}/${duration}`);
-        }else{
+        } else {
             alert("You are not logged in. Log in Rent Products.")
         }
 
@@ -67,7 +67,7 @@ const ProdDetails = ({ item }) => {
                 duration: duration // Assuming you have the duration stored in state
             };
 
-            
+
             // Make a POST request to add the product to the cart
             const response = await axios.post(`users/add-to-cart/${userId}`, data);
             setCacheCart(prevCacheCart => [...prevCacheCart, response.data.newCartItem]);
@@ -136,10 +136,28 @@ const ProdDetails = ({ item }) => {
                     <span>Rent Duration (in months)</span>
                     <Counter valueFunc={setDuration} defaultValue={duration} />
                 </div>
-
+                {item && console.log(item.available)}
                 <div className='Buttons'>
-                    <CustomButton btnText="Rent now" handleClick={rentProduct} Btnwidth="100%" />
-                    <CustomButtonSecondary btnText="Add to Cart" handleClick={AddtoCart} Btnwidth="100%" />
+                    <button
+                    className="rent-now-button"
+                        onClick={rentProduct}
+                        style={{ background: item && !item.available ? "red" : "#181A12"}}
+
+                        disabled={item ? !item.available : true}
+                    >
+                        {item && !item.available ? "Not Available" : "Rent Now"}
+                    </button>
+
+                    {!item || item.available ? (
+    <button
+        className="add-to-cart-button"
+        onClick={AddtoCart}
+        disabled={!item || !item.available}
+    >
+        Add to Cart
+    </button>
+) : null}
+
                 </div>
             </div>
         </div>

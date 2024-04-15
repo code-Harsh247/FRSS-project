@@ -42,7 +42,7 @@ function Admin() {
                     totalcategories: totalCategoriesResponse.data.totalCategories,
                     totalproducts: totalProductsResponse.data.totalProducts,
                     totalinventory: totalInventoryResponse.data.totalInventory,
-                    revenue: revenueResponse.data.revenue,
+                    revenue: revenueResponse.data.totalRevenue,
                     customer: totalCustomersResponse.data.totalCustomers,
                     rented: totalRentedResponse.data.totalRented,
                     currrentlyented: totalProductsRentedResponse.data.totalProductsRented,
