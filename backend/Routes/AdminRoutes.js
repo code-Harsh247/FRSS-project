@@ -466,7 +466,7 @@ router.get('/total-products-rented', async (req, res) => {
             }
         ]);
 
-        res.json({ totalProductsRented: totalProductsRented.totalProductsRented });
+        res.json({ totalProductsRented: totalProductsRented[0].totalProductsRented });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server Error" });

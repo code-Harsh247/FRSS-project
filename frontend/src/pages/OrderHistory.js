@@ -13,7 +13,7 @@ import { useProducts } from "../context/ProductContext";
 import { useNavigate } from "react-router-dom";
 
 function OrderHistory() {
-    const { loading, setLoading, userId } = useCart(); // Removed cartData since we're not fetching it here
+    const { loading, setLoading, userId } = useCart();
     const { isLoggedIn } = useAuth();
     const [orderHistory, setOrderHistory] = useState([]);
     const [orderedProducts, setOrderedProducts] = useState([]);
@@ -23,11 +23,8 @@ function OrderHistory() {
 
     useEffect(() => {
         const fetchOrderHistory = async () => {
-            // Fetch order history data from the backend
             try {
-                // Assuming the API endpoint to fetch order history is '/users/order-history/:userId'
                 const response = await axios.get(`/users/rented/${userId}`);
-                console.log("Rented : ", response.data.rentedItems);
                 setOrderHistory(response.data.rentedItems);
                 setLoading(false);
             } catch (error) {
@@ -36,25 +33,23 @@ function OrderHistory() {
             }
         };
 
-
         fetchOrderHistory();
     }, [userId, setLoading]);
 
     useEffect(() => {
-        const fetchOrderedProducts = () => {
-            // Filter products based on rented IDs
+        const fetchOrderedProducts = async () => {
             const filteredProducts = products.filter((product) =>
                 orderHistory.some((item) => item.ProductId === product.id)
             );
 
-            // Map filtered products to include quantity and duration
-            const orderedProductsData = filteredProducts.map((product) => {
+            const orderedProductsData = await Promise.all(filteredProducts.map(async (product) => {
                 const matchingItem = orderHistory.find(
                     (item) => item.ProductId === product.id
                 );
                 const dateObject = new Date(matchingItem.Date);
                 const formattedDate = `${dateObject.toLocaleDateString()} at ${dateObject.toLocaleTimeString()}`;
-                const timeDue  = `${matchingItem.TimeDue} day(s)`
+                const timeDueResponse = await axios.get(`/users/time-due/${userId}/${matchingItem._id}`);
+                const timeDue = timeDueResponse.data.timeDue;
                 return {
                     ...product,
                     quantity: matchingItem.Quantity,
@@ -63,17 +58,14 @@ function OrderHistory() {
                     timeDue: timeDue,
                     status: matchingItem.Status,
                     orderId: matchingItem.orderId
-                    // Assuming RentDuration is the property name in order history
                 };
-            });
+            }));
 
             setOrderedProducts(orderedProductsData);
         };
 
         fetchOrderedProducts();
-    }, [orderHistory, products]);
-
-    console.log(orderedProducts);
+    }, [orderHistory, products, userId]);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -102,7 +94,7 @@ function OrderHistory() {
             {isLoggedIn && orderHistory.length > 0 && (
                 <div className="OrderHistoryItemsContainer">
                     {orderedProducts.map((item) => {
-                        console.log("Date:", item); // Log the date outside of JSX
+                        console.log("Date:", item);
                         return (
                             <HistoryProductCard
                                 key={item._id}
@@ -112,7 +104,7 @@ function OrderHistory() {
                                 quantity={item.quantity}
                                 duration={item.duration}
                                 date={item.Date}
-                                timeDue = {item.timeDue}
+                                timeDue={item.timeDue}
                                 status={item.status}
                                 orderId={item.orderId}
                                 userId={userId}

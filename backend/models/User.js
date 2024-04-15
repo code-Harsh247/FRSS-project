@@ -119,10 +119,10 @@ UserSchema.methods.calculateDueTime = function() {
             const currentDate = new Date(); // Current date
             
             // Calculate total days rented
-            const totalDaysRented = Math.floor((currentDate - startDate) / (24 * 60 * 60 * 1000));
+            const totalDaysRented = Math.floor((currentDate - startDate) / (24* 60 * 60 * 1000));
 
             // Calculate total days based on rent duration in months
-            const totalDaysRentDuration = rentDurationMonths * 30; // Assuming each month has 30 days
+            const totalDaysRentDuration = rentDurationMonths ; // Assuming each month has 30 days
 
             // Calculate remaining days
             const daysRemaining = totalDaysRentDuration - totalDaysRented;

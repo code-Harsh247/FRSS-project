@@ -77,6 +77,6 @@
   transform: scale(0.95);
   box-shadow: none;
 }
-.icons img:hover, .profile-icon-container img:hover {
+.icons img:hover, .profile-icon-container img,.navbar-logo:hover {
   cursor: pointer;
 }

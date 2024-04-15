@@ -68,7 +68,7 @@ function HistoryProductCard({ img, name, price, quantity, duration, date, timeDu
             <div>
               <span style={{ color: "black" }}><span className='font-Admin-Prod-Card'>Date Ordered:</span>{date}</span>
               <br />
-              <span style={{ color: timeDue < 0 ? "red" : "green" }}><span className='font-Admin-Prod-Card'>Time Due:</span>{timeDue}</span>
+              <span style={{ color: timeDue < 0 ? "red" : "green" }}><span className='font-Admin-Prod-Card'>Time Due:</span>{timeDue}      days</span>
             </div>
             <div className='StatusMessage'>
               <span className='font-Admin-Prod-Card'>Status:</span>{statusMessage}
