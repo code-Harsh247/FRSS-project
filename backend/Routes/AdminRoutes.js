@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Product=require("../models/Product");
 
+
 router.post('/signup', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -152,7 +153,7 @@ router.get('/return-requests', async (req, res) => {
 router.post('/create-return-requests', async (req, res) => {
     try {
         // Extract necessary data from the request body
-        const { orderId } = req.body;
+        const { orderId, userId } = req.body;
 
         // Find the admin document
         const admin = await Admin.findOne({ isAdmin: true });
@@ -169,6 +170,23 @@ router.post('/create-return-requests', async (req, res) => {
         // Save the updated admin document
         await admin.save();
 
+        // Find the user based on the provided user ID
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        // Update the status of the rented item with the given order ID to "pending"
+        for (const item of user.Rented) {
+            if (item.orderId === orderId) {
+                item.Status = 'pending';
+                break; // Exit the loop once the item is found and updated
+            }
+        }
+
+        // Save the changes to the user document
+        await user.save();
+
         // Return success response
         res.status(201).json({ success: true, message: 'Return request created successfully' });
     } catch (error) {
@@ -177,7 +195,6 @@ router.post('/create-return-requests', async (req, res) => {
     }
 });
 
-module.exports = router;
 
 router.get('/total-investments', async (req, res) => {
     try {

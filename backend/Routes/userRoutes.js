@@ -348,23 +348,6 @@ router.post('/rent/:userId', async (req, res) => {
         if (product.stock < quantity || !product.available) {
             return res.status(400).json({ success: false, errors: "Requested quantity not available in stock" });
         }
-
-        // Update user's rented items
-        const rentedProduct = {
-            ProductId: productId,
-            Quantity: quantity,
-            RentDuration: duration,
-            Price: price,
-            Status: 'active',
-            TimeDue: duration
-        };
-        user.Rented.push(rentedProduct);
-
-        // Update product's stock and units rented
-        product.unitsRented += quantity;
-        product.stock -= quantity;
-
-        // Add order to admin
         const admin = await Admin.findOne();
         if (!admin) {
             return res.status(500).json({ success: false, errors: "Admin not found" });
@@ -379,8 +362,25 @@ router.post('/rent/:userId', async (req, res) => {
             id = 1;
         }
 
+        // Update user's rented items
+        const rentedProduct = {
+            ProductId: productId,
+            Quantity: quantity,
+            RentDuration: duration,
+            Price: price,
+            Status: 'active',
+            TimeDue: duration,
+            orderId: id
+        };
+        user.Rented.push(rentedProduct);
+
+        // Update product's stock and units rented
+        product.unitsRented += quantity;
+        product.stock -= quantity;
+
+
         const newOrder = {
-            OrderID:id,
+            OrderID: id,
             image: product.image[0],
             ProductID: product.id,
             Username: userName,
@@ -481,21 +481,6 @@ router.post('/rent/cart/:userId', async (req, res) => {
             if (product.stock < quantity || !product.available) {
                 return res.status(400).json({ success: false, errors: "Requested quantity not available in stock" });
             }
-
-            // Update user's rented items
-            const rentedProduct = {
-                ProductId: productId,
-                Quantity: quantity,
-                RentDuration: duration,
-                Price: price,
-                Status: 'active',
-                TimeDue: duration
-            };
-            user.Rented.push(rentedProduct);
-
-            // Update product's stock and units rented
-            product.unitsRented += quantity;
-            product.stock -= quantity;
             let id;
             if (adminOrders.length > 0) {
                 let last_order_array = adminOrders.slice(-1);
@@ -505,8 +490,25 @@ router.post('/rent/cart/:userId', async (req, res) => {
             else {
                 let temp = admin.Order.slice(-1);
                 let temp2 = temp[0];
-                id = temp2.OrderID+1;
+                id = temp2.OrderID + 1;
             }
+
+            // Update user's rented items
+            const rentedProduct = {
+                ProductId: productId,
+                Quantity: quantity,
+                RentDuration: duration,
+                Price: price,
+                Status: 'active',
+                TimeDue: duration,
+                orderId: id
+            };
+            user.Rented.push(rentedProduct);
+
+            // Update product's stock and units rented
+            product.unitsRented += quantity;
+            product.stock -= quantity;
+
             // Create an order for the admin
             const newOrder = {
                 OrderID: id,

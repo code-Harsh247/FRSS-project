@@ -90,6 +90,9 @@ const UserSchema = new mongoose.Schema({
             Loan:{
                 type: Number,
                 default:0
+            },
+            orderId:{
+                type:Number
             }
         }],
         default: []

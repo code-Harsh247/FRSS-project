@@ -1,15 +1,11 @@
 import React from 'react';
 import './HistoryProductCard.css';
+import axios from "../../context/axiosConfig";
 import closeicon from '../assets/Icons/close.png';
 
-function HistoryProductCard({ img, name, price, quantity, duration, date, timeDue, status, orderId }) {
-
-  const handleReturnProduct = () => {
-    alert(`Return request for Product : "${name}" initiated`);
-  }
-
-  const messages = ["Currently Renting", "Return Request Initiated", "Returned"];
+function HistoryProductCard({ img, name, price, quantity, duration, date, timeDue, status, orderId, userId }) {
   let messageIndex;
+  const messages = ["Currently Renting", "Return Request Initiated", "Returned"];
   switch (status) {
     case 'active':
       messageIndex = 0;
@@ -23,6 +19,25 @@ function HistoryProductCard({ img, name, price, quantity, duration, date, timeDu
     default:
       messageIndex = -1; // Default message if status is not recognized
   }
+  const handleReturnProduct = async () => {
+    try {
+      // Make a POST request to create a return request
+      const response = await axios.post('admin/create-return-requests', { orderId, userId });
+
+      // Check if the return request was successfully created
+      if (response.data.success) {
+        alert(`Return request for Product: "${name}" initiated successfully`);
+        messageIndex = 1;
+      } else {
+        alert('Failed to initiate return request');
+      }
+    } catch (error) {
+      console.error('Error initiating return request:', error);
+      alert('Failed to initiate return request');
+    }
+  };
+
+
 
   const statusMessage = messages[messageIndex];
 
@@ -61,8 +76,6 @@ function HistoryProductCard({ img, name, price, quantity, duration, date, timeDu
         </div>
       </div>
       <button className='ReturnBtn' onClick={handleReturnProduct}>Return</button>
-      {/* Close icon */}
-      {/* Note: Since this is a history product card, there's no need for the delete functionality */}
 
     </div>
   );

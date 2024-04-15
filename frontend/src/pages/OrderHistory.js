@@ -61,7 +61,8 @@ function OrderHistory() {
                     duration: matchingItem.RentDuration,
                     Date: formattedDate,
                     timeDue: timeDue,
-                    status: matchingItem.Status
+                    status: matchingItem.Status,
+                    orderId: matchingItem.orderId
                     // Assuming RentDuration is the property name in order history
                 };
             });
@@ -105,7 +106,6 @@ function OrderHistory() {
                         return (
                             <HistoryProductCard
                                 key={item._id}
-
                                 img={item.image[0]}
                                 name={item.name}
                                 price={item.price}
@@ -114,7 +114,8 @@ function OrderHistory() {
                                 date={item.Date}
                                 timeDue = {item.timeDue}
                                 status={item.status}
-                                orderId={item}
+                                orderId={item.orderId}
+                                userId={userId}
                             />
                         );
                     })}
