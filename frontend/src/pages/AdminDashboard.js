@@ -49,20 +49,23 @@ function Admin() {
                     totalloan: totalLoanResponse.data.totalLoan,
                     profit: totalProfitResponse.data.totalProfit
                     
+                    
                 });
             } catch (error) {
                 console.error("Error fetching dashboard data:", error);
             }
-            console.log("Server ", dashboardData.revenue);
+            
         };
 
         if (isAdminLoggedIn) {
             fetchDashboardData();
+            
         }
     }, [isAdminLoggedIn]);
 
     if (isAdminLoggedIn) {
         return (
+            
             <div className="AdminContainer">
                 <AdminNavbar />
                 <AdminBanner name="Admin Dashboard" />
@@ -82,6 +85,7 @@ function Admin() {
                                     <div className="Categories">
                                         <span id="itext">Total Categories :</span>
                                         <span id="inumber">{dashboardData.totalcategories}</span>
+                                        
                                     </div>
                                     <div className="Products">
                                         <span id="itext">Total Products :</span>
@@ -127,8 +131,8 @@ function Admin() {
                                         <span id="itext">Profit</span>
                                     </div>
                                     <div className="TotalInvestmentAmount">
-                                        <span className={dashboardData.profit < 0 ? "loss" : "profit"}>
-                                            {dashboardData.profit < 0 ? `-₹${Math.abs(dashboardData.profit)}` : `₹${dashboardData.profit}`}
+                                        <span className={dashboardData.revenue -dashboardData.totalinvestment < 0 ? "loss" : "profit"}>
+                                            {dashboardData.revenue -dashboardData.totalinvestment < 0 ? `-₹${Math.abs(dashboardData.revenue -dashboardData.totalinvestment)}` : `₹${dashboardData.revenue -dashboardData.totalinvestment}`}
                                         </span>
 
 

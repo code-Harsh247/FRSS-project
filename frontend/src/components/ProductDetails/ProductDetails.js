@@ -9,6 +9,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 
+
 const ProdDetails = ({ item }) => {
     const [mainImg, setMainImg] = useState(null);
     const [loading, setLoading] = useState(true);
