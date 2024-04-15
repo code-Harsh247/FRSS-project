@@ -118,3 +118,49 @@
     align-items: center;
 }
 
+.rent-now-button{
+    margin-top: 1rem;
+    height: 2.9em;
+    border-radius: 4px;
+    background-color: #181A12;
+    color: white;
+    transform: scale(1);
+    transition: 0.2s;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    width: 100%;
+}
+
+.rent-now-button:hover {
+    background-color: #373737;
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .rent-now-button:active {
+    transform: scale(0.95);
+    box-shadow: none;
+  }
+
+  .add-to-cart-button{
+    margin-top: 1rem;
+    height: 2.9em;
+    border-radius: 4px;
+    background-color: #ddd;
+    color: black;
+    transform: scale(1);
+    transition: 0.2s;
+    /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
+    cursor: pointer;
+    width:100%;
+}
+
+.add-to-cart-button:hover {
+    background-color: black;
+    color: white;
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .add-to-cart-button:active {
+    transform: scale(0.95);
+    box-shadow: none;
+  }

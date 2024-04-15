@@ -18,6 +18,7 @@ const ProductDetailsPage = () => {
       try {
         const response = await axios.get(`products/${productID}`);
         setProduct(response.data);
+       
       } catch (error) {
         console.error("Failed to fetch product details:", error);
       }
@@ -28,10 +29,11 @@ const ProductDetailsPage = () => {
   }, [productID]);
 
   return (
+
     <div>
       <Navbar />
       <ProdDetails item={product} />
-      <ReviewSection product={product}/>
+      <ReviewSection product={product} />
       <ServiceBanner />
       <Footer />
     </div>

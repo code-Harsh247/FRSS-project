@@ -26,6 +26,7 @@ const MostRented = () => {
                         imageUrl={product.image[0]}
                         productName={product.name}
                         price={product.price}
+                        availability={product.available }
                     />
                 </div>
                 ))}
