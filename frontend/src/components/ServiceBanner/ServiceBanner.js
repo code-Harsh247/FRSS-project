@@ -21,7 +21,7 @@ function ServiceBanner() {
             <div className='Service'>
                 <img src={guarantee} alt='guarantee' />
                 <p className='servicetitle'>Warranty Protection</p>
-                <p>Over 2 Years Warranty</p>
+                <p>Choose the Best Option</p>
             </div>
 
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "../context/axiosConfig"
+import axios from "../context/axiosConfig";
 import InputBox from "../components/InputBox/InputBox";
 import { useParams } from "react-router-dom";
-import "./Css/CheckOut.css"
-import ShopBanner from '../components/ShopBanner/ShopBanner';
+import "./Css/CheckOut.css";
+import ShopBanner from "../components/ShopBanner/ShopBanner";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import ServiceBanner from "../components/ServiceBanner/ServiceBanner";
@@ -26,13 +26,10 @@ const CheckOut = () => {
 
   const clearCartProducts = async () => {
     try {
-      // Make a DELETE request to empty the user's cart
       const response = await axios.delete(`users/empty-cart/${userId}`);
-
-      // Check if the request was successful
+      
       if (response.data.success) {
         console.log("Cart emptied successfully");
-        // Optionally, you can perform additional actions here if needed
       } else {
         console.error("Unable to clear cart");
       }
@@ -44,7 +41,7 @@ const CheckOut = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        if (productID!==null) {
+        if (productID !== null) {
           const response = await axios.get(`/products/${productID}`);
           setProduct(response.data);
           setRentItem(true);
@@ -54,7 +51,6 @@ const CheckOut = () => {
         setError(error.message);
         setRentItem(false);
         setLoading2(false);
-
       }
     };
 
@@ -63,7 +59,7 @@ const CheckOut = () => {
 
   useEffect(() => {
     if (product) {
-      setRentProducts(prevProducts => [...prevProducts, product]);
+      setRentProducts((prevProducts) => [...prevProducts, product]);
     }
   }, [product]);
 
@@ -78,67 +74,95 @@ const CheckOut = () => {
   const [emailInput, setEmailInput] = useState("");
   const [PhoneInput, setPhoneInput] = useState("");
 
+  const [isFormValid, setIsFormValid] = useState(false);
 
+  useEffect(() => {
+    setIsFormValid(
+        ProvinceInput.trim() !== "" &&
+        FirstNameInput.trim() !== "" &&
+        CountryRegionInput.trim() !== "" &&
+        StreetAddressInput.trim() !== "" &&
+        TownCityInput.trim() !== "" &&
+        ZIPCodeInput.trim() !== "" &&
+        emailInput.trim() !== "" &&
+        PhoneInput.trim() !== ""
+    );
+  }, [
+    ProvinceInput,
+    FirstNameInput,
+    CountryRegionInput,
+    StreetAddressInput,
+    TownCityInput,
+    ZIPCodeInput,
+    emailInput,
+    PhoneInput,
+  ]);
 
-
+ 
   const handleProvinceChange = (province) => {
     setProvinceInput(province);
-  }
+  };
+
   const handleFirstNameChange = (firstName) => {
     setFirstNameInput(firstName);
-  }
+  };
 
   const handleCountryRegionChange = (countryRegion) => {
     setCountryRegionInput(countryRegion);
-  }
+  };
+
   const handleStreetAddressChange = (streetAddress) => {
     setStreetAddressInput(streetAddress);
-  }
+  };
+
   const handleTownCityChange = (townCity) => {
     setTownCityInput(townCity);
-  }
+  };
+
   const handleZIPCodeChange = (zIPCode) => {
     setZIPCodeInput(zIPCode);
-  }
+  };
+
   const handleEmailChange = (email) => {
     setEmailInput(email);
-  }
+  };
+
   const handlePhoneChange = (phone) => {
     setPhoneInput(phone);
-  }
+  };
+
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    // Calculate total when product, quantity, or duration changes
     if (product && quantity && duration) {
       const totalPrice = product.price * quantity * duration;
       setTotal(totalPrice);
     }
   }, [product, quantity, duration]);
+
   let cartProducts = [];
   let totalBill = 0;
 
   if (!loading) {
-    // Create an array of products with the same IDs as in cartData and add count and duration
-    cartProducts = cartData.map(cartItem => {
-      const matchingProduct = products.find(product => product.id === cartItem.id);
+    cartProducts = cartData.map((cartItem) => {
+      const matchingProduct = products.find(
+        (product) => product.id === cartItem.id
+      );
       return {
         ...matchingProduct,
         count: cartItem.count,
-        duration: cartItem.duration
+        duration: cartItem.duration,
       };
     });
   }
 
-  cartProducts.forEach(element => {
+  cartProducts.forEach((element) => {
     totalBill += element.price * element.duration * element.count;
   });
 
   const RentProducts = async () => {
     try {
-      // Check if rentItem is true and a product is available for rent
       if (rentItem && product) {
-        // Prepare data for renting the product
         const data = {
           productId: product.id,
           quantity: quantity,
@@ -151,26 +175,22 @@ const CheckOut = () => {
           email: emailInput,
           zipcode: ZIPCodeInput,
           country: CountryRegionInput,
-          userName: FirstNameInput
+          userName: FirstNameInput,
         };
 
-        // Make a POST request to rent the product
         const response = await axios.post(`users/rent/${userId}`, data);
 
-        // Handle the response
         console.log("Rented Product Response:", response.data);
         alert("Product has been successfully rented.");
       } else {
-        // Handle case where rentItem is false or product is not available
         alert("No product available for rent.");
       }
-      navigate('/');
+      navigate("/");
     } catch (error) {
       console.error("Renting Error:", error);
       alert("An error occurred while renting the product. Please try again.");
     }
-  }
-
+  };
 
   const rentCart = async () => {
     try {
@@ -186,30 +206,51 @@ const CheckOut = () => {
         userName: FirstNameInput,
         cartItems: cartProducts,
       });
-
+  
       console.log("Rent cart response:", response.data);
       alert("All Products have been successfully rented. Thank you for shopping with us.");
+  
+      // Clear the cart after renting the products
       try {
-        // Make a DELETE request to empty the user's cart
         const response = await axios.delete(`users/empty-cart/${userId}`);
-        console.log(response.data.success);
-        // Check if the request was successful
         if (response.data.success) {
           console.log("Cart emptied successfully");
-          // Optionally, you can perform additional actions here if needed
         } else {
           console.error("Unable to clear cart");
         }
       } catch (error) {
         console.error("Unable to clear cart:", error);
       }
-      navigate('/');
+  
+      navigate("/");
     } catch (error) {
       console.error("Rent cart error:", error.message);
       alert("An error occurred while renting the products. Please try again.");
     }
   };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log("hello" , isFormValid)
+   
+      if (!isFormValid) {
+        
+        return alert("Please fill in all the fields");
+      }
 
+      rentCart();
+      
+    clearCartProducts(userId);
+   
+    } catch (error) {
+      // Error handling
+    }
+  };
+
+
+
+  
 
   return (
     <div className="MainCheckOutContainer">
@@ -243,7 +284,7 @@ const CheckOut = () => {
           </div>
           <div className="ZIPCode">
             <span>ZIP Code</span>
-            <InputBox onInputChange={handleZIPCodeChange} />
+            <InputBox onInputChange={handleZIPCodeChange} type="number"/>
           </div>
           <div className="Phone">
             <span>Phone</span>
@@ -262,7 +303,7 @@ const CheckOut = () => {
               <p>check1</p>
             ) : (
               <>
-                {product.image?.[0] ? ( // Ensure product.image is not undefined or empty
+                {product.image?.[0] ? (
                   <CheckoutCard
                     key={product._id}
                     price={product.price}
@@ -307,7 +348,7 @@ const CheckOut = () => {
           <span className="disclaimer">*Total = Quantity * Monthly Rent * Rent Duration in months</span>
           <br />
           <div className="PlaceOrderBtn">
-            <CustomButtonSecondary Btnwidth="75%" btnText="Rent" handleClick={rentItem ? RentProducts : rentCart} />
+            <CustomButtonSecondary Btnwidth="75%" btnText="Rent" handleClick={rentItem ? RentProducts :handleSubmit} />
           </div>
         </div>
 
@@ -319,4 +360,5 @@ const CheckOut = () => {
   );
 
 };
+
 export default CheckOut;

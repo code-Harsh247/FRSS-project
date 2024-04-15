@@ -6,6 +6,7 @@ import { useAdminAuth } from "../../context/AdminAuthContext";
 import { NavLink, useNavigate } from "react-router-dom";
 import reddot from "../assets/Icons/bin.png";
 
+
 const AdminNavbar = ({alert}) => {
     const [profileListVisibility, setProfileListVisibility] = useState(false);
     const [logoutBoxPosition, setLogoutBoxPosition] = useState({ top: 0, left: 0 });
@@ -45,13 +46,15 @@ const AdminNavbar = ({alert}) => {
     const handleLogIn=()=>{
         navigate('/admin');
     }
-
+    const openDashboard=()=>{  
+        navigate('/admin/dashboard');
+     }
 
     return (
         <>
             <nav className="navbar">
                 <div className="logo-container">
-                    <img src={logo} alt="Company Logo" className="navbar-logo" />
+                    <img src={logo} alt="Company Logo" className="navbar-logo" onClick={openDashboard} />
                 </div>
                 <div className="links">
 

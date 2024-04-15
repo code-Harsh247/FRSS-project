@@ -78,6 +78,9 @@ const Navbar = () => {
     const openOrders=()=>{
         navigate('/orders');
     }
+    const openHomePage=()=>{
+        navigate('/');
+    }
     
     
 
@@ -85,7 +88,7 @@ const Navbar = () => {
         <>
             <nav className="navbar">
                 <div className="logo-container">
-                    <img src={logo} alt="Company Logo" className="navbar-logo" />
+                    <img src={logo} alt="Company Logo" className="navbar-logo" onClick={openHomePage}/>
                 </div>
                 <div className="links">
                     <NavLink to="/">Home</NavLink>
