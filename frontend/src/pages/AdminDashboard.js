@@ -23,7 +23,6 @@ function Admin() {
                     totalRentedResponse,
                     totalLoanResponse,
                     totalProductsRentedResponse,
-                    totalProfitResponse
                 ] = await Promise.all([
                     axios.get("/admin/total-investments"),
                     axios.get("/admin/total-categories"),
@@ -34,7 +33,6 @@ function Admin() {
                     axios.get("/admin/total-rented"),
                     axios.get("/admin/total-loan"),
                     axios.get("/admin/total-products-rented"),
-                    axios.get("/admin/total-profit")
                 ]);
 
                 setDashboardData({
@@ -42,14 +40,11 @@ function Admin() {
                     totalcategories: totalCategoriesResponse.data.totalCategories,
                     totalproducts: totalProductsResponse.data.totalProducts,
                     totalinventory: totalInventoryResponse.data.totalInventory,
-                    revenue: revenueResponse.data.totalRevenue,
+                    revenue: revenueResponse.data.revenue[0].revenue,
                     customer: totalCustomersResponse.data.totalCustomers,
                     rented: totalRentedResponse.data.totalRented,
-                    currrentlyented: totalProductsRentedResponse.data.totalProductsRented,
+                    currrentlyrented: totalProductsRentedResponse.data.totalProductsRented,
                     totalloan: totalLoanResponse.data.totalLoan,
-                    profit: totalProfitResponse.data.totalProfit
-                    
-                    
                 });
             } catch (error) {
                 console.error("Error fetching dashboard data:", error);
@@ -58,13 +53,11 @@ function Admin() {
 
         if (isAdminLoggedIn) {
             fetchDashboardData();
-            
         }
     }, [isAdminLoggedIn]);
 
     if (isAdminLoggedIn) {
         return (
-            
             <div className="AdminContainer">
                 <AdminNavbar />
                 <AdminBanner name="Admin Dashboard" />
@@ -84,7 +77,6 @@ function Admin() {
                                     <div className="Categories">
                                         <span id="itext">Total Categories :</span>
                                         <span id="inumber">{dashboardData.totalcategories}</span>
-                                        
                                     </div>
                                     <div className="Products">
                                         <span id="itext">Total Products :</span>
@@ -103,6 +95,7 @@ function Admin() {
                                     </div>
                                     <div className="TotalInvestmentAmount">
                                         <span id="inumber">₹{dashboardData.revenue}</span>
+                                        {console.log(dashboardData.revenue)}
                                     </div>
                                 </div>
                                 <div className="ProductInvestment">
@@ -116,7 +109,7 @@ function Admin() {
                                     </div>
                                     <div className="Inventory">
                                         <span id="itext">Currently Rented :</span>
-                                        <span id="inumber">{dashboardData.currrentlyented}</span>
+                                        <span id="inumber">{dashboardData.currrentlyrented}</span>
                                     </div>
                                     <div className="Inventory">
                                         <span id="itext">Total Loan :</span>
@@ -130,12 +123,9 @@ function Admin() {
                                         <span id="itext">Profit</span>
                                     </div>
                                     <div className="TotalInvestmentAmount">
-                                        <span className={dashboardData.revenue -dashboardData.totalinvestment < 0 ? "loss" : "profit"}>
-                                            {dashboardData.revenue -dashboardData.totalinvestment < 0 ? `-₹${Math.abs(dashboardData.revenue -dashboardData.totalinvestment)}` : `₹${dashboardData.revenue -dashboardData.totalinvestment}`}
+                                        <span className={dashboardData.revenue - dashboardData.totalinvestment < 0 ? "loss" : "profit"}>
+                                            {dashboardData.revenue - dashboardData.totalinvestment < 0 ? `-₹${Math.abs(dashboardData.revenue - dashboardData.totalinvestment)}` : `₹${dashboardData.revenue - dashboardData.totalinvestment}`}
                                         </span>
-
-
-
                                     </div>
                                 </div>
                             </div>
