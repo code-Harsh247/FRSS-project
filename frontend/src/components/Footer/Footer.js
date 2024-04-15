@@ -1,13 +1,20 @@
 import React from "react";
 import "./Footer.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo/Logo (black).png";
+
 const Footer = () => {
     
+    const navigate = useNavigate();
+
+    const openHomePage=()=>{
+        navigate('/');
+    }
+
     return (
         <div className="footerContainer">
             <div className="footerLogo">
-                <img src={Logo} alt="The Furniture Co. Logo" />
+                <img src={Logo} alt="The Furniture Co. Logo" onClick={openHomePage} />
                 </div>
           
             <div className="list1">
