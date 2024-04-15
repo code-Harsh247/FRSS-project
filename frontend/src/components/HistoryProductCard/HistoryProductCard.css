@@ -35,6 +35,24 @@
   color: #000000;
 }
 
+.detail{
+
+    width: 100%;
+    display: flex;
+}
+.StatusMessage{
+  color: black;
+  display: flex;
+  justify-content: flex-end;
+}
+.detail div{
+  width: 35%;
+}
+.detail span{
+  display: inline-block;
+  padding-right: 10px;
+}
+
 .product-price {
   font-size: 1.5rem;
   font-weight: bold;

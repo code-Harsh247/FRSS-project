@@ -42,12 +42,13 @@ export const CartProvider = ({ children }) => {
         try {
           console.log(userId);
           const response = await axios.get(`/users/cart/${userId}`);
-          setCartData(response.data.cartData);
+          const filteredCartData = response.data.cartData.filter(item => item.id);
+          setCartData(filteredCartData);
           setLoading(false);
   
           // Check if cartData is different from cacheCart before updating cacheCart
-          if (!isEqual(response.data.cartData, cacheCart)) {
-            setCacheCart(response.data.cartData);
+          if (!isEqual(filteredCartData, cacheCart)) {
+            setCacheCart(filteredCartData);
           }
         } catch (error) {
           console.error('Error fetching cart data:', error);

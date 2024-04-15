@@ -135,6 +135,50 @@ router.get('/notifications', async (req, res) => {
     }
 });
 
+router.get('/return-requests', async (req, res) => {
+    try {
+        const admin = await Admin.findOne({ isAdmin: true });
+        if (!admin) {
+            return res.status(404).json({ success: false, message: 'Admin not found' });
+        }
+        const returnRequests = admin.ReturnRequests;
+        res.status(200).json({ success: true, returnRequests });
+    } catch (error) {
+        console.error('Error fetching return requests:', error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+});
+
+router.post('/create-return-requests', async (req, res) => {
+    try {
+        // Extract necessary data from the request body
+        const { orderId } = req.body;
+
+        // Find the admin document
+        const admin = await Admin.findOne({ isAdmin: true });
+        if (!admin) {
+            return res.status(404).json({ success: false, message: 'Admin not found' });
+        }
+
+        // Create the return request object
+        const returnRequest = { OrderID: orderId };
+
+        // Add the return request to the ReturnRequests array
+        admin.ReturnRequests.push(returnRequest);
+
+        // Save the updated admin document
+        await admin.save();
+
+        // Return success response
+        res.status(201).json({ success: true, message: 'Return request created successfully' });
+    } catch (error) {
+        console.error('Error creating return request:', error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+});
+
+module.exports = router;
+
 router.get('/total-investments', async (req, res) => {
     try {
         const totalInvestments = await Product.aggregate([
@@ -182,6 +226,7 @@ router.get('/total-products', async (req, res) => {
     }
 });
 
+
 // Get total inventory (sum of quantity of each product in database)
 router.get('/total-inventory', async (req, res) => {
     try {
@@ -211,7 +256,7 @@ router.get('/revenue', async (req, res) => {
             },
             {
                 $match: {
-                    "Rented.Live": true // Filter documents where Live is true
+                    "Rented.Status": "active" // Filter documents where Live is true
                 }
             },
             {
@@ -300,7 +345,7 @@ router.get('/total-products-rented', async (req, res) => {
             },
             {
                 $match: {
-                    "Rented.Live": true // Match documents where Live status is true
+                    "Rented.Status": "active" // Match documents where Live status is true
                 }
             },
             {

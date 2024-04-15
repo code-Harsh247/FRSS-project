@@ -82,9 +82,10 @@ const UserSchema = new mongoose.Schema({
             TimeDue:{
                 type:Number
             },
-            Live:{
-                type:Boolean,
-                default:true
+            Status:{
+                type:String,
+                enum:['active','inactive','pending'],
+                default: 'active'
             },
             Loan:{
                 type: Number,
@@ -109,16 +110,22 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.methods.calculateDueTime = function() {
     this.Rented.forEach(item => {
-        if (item.Live) {
-            const rentDuration = item.RentDuration; // Rent duration in months
-            const startDate = item.Date; // Date the product was rented
+        if (item.Status === 'active') {
+            const rentDurationMonths = item.RentDuration; // Rent duration in months
+            const startDate = new Date(item.Date); // Date the product was rented
             const currentDate = new Date(); // Current date
             
-            // Calculate due time in months
-            const dueTime = rentDuration - Math.floor((currentDate - startDate) / (30 * 24 * 60 * 60 * 1000));
-            
-            // Update TimeDue field with the calculated due time
-            item.TimeDue = dueTime;
+            // Calculate total days rented
+            const totalDaysRented = Math.floor((currentDate - startDate) / (24 * 60 * 60 * 1000));
+
+            // Calculate total days based on rent duration in months
+            const totalDaysRentDuration = rentDurationMonths * 30; // Assuming each month has 30 days
+
+            // Calculate remaining days
+            const daysRemaining = totalDaysRentDuration - totalDaysRented;
+
+            // Update TimeDue field with the calculated due time in days
+            item.TimeDue = daysRemaining;
         }
     });
     // Save the changes to the user document
@@ -127,9 +134,9 @@ UserSchema.methods.calculateDueTime = function() {
 
 UserSchema.methods.calculateLoan = function() {
     this.Rented.forEach(item => {
-        if (item.Live) {
+        if (item.Status === 'active') {
             const rentDuration = item.RentDuration; // Rent duration in months
-            const startDate = item.Date; // Date the product was rented
+            const startDate = new Date(item.Date); // Date the product was rented
             const currentDate = new Date(); // Current date
             
             // Calculate due time in months
@@ -142,7 +149,7 @@ UserSchema.methods.calculateLoan = function() {
                 item.Loan = 0; // If due time is not negative, set loan to 0
             }
         } else {
-            item.Loan = 0; // If status is not live, set loan to 0
+            item.Loan = 0; // If status is not 'active', set loan to 0
         }
     });
     // Save the changes to the user document
