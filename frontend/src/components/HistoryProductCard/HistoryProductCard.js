@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './HistoryProductCard.css';
 import axios from "../../context/axiosConfig";
-import closeicon from '../assets/Icons/close.png';
 
 function HistoryProductCard({ img, name, price, quantity, duration, date, timeDue, status, orderId, userId }) {
-  let messageIndex;
+  const [messageIndex, setMessageIndex] = useState(-1);
   const messages = ["Currently Renting", "Return Request Initiated", "Returned"];
-  switch (status) {
-    case 'active':
-      messageIndex = 0;
-      break;
-    case 'inactive':
-      messageIndex = 2;
-      break;
-    case 'pending':
-      messageIndex = 1;
-      break;
-    default:
-      messageIndex = -1; // Default message if status is not recognized
-  }
+
+  // Use useEffect to set initial messageIndex based on status prop
+  useEffect(() => {
+    switch (status) {
+      case 'active':
+        setMessageIndex(0);
+        break;
+      case 'inactive':
+        setMessageIndex(2);
+        break;
+      case 'pending':
+        setMessageIndex(1);
+        break;
+      default:
+        setMessageIndex(-1); // Default message if status is not recognized
+    }
+  }, [status]); // Run effect when status prop changes
+
   const handleReturnProduct = async () => {
     try {
       // Make a POST request to create a return request
@@ -26,8 +30,9 @@ function HistoryProductCard({ img, name, price, quantity, duration, date, timeDu
 
       // Check if the return request was successfully created
       if (response.data.success) {
+        setMessageIndex(1);
         alert(`Return request for Product: "${name}" initiated successfully`);
-        messageIndex = 1;
+
       } else {
         alert('Failed to initiate return request');
       }
@@ -37,13 +42,10 @@ function HistoryProductCard({ img, name, price, quantity, duration, date, timeDu
     }
   };
 
-
-
   const statusMessage = messages[messageIndex];
 
   return (
     <div className="history-product-card">
-
       <div className='product-image-container'>
         <img
           className="product-image"
@@ -71,11 +73,13 @@ function HistoryProductCard({ img, name, price, quantity, duration, date, timeDu
             <div className='StatusMessage'>
               <span className='font-Admin-Prod-Card'>Status:</span>{statusMessage}
             </div>
-
           </div>
         </div>
       </div>
-      <button className='ReturnBtn' onClick={handleReturnProduct}>Return</button>
+      <button className={messageIndex===1 ? "DisabledBtn" : "ReturnBtn"} disabled={messageIndex === 1} onClick={handleReturnProduct}>{messageIndex===1 ? "Pending" : "Return"}</button>
+
+
+
 
     </div>
   );
