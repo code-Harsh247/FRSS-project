@@ -356,7 +356,10 @@ router.post('/rent/:userId', async (req, res) => {
         if (admin.Order.length > 0) {
             let last_order_array = admin.Order.slice(-1);
             let last_order = last_order_array[0];
-            id = last_order.OrderID + 1;
+            if(last_order){
+                id = last_order.OrderID + 1;
+            }
+            else id =1;
         }
         else {
             id = 1;
@@ -485,13 +488,15 @@ router.post('/rent/cart/:userId', async (req, res) => {
             if (adminOrders.length > 0) {
                 let last_order_array = adminOrders.slice(-1);
                 let last_order = last_order_array[0];
-                id = last_order.OrderID + 1;
+                if (last_order) {
+                    id = last_order.OrderID + 1;
+                } else {
+                    id = 1;
+                }
+            } else {
+                id = 1;
             }
-            else {
-                let temp = admin.Order.slice(-1);
-                let temp2 = temp[0];
-                id = temp2.OrderID + 1;
-            }
+            
 
             // Update user's rented items
             const rentedProduct = {
