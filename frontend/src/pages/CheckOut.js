@@ -20,16 +20,19 @@ const CheckOut = () => {
   const [loading2, setLoading2] = useState(true);
   const [error, setError] = useState(null);
   const [rentItem, setRentItem] = useState(null);
-  const { cartData, loading, setLoading, userId } = useCart();
+  const { cartData, loading, setLoading, userId, setCacheCart, setCartData } = useCart();
   const { products } = useProducts();
   const [rentProducts, setRentProducts] = useState([]);
 
   const clearCartProducts = async () => {
+    console.log("Clearing cart products");
     try {
       const response = await axios.delete(`users/empty-cart/${userId}`);
       
       if (response.data.success) {
         console.log("Cart emptied successfully");
+        setCacheCart([]);
+        setCartData([]);
       } else {
         console.error("Unable to clear cart");
       }
@@ -238,10 +241,11 @@ const CheckOut = () => {
         
         return alert("Please fill in all the fields");
       }
-
       rentCart();
+      console.log("hello")
+      clearCartProducts();
       
-    clearCartProducts(userId);
+    
    
     } catch (error) {
       // Error handling
