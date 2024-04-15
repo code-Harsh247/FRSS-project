@@ -466,6 +466,9 @@ router.post('/rent/cart/:userId', async (req, res) => {
         // Initialize an array to store orders for the admin
         const adminOrders = [];
         const admin = await Admin.findOne();
+        let temp=1;
+        const lastOrder = admin.Order[admin.Order.length - 1];
+        let lastOrderID = lastOrder ? lastOrder.OrderID : 0 ;
         // Iterate through each item in the cart
         for (const cartItem of cartItems) {
             const productId = cartItem.id;
@@ -484,18 +487,10 @@ router.post('/rent/cart/:userId', async (req, res) => {
             if (product.stock < quantity || !product.available) {
                 return res.status(400).json({ success: false, errors: "Requested quantity not available in stock" });
             }
-            let id;
-            if (adminOrders.length > 0) {
-                let last_order_array = adminOrders.slice(-1);
-                let last_order = last_order_array[0];
-                if (last_order) {
-                    id = last_order.OrderID + 1;
-                } else {
-                    id = 1;
-                }
-            } else {
-                id = 1;
-            }
+            
+            let id = lastOrderID + temp;
+            temp=temp+1;
+
             
 
             // Update user's rented items

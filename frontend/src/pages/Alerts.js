@@ -14,11 +14,12 @@ function Alerts() {
     const [orderAlerts, setOrderAlerts] = useState([]);
     const [inventoryNotifications, setInventoryNotifications] = useState([]);
     const [returnOrderAlerts, setReturnOrderAlerts] = useState([]);
+    const [orders, setOrders] = useState([]);
 
 
 
-    
-    
+
+
     useEffect(() => {
         const fetchOrderAlerts = async () => {
             try {
@@ -43,12 +44,13 @@ function Alerts() {
         const fetchReturnOrderAlerts = async () => {
             try {
                 // Fetch return order alerts from the backend
-                const response = await axios.get("/admin/return-orders");
-                setReturnOrderAlerts(response.data.returnOrders);
+                const response = await axios.get("/admin/return-requests");
+                setReturnOrderAlerts(response.data.returnRequests);
             } catch (error) {
                 console.error("Error fetching return order alerts:", error);
             }
         };
+
 
         if (isAdminLoggedIn) {
             fetchOrderAlerts();
@@ -56,23 +58,32 @@ function Alerts() {
             fetchReturnOrderAlerts();
         }
     }, [isAdminLoggedIn]);
+    const [fetchedOrders,setFetchedOrders] = useState([]);
     useEffect(() => {
-        const fetchReturnOrderAlerts = async () => {
-            try {
-                // Fetch return order alerts from the backend
-                const response = await axios.get("/admin/return-requests");
-                setReturnOrderAlerts(response.data.returnRequests);
-            } catch (error) {
-                console.error("Error fetching return order alerts:", error);
-            }
-        };
-    
-        if (isAdminLoggedIn) {
-            
-            fetchReturnOrderAlerts(); // Call the function to fetch return order alerts
-        }
-    }, [isAdminLoggedIn]);
+        // Initialize an empty array to store the fetched orders
+        const newFetchedOrders = [];
+        // Iterate through returnOrderAlerts to find corresponding orders
+        for (const obj of returnOrderAlerts) {
+            // Extract the OrderID from the alert object
+            const orderId = Number(obj.OrderID);
 
+            // Find the order in orderAlerts array based on the OrderID
+            const order = orderAlerts.find(order => order.OrderID === orderId);
+
+            // If order is found, push it to the fetchedOrders array
+            if (order) {
+                newFetchedOrders.push(order);
+            }
+        }
+        setFetchedOrders(newFetchedOrders);
+        console.log('Fetched Orders:', fetchedOrders);
+    }, [orderAlerts, returnOrderAlerts]);
+
+
+
+
+
+    console.log("renturnOrderAlerts : ", returnOrderAlerts);
 
     // Handlers for clearing alerts
     const handleClearOrderAlerts = async () => {
@@ -107,11 +118,11 @@ function Alerts() {
             console.error("Error clearing return order alerts:", error);
         }
     };
-
+    console.log(orderAlerts);
     if (isAdminLoggedIn) {
         return (
             <div className="AlertsContainer">
-                <AdminNavbar  />
+                <AdminNavbar />
                 <AdminBanner name="Alerts" />
                 <div className="AlertsContent">
                     {/* Order Alerts Section */}
@@ -123,50 +134,43 @@ function Alerts() {
                             </div>
                         </div>
                         <div className="OrderAlertsList">
-                            {orderAlerts.length === 0  && (
+                            {orderAlerts.length === 0 && (
                                 <div className="NoAlertsMessage">
-                                    <span>No Recent Orders</span>  
+                                    <span>No Recent Orders</span>
                                 </div>
                             )}
                             {orderAlerts.map((order) => (
                                 <OrderAlertsCard
-                                    key={order.id}
-                                    image={order.image}
-                                    productId={order.ProductID}
-                                    userName={order.Username}
-                                    userId={order.UserID}
-                                    duration={order.Duration}
-                                    price={order.Price}
-                                    quantity={order.Quantity}
+                                    key={order._id}
+                                    order={order}
                                 />
                             ))}
                         </div>
                     </div>
-                    
-                    {/* Return Order Alerts Section */}
-                    <div className="OrderAlerts">
-    <div className="OrderAlertsTitle">
-        <span id="Title">Return Order Alerts</span>
-        <div className="ClearOrderAlerts">
-            <button onClick={handleClearReturnOrderAlerts}>Clear All</button>
-        </div>
-    </div>
-    <div className="OrderAlertsList">
-    {returnOrderAlerts.length === 0 && (
-        <div className="NoAlertsMessage">
-            <span>No Return Orders</span>  
-        </div>
-    )}
-    {returnOrderAlerts.map((returnOrder) => (
-        console.log(returnOrder),
-        <OrderReturnCard
-            key={returnOrder._id}
-            orderId={returnOrder.OrderID}
-        />
-    ))}
-</div>
 
-</div>
+                    {console.log("Test : ",fetchedOrders)}
+                    <div className="OrderAlerts">
+                        <div className="OrderAlertsTitle">
+                            <span id="Title">Return Requests</span>
+                            <div className="ClearOrderAlerts">
+                                <button onClick={handleClearReturnOrderAlerts}>Clear All</button>
+                            </div>
+                        </div>
+                        <div className="OrderAlertsList">
+                            {fetchedOrders.length === 0 && (
+                                <div className="NoAlertsMessage">
+                                    <span>No Return Requests</span>
+                                </div>
+                            )}
+                            {fetchedOrders.map((returnOrder) => (
+                                <OrderAlertsCard
+                                    key={returnOrder._id}
+                                    order={returnOrder} 
+                                />
+                            ))}
+                        </div>
+
+                    </div>
 
 
                     {/* Inventory Notifications Section */}
@@ -180,7 +184,7 @@ function Alerts() {
                         <div className="NotificationList">
                             {inventoryNotifications.length === 0 && (
                                 <div className="NoAlertsMessage">
-                                    <span>Inventory Looks Good</span>  
+                                    <span>Inventory Looks Good</span>
                                 </div>
                             )}
                             {inventoryNotifications.map((notification) => (
