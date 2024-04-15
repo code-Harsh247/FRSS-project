@@ -56,7 +56,15 @@ function HistoryProductCard({ img, name, price, quantity, duration, date, timeDu
       <div className="product-info">
         <h3 className="product-name">{name}</h3>
         <span className="product-price">
-          ₹{(price).toLocaleString()} /month {/* Assuming static rental price */}
+        <span className="product-price">
+  {timeDue < 0 ? `₹${(price * 1.15).toLocaleString()} / month  {15 % Added)` : `₹${price.toLocaleString()} / month`}
+</span>
+ 
+          
+          
+          
+          
+          {/* Assuming static rental price */}
         </span>
         <div className="product-details">
           <div className='detail'>
@@ -70,9 +78,11 @@ function HistoryProductCard({ img, name, price, quantity, duration, date, timeDu
               <br />
               <span style={{ color: timeDue < 0 ? "red" : "green" }}><span className='font-Admin-Prod-Card'>Time Due:</span>{timeDue}      days</span>
             </div>
-            <div className='StatusMessage'>
-              <span className='font-Admin-Prod-Card'>Status:</span>{statusMessage}
+            <div className='StatusMessage' >
+            <span style={{ color: "black" }}><span className='font-Admin-Prod-Card'>Status:</span>{statusMessage}</span>
+              <span style={{ color: timeDue < 0 ? "red" : "green" }}>{timeDue < 0 ? "Loan: Active" : "Loan: Inactive"}</span>
             </div>
+            
           </div>
         </div>
       </div>
