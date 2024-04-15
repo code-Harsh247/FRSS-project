@@ -678,10 +678,10 @@ router.get('/time-due/:userId/:orderId', async (req, res) => {
         // Check if live status is true
         if (order.Status === 'active') {
             // Calculate time due in months
-            const rentDuration = order.RentDuration; // Rent duration in months
+            const rentDuration = (order.RentDuration)*30; // Rent duration in months
             const startDate = new Date(order.Date); // Date the product was rented
             const currentDate = new Date(); // Current date
-            const monthsDiff = (currentDate.getFullYear() - startDate.getFullYear()) * 12 + (currentDate.getMonth() - startDate.getMonth());
+            const monthsDiff = (currentDate.getFullYear() - startDate.getFullYear()) * 12*30 + (currentDate.getMonth() - startDate.getMonth())*30 + (currentDate.getDate()-startDate.getDate());
             const timeDue = rentDuration - monthsDiff;
 
             res.json({ timeDue: timeDue });
@@ -694,7 +694,7 @@ router.get('/time-due/:userId/:orderId', async (req, res) => {
     }
 });
 
-router.get('/total-loan/:userId/:orderId', async (req, res) => {
+router.get('/total-loan/:userId/:orderId', async (req, res) => {``
     const userId = req.params.userId;
     const orderId = req.params.orderId;
 
