@@ -387,7 +387,7 @@ router.post('/rent/:userId', async (req, res) => {
             image: product.image[0],
             ProductID: product.id,
             Username: userName,
-            UserID: email,
+            UserID: userId,
             Duration: duration,
             Price: price,
             Quantity: quantity,
@@ -513,7 +513,7 @@ router.post('/rent/cart/:userId', async (req, res) => {
                 image: product.image[0],
                 ProductID: productId,
                 Username: userName, // Assuming user has a userName property
-                UserID: email, // Assuming user has an email property
+                UserID: userId, // Assuming user has an email property
                 Duration: duration,
                 Price: price,
                 Quantity: quantity,

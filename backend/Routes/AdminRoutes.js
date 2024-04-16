@@ -55,6 +55,110 @@ router.post('/login', async (req, res) => {
     }
 });
 
+router.post('/accept-return-request/', async (req, res) => {
+    try {
+        // Extract orderId and userId from request parameters
+        const orderId = req.body.orderId;
+        const userID = req.body.userID;
+        const productID = req.body.productID;
+        const Quantity = req.body.Quantity;
+
+        // Find the user based on the provided userId
+        const user = await User.findById(userID);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+        const prod = await Product.find({id: productID});
+        if(!prod){
+            return res.status(404).json({ success: false, message: 'Product not found' });
+        }
+
+        prod.stock+=Quantity;
+
+        // Find the rented item with the given orderId and set its status to 'inactive'
+        const rentedItem = user.Rented.find(item => Number(item.orderId) === Number(orderId));
+        if (!rentedItem) {
+            return res.status(404).json({ success: false, message: 'Rented item not found' });
+        }
+        
+        rentedItem.Status = 'inactive';
+
+        // Save the changes to the user document
+        await user.save();
+        await prod.save();
+
+        // Return success response
+        res.status(200).json({ success: true, message: 'Return request accepted successfully' });
+    } catch (error) {
+        console.error('Error accepting return request:', error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+});
+
+router.post('/reject-return-request', async (req, res) => {
+    try {
+        // Get orderId and userID from the request body
+        const { orderId, userID } = req.body;
+
+        // Find the user based on the provided userId
+        const user = await User.findById(userID);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        // Find the rented item with the given orderId
+        const rentedItem = user.Rented.find(item => Number(item.orderId) === Number(orderId));
+        if (!rentedItem) {
+            return res.status(404).json({ success: false, message: 'Rented item not found' });
+        }
+        
+        // Set the Damaged property to true for the rented item
+        rentedItem.Damaged = true;
+
+        // Save the changes to the user document
+        await user.save();
+
+        // Return success response
+        res.status(200).json({ success: true, message: 'Return request rejected successfully' });
+    } catch (error) {
+        console.error('Error rejecting return request:', error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+});
+
+
+
+router.post('/ship-order/:orderID', async (req, res) => {
+    try {
+        const orderID = req.params.orderID;
+
+        // Find the admin and update
+        const admin = await Admin.findOne({ isAdmin: true });
+        if (!admin) {
+            return res.status(404).json({ success: false, message: 'Admin not found' });
+        }
+
+        // Find the order with the given orderID
+        const order = admin.Order.find(order => Number(order.OrderID) === Number(orderID));
+        if (!order) {
+            return res.status(404).json({ success: false, message: 'Order not found' });
+        }
+
+        // Set the ship status of the order to true
+        order.ShipStatus = true;
+
+        // Save the changes to the admin document
+        await admin.save();
+
+        res.json({ success: true, message: 'Order ship status set to true successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+});
+
+
+
 
 router.post('/empty-orders', async (req, res) => {
     try {

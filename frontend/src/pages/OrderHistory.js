@@ -57,7 +57,8 @@ function OrderHistory() {
                     Date: formattedDate,
                     timeDue: timeDue,
                     status: orderItem.Status,
-                    orderId: orderItem.orderId
+                    orderId: orderItem.orderId,
+                    isDamaged: orderItem.Damaged
                 };
             }));
     
@@ -110,6 +111,7 @@ function OrderHistory() {
                                 status={item.status}
                                 orderId={item.orderId}
                                 userId={userId}
+                                isDamaged = {item.isDamaged}
                             />
                         );
                     })}

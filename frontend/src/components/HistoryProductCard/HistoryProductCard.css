@@ -29,6 +29,10 @@
   height: auto;
 }
 
+.DamagedProduct{
+  border: 1px solid red;
+}
+
 .DisabledBtn{
   position: relative;
   right: 5%;

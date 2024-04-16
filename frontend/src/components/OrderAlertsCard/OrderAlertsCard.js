@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../context/axiosConfig"
-import './OrderAlertsCard.css'; // Import the CSS file for styling
+import './OrderAlertsCard.css';
 import { useProducts } from "../../context/ProductContext";
 
 function OrderAlertsCard({ order }) {
@@ -11,10 +11,17 @@ function OrderAlertsCard({ order }) {
 
     useEffect(() => {
         setItem(products.find(product => product.id === order.ProductID));
+        setShip(order.ShipStatus);
     }, [products])
 
-    const handleShip = () => {
-        setShip(true);
+    const handleShip = async () => {
+        try {
+            await axios.post(`/admin/ship-order/${order.OrderID}`);
+            setShip(true);
+        } catch (error) {
+            console.error('Error shipping order:', error);
+            // Handle error, maybe show a message to the user
+        }
     }
 
     const onClose = () => {
@@ -57,7 +64,7 @@ function OrderAlertsCard({ order }) {
                 <div className="ShipOrderBtn">
                     <button
                         onClick={handleShip}
-                        disabled={ship}
+                        disabled={order.ShipStatus}
                         style={{
                             backgroundColor: ship ? 'grey' : 'black',
                             color: ship ? 'white' : 'white',

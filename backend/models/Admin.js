@@ -59,6 +59,10 @@ const AdminSchema = new mongoose.Schema({
             },
             Country:{
                 type: String
+            },
+            ShipStatus:{
+                type: Boolean,
+                default: false
             }
         }],
         default:[]

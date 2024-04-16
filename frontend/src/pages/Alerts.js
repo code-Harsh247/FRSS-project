@@ -131,9 +131,9 @@ function Alerts() {
                     <div className="OrderAlerts">
                         <div className="OrderAlertsTitle">
                             <span id="Title">Order Alerts</span>
-                            <div className="ClearOrderAlerts">
+                            {/* <div className="ClearOrderAlerts">
                                 <button onClick={handleClearOrderAlerts}>Clear All</button>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="OrderAlertsList">
                             {orderAlerts.length === 0 && (
@@ -165,7 +165,7 @@ function Alerts() {
                                 </div>
                             )}
                             {fetchedOrders.map((returnOrder) => (
-                                <OrderAlertsCard
+                                <OrderReturnCard
                                     key={returnOrder._id}
                                     order={returnOrder} 
                                 />
