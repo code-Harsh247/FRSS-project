@@ -387,7 +387,7 @@ router.post('/rent/:userId', async (req, res) => {
             image: product.image[0],
             ProductID: product.id,
             Username: userName,
-            UserID: email,
+            UserID: userId,
             Duration: duration,
             Price: price,
             Quantity: quantity,
@@ -491,8 +491,6 @@ router.post('/rent/cart/:userId', async (req, res) => {
             let id = lastOrderID + temp;
             temp=temp+1;
 
-            
-
             // Update user's rented items
             const rentedProduct = {
                 ProductId: productId,
@@ -515,7 +513,7 @@ router.post('/rent/cart/:userId', async (req, res) => {
                 image: product.image[0],
                 ProductID: productId,
                 Username: userName, // Assuming user has a userName property
-                UserID: email, // Assuming user has an email property
+                UserID: userId, // Assuming user has an email property
                 Duration: duration,
                 Price: price,
                 Quantity: quantity,
@@ -530,7 +528,7 @@ router.post('/rent/cart/:userId', async (req, res) => {
             adminOrders.push(newOrder);
 
             // Check if stock falls below threshold and update availability
-            if (product.stock < 20) {
+            if (product.stock <= 20) {
                 product.available = false;
                 const newNotification = {
                     image: product.image[0],

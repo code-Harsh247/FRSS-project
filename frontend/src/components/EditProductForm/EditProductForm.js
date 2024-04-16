@@ -120,6 +120,7 @@ const EditProduct = ({ productId }) => {
 
         try {
             console.log(id);
+            const availability = productQuantity>20? true : false;
             const response = await axios.put(`/products/updateproduct/${id}`, {
                 name: productName,
                 price: productPrice,
@@ -127,7 +128,9 @@ const EditProduct = ({ productId }) => {
                 image: imageUrls,
                 cost: originalCost,
                 category: productCategory,
-                stock: productQuantity
+                stock: productQuantity,
+                available: availability
+
             });
 
             alert("Product updated!");

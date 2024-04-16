@@ -24,48 +24,51 @@ function OrderHistory() {
     useEffect(() => {
         const fetchOrderHistory = async () => {
             try {
-                const response = await axios.get(`/users/rented/${userId}`);
-                setOrderHistory(response.data.rentedItems);
-                setLoading(false);
+                if (userId) {
+                    const response = await axios.get(`/users/rented/${userId}`);
+                    setOrderHistory(response.data.rentedItems);
+                    setLoading(false);
+                }
+
             } catch (error) {
                 console.error("Error fetching order history:", error);
                 setLoading(false);
             }
         };
-
+        console.log("OrderHistory : ", orderHistory);
         fetchOrderHistory();
     }, [userId, setLoading]);
 
     useEffect(() => {
         const fetchOrderedProducts = async () => {
-            const filteredProducts = products.filter((product) =>
-                orderHistory.some((item) => item.ProductId === product.id)
-            );
-
-            const orderedProductsData = await Promise.all(filteredProducts.map(async (product) => {
-                const matchingItem = orderHistory.find(
-                    (item) => item.ProductId === product.id
-                );
-                const dateObject = new Date(matchingItem.Date);
+            const orderedProductsData = await Promise.all(orderHistory.map(async (orderItem) => {
+                const matchingProduct = products.find((product) => product.id === orderItem.ProductId);
+                if (!matchingProduct) {
+                    return null; // Product not found, handle accordingly
+                }
+                const dateObject = new Date(orderItem.Date);
                 const formattedDate = `${dateObject.toLocaleDateString()} at ${dateObject.toLocaleTimeString()}`;
-                const timeDueResponse = await axios.get(`/users/time-due/${userId}/${matchingItem._id}`);
+                const timeDueResponse = await axios.get(`/users/time-due/${userId}/${orderItem._id}`);
                 const timeDue = timeDueResponse.data.timeDue;
                 return {
-                    ...product,
-                    quantity: matchingItem.Quantity,
-                    duration: matchingItem.RentDuration,
+                    ...matchingProduct,
+                    quantity: orderItem.Quantity,
+                    duration: orderItem.RentDuration,
                     Date: formattedDate,
                     timeDue: timeDue,
-                    status: matchingItem.Status,
-                    orderId: matchingItem.orderId
+                    status: orderItem.Status,
+                    orderId: orderItem.orderId,
+                    isDamaged: orderItem.Damaged
                 };
             }));
-
-            setOrderedProducts(orderedProductsData);
+    
+            // Filter out null values (products not found) and set ordered products
+            setOrderedProducts(orderedProductsData.filter(product => product !== null));
         };
-
+    
         fetchOrderedProducts();
     }, [orderHistory, products, userId]);
+        
 
     if (loading) {
         return <div>Loading...</div>;
@@ -84,7 +87,7 @@ function OrderHistory() {
                     </div>
                 </div>
             )}
-
+            {console.log("Order History Now :", orderedProducts)}
             {isLoggedIn && orderHistory.length === 0 && (
                 <div className="EmptyOrderHistory">
                     <p>Your order history is empty.</p>
@@ -94,7 +97,7 @@ function OrderHistory() {
             {isLoggedIn && orderHistory.length > 0 && (
                 <div className="OrderHistoryItemsContainer">
                     {orderedProducts.map((item) => {
-                        console.log("Date:", item);
+
                         return (
                             <HistoryProductCard
                                 key={item._id}
@@ -108,6 +111,7 @@ function OrderHistory() {
                                 status={item.status}
                                 orderId={item.orderId}
                                 userId={userId}
+                                isDamaged = {item.isDamaged}
                             />
                         );
                     })}

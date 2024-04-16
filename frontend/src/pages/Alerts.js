@@ -8,13 +8,14 @@ import InventoryNotificationCard from "../components/InventoryNotificationCard/I
 import AdminLoginPage from "./AdminLoginPage";
 import { useAdminAuth } from "../context/AdminAuthContext";
 import OrderReturnCard from "../components/OrderReturnCard/OrderReturnCard";
+import { useProducts } from "../context/ProductContext";
 
 function Alerts() {
     const { isAdminLoggedIn } = useAdminAuth();
     const [orderAlerts, setOrderAlerts] = useState([]);
     const [inventoryNotifications, setInventoryNotifications] = useState([]);
     const [returnOrderAlerts, setReturnOrderAlerts] = useState([]);
-    const [orders, setOrders] = useState([]);
+    const {products} = useProducts(); 
 
 
 
@@ -108,6 +109,7 @@ function Alerts() {
         }
     };
 
+
     const handleClearReturnOrderAlerts = async () => {
         try {
             // Clear all return order alerts
@@ -129,9 +131,9 @@ function Alerts() {
                     <div className="OrderAlerts">
                         <div className="OrderAlertsTitle">
                             <span id="Title">Order Alerts</span>
-                            <div className="ClearOrderAlerts">
+                            {/* <div className="ClearOrderAlerts">
                                 <button onClick={handleClearOrderAlerts}>Clear All</button>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="OrderAlertsList">
                             {orderAlerts.length === 0 && (
@@ -163,7 +165,7 @@ function Alerts() {
                                 </div>
                             )}
                             {fetchedOrders.map((returnOrder) => (
-                                <OrderAlertsCard
+                                <OrderReturnCard
                                     key={returnOrder._id}
                                     order={returnOrder} 
                                 />
@@ -190,6 +192,7 @@ function Alerts() {
                             {inventoryNotifications.map((notification) => (
                                 <InventoryNotificationCard
                                     key={notification._id}
+                                    prodName = {notification.ProductName}
                                     productId={notification.ProductID}
                                     imageUrl={notification.image}
                                     quantity={notification.Quantity}

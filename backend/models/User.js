@@ -93,6 +93,10 @@ const UserSchema = new mongoose.Schema({
             },
             orderId:{
                 type:Number
+            },
+            Damaged:{
+                type:Boolean,
+                default: false
             }
         }],
         default: []

@@ -165,6 +165,7 @@ const CheckOut = () => {
 
   const RentProducts = async () => {
     try {
+      console.log("The user ID is ", userId);
       if (rentItem && product) {
         const data = {
           productId: product.id,
@@ -197,7 +198,7 @@ const CheckOut = () => {
 
   const rentCart = async () => {
     try {
-      console.log(cartProducts);
+      console.log("The user ID is ", userId);
       const response = await axios.post(`users/rent/cart/${userId}`, {
         street: StreetAddressInput,
         city: TownCityInput,
