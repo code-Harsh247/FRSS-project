@@ -68,10 +68,15 @@ router.post('/accept-return-request/', async (req, res) => {
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
-        const prod = await Product.find({id: productID});
+        const prod = await Product.findOne({id: productID});
         if(!prod){
             return res.status(404).json({ success: false, message: 'Product not found' });
         }
+        const admin = await Admin.findOne();
+        if(!admin){
+            return res.status(404).json({ success: false, message: 'Admin not found' });
+        }
+        
 
         prod.stock+=Quantity;
 
@@ -86,6 +91,13 @@ router.post('/accept-return-request/', async (req, res) => {
         // Save the changes to the user document
         await user.save();
         await prod.save();
+
+        const returnRequest = admin.ReturnRequests.find(request => Number(request.OrderID) === Number(orderId));
+        if (returnRequest) {
+            returnRequest.ProcessedStatus = 1;
+            await admin.save();
+        }
+        else console.log("Failed to set Processed Status to 1");
 
         // Return success response
         res.status(200).json({ success: true, message: 'Return request accepted successfully' });
@@ -117,6 +129,16 @@ router.post('/reject-return-request', async (req, res) => {
 
         // Save the changes to the user document
         await user.save();
+
+        const admin = await Admin.findOne();
+        if(!admin){
+            return res.status(404).json({ success: false, message: 'Admin not found' });
+        }
+        const returnRequest = admin.ReturnRequests.find(request => Number(request.OrderID) === Number(orderId));
+        if (returnRequest) {
+            returnRequest.ProcessedStatus = 0;
+            await admin.save();
+        }
 
         // Return success response
         res.status(200).json({ success: true, message: 'Return request rejected successfully' });

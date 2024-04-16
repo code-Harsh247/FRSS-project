@@ -18,6 +18,7 @@ function OrderAlertsCard({ order }) {
         try {
             await axios.post(`/admin/ship-order/${order.OrderID}`);
             setShip(true);
+            alert("Order Shipping initiated.")
         } catch (error) {
             console.error('Error shipping order:', error);
             // Handle error, maybe show a message to the user
@@ -73,9 +74,6 @@ function OrderAlertsCard({ order }) {
                         {ship ? "Shipped" : "Ship Order"}
                     </button>
 
-                </div>
-                <div className="close-order-icon" onClick={onClose}>
-                    X {/* Close icon */}
                 </div>
             </div>
         );

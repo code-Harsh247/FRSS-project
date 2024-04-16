@@ -84,6 +84,10 @@ const AdminSchema = new mongoose.Schema({
     ReturnRequests:[{
         OrderID:{
             type:String
+        },
+        ProcessedStatus:{
+            type:Number,
+            default:-1
         }
     }]
     

@@ -58,7 +58,7 @@ function OrderHistory() {
                     timeDue: timeDue,
                     status: orderItem.Status,
                     orderId: orderItem.orderId,
-                    isDamaged: orderItem.Damaged
+                    isDamaged: orderItem.Damaged,
                 };
             }));
     
@@ -112,6 +112,7 @@ function OrderHistory() {
                                 orderId={item.orderId}
                                 userId={userId}
                                 isDamaged = {item.isDamaged}
+                                cost = {item.cost}
                             />
                         );
                     })}

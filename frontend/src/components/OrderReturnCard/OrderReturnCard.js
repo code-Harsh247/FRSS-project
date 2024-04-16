@@ -8,6 +8,7 @@ const OrderReturnCard = ({ order }) => {
     const { products } = useProducts();
     const [item, setItem] = useState(null);
     const [processed, setProcessed] = useState(false);
+    const [ProcessedCode, setProcessedCode] = useState(-1);
 
     const AcceptReturn = async () => {
         try {
@@ -19,9 +20,9 @@ const OrderReturnCard = ({ order }) => {
                 orderId: order.OrderID,
                 userID: order.UserID,
                 productID: order.ProductID,
-                Quantity:order.Quantity
+                Quantity: order.Quantity
             });
-
+            setProcessedCode(1);
             // If the request is successful, you can update the UI or perform any other actions
             // For example, you can display a success message or refresh the list of return requests
 
@@ -36,10 +37,34 @@ const OrderReturnCard = ({ order }) => {
         }
     };
 
+    useEffect(() => {
+        setProcessedCode(order.ProcessedStatus);
+    }, [order])
 
-    const RejectReturn = () => {
 
-    }
+    const RejectReturn = async () => {
+        try {
+            // Set processed to true to disable the buttons while the request is being processed
+            setProcessed(true);
+
+            // Send a POST request to your backend to reject the return request
+            await axios.post('/admin/reject-return-request', {
+                orderId: order.OrderID,
+                userID:order.UserID
+            });
+            alert("Return Request Rejected. Damaged Product Notification sent.")
+            // If the request is successful, update the ProcessedCode state to 0 for rejected
+            setProcessedCode(0);
+        } catch (error) {
+            // If there's an error, log the error message
+            console.error("Error rejecting return request:", error);
+        } finally {
+            // Reset the processed state to enable the buttons again
+            setProcessed(false);
+        }
+    };
+
+    console.log("Process ",order.ProcessedStatus);
 
     useEffect(() => {
         setItem(products.find(product => product.id === order.ProductID));
@@ -77,10 +102,23 @@ const OrderReturnCard = ({ order }) => {
                 <span><span className='font-Admin-Prod-Card'>ZipCode : </span>{order.ZipCode}</span>
                 <br />
             </div>
-            <div className='ReturnCardBtns'>
-                <button onClick={AcceptReturn} disabled={processed} >Accept</button>
-                <button onClick={RejectReturn} disabled={processed}>Reject</button>
-            </div>
+            {(ProcessedCode == -1) &&
+                <div className='ReturnCardBtns'>
+                    <button onClick={AcceptReturn} >Accept</button>
+                    <button onClick={RejectReturn}>Reject</button>
+                </div>
+            }
+            {(ProcessedCode == 1) &&
+                <div className='DisableBtnReturn'>
+                    <button disabled={true} >Accepted</button>
+                </div>
+            }
+            {(ProcessedCode == 0) &&
+                <div className='DisableBtnReturn'>
+                    <button disabled={true} style={{backgroundColor:"red"}}>Rejected</button>
+                </div>
+            }
+
         </div>
     );
 

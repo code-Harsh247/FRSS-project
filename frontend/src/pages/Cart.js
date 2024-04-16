@@ -19,7 +19,7 @@ function Cart() {
     const navigate = useNavigate();
 
     const [cartProducts, setCartProducts] = useState([]);
-    
+
     useEffect(() => {
         // Function to fetch and process cart data
         const fetchCartData = async () => {
@@ -28,7 +28,7 @@ function Cart() {
                 setLoading(false);
                 return;
             }
-            
+
             const filteredCartData = cartData.filter(
                 (item) => Object.keys(item).length !== 0
             );
@@ -38,7 +38,8 @@ function Cart() {
             for (const cartItem of filteredCartData) {
                 const product = products.find((product) => product.id === cartItem.id);
                 if (product) {
-                    const productWithQuantity = { ...product, 
+                    const productWithQuantity = {
+                        ...product,
                         quantity: cartItem.count,
                         duration: cartItem.duration
                     };
@@ -90,7 +91,7 @@ function Cart() {
             {!isLoggedIn && <div id="LogInCart">
                 <p>Please Login to view your cart</p>
                 <div className="LoginBtn">
-                    <CustomButton btnText="Log in" handleClick={handleButtonClick} Btnwidth="8.5em"/>
+                    <CustomButton btnText="Log in" handleClick={handleButtonClick} Btnwidth="8.5em" />
                 </div>
             </div>}
 
@@ -103,7 +104,7 @@ function Cart() {
                     {cartProducts.map((item) => (
                         <CartItem
                             key={item.id}
-                            ID = {item.id}
+                            ID={item.id}
                             price={item.price}
                             name={item.name}
                             q={item.quantity}
@@ -114,9 +115,12 @@ function Cart() {
                     ))}
                 </div>
             )}
-            <div className="CheckOut-Btn">
-                <CustomButton Btnwidth="100%" btnText="Checkout" handleClick={checkout}/>
-            </div>
+            {cartProducts.length !== 0 && (
+                <div className="CheckOut-Btn">
+                    <CustomButton Btnwidth="100%" btnText="Checkout" handleClick={checkout} />
+                </div>
+            )}
+
             <ServiceBanner />
             <Footer />
         </div>

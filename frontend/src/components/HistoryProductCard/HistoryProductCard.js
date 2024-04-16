@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './HistoryProductCard.css';
 import axios from "../../context/axiosConfig";
 
-function HistoryProductCard({ img, name, price, quantity, duration, date, timeDue, status, orderId, userId, isDamaged }) {
+function HistoryProductCard({ img, name, price, quantity, duration, date, timeDue, status, orderId, userId, isDamaged,cost }) {
   const [messageIndex, setMessageIndex] = useState(-1);
   const messages = ["Currently Renting", "Return Request Initiated", "Returned"];
-  console.log("Is Damaged :",isDamaged);
+  console.log("Cost :", cost);
   // Use useEffect to set initial messageIndex based on status prop
   useEffect(() => {
     switch (status) {
@@ -54,16 +54,20 @@ function HistoryProductCard({ img, name, price, quantity, duration, date, timeDu
         />
       </div>
       <div className="product-info">
+        <div className='Title-order-history'>
         <h3 className="product-name">{name}</h3>
+        </div>
+        
+        
         <span className="product-price">
-        <span className="product-price">
-  {timeDue < 0 ? `₹${(price * 1.15).toLocaleString()} / month  {15 % Added)` : `₹${price.toLocaleString()} / month`}
-</span>
- 
-          
-          
-          
-          
+          <span className="product-price">
+            {isDamaged? `₹${cost.toLocaleString()}`: timeDue < 0 ? `₹${(price * 1.15).toLocaleString()} / month  {15 % Added)` : `₹${price.toLocaleString()} / month`}
+          </span>
+
+
+
+
+
           {/* Assuming static rental price */}
         </span>
         <div className="product-details">
@@ -76,22 +80,23 @@ function HistoryProductCard({ img, name, price, quantity, duration, date, timeDu
             <div>
               <span style={{ color: "black" }}><span className='font-Admin-Prod-Card'>Date Ordered:</span>{date}</span>
               <br />
-              <span style={{ color: timeDue < 0 ? "red" : "green" }}><span className='font-Admin-Prod-Card'>Time Due:</span>{messageIndex!==0 ? (messageIndex!==1 ? ("0 day"):("On hold")) : `${timeDue} days`} </span>
+              <span style={{ color: timeDue < 0 ? "red" : "green" }}><span className='font-Admin-Prod-Card'>Time Due:</span>{isDamaged ? "none" : messageIndex !== 0 ? (messageIndex !== 1 ? ("0 day") : ("On hold")) : `${timeDue} days` } </span>
             </div>
             <div className='StatusMessage' >
-            <span style={{ color: "black" }}><span className='font-Admin-Prod-Card'>Status:</span>{statusMessage}</span>
-              <span style={{ color: timeDue < 0 ? "red" : "green" }}>{timeDue < 0 ? "Loan: Active" : "Loan: Inactive"}</span>
+              <span style={isDamaged ? {color:"red"}:{color:"black"} }><span className='font-Admin-Prod-Card'>Status:</span>
+              {isDamaged ? "Product was found damaged. Please pay the full price." : statusMessage}
+              </span>
+              { !isDamaged && (
+                  <span style={{ color: timeDue < 0 ? "red" : "green" }}>{timeDue < 0 ? "Loan: Active" : "Loan: Inactive"}</span>
+              )}
+              
             </div>
 
-            {/* {isDamaged && (
-              <div className='DamagedProduct'>
 
-              </div>
-            ) } */}
           </div>
         </div>
       </div>
-      <button className={messageIndex==0 ? "ReturnBtn" : "DisabledBtn"} disabled={messageIndex !== 0} onClick={handleReturnProduct}>{messageIndex!==0 ? (messageIndex!==1 ? ("Returned"):("Pending")) : "Return"}</button>
+      <button className={messageIndex == 0 ? "ReturnBtn" : "DisabledBtn"} disabled={messageIndex !== 0} onClick={handleReturnProduct}>{isDamaged? "Damaged" : messageIndex !== 0 ? (messageIndex !== 1 ? ("Returned") : ("Pending")) : "Return" }</button>
 
 
 

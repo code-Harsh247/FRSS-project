@@ -67,13 +67,14 @@ function Alerts() {
         for (const obj of returnOrderAlerts) {
             // Extract the OrderID from the alert object
             const orderId = Number(obj.OrderID);
-
+            const processedStatus = Number(obj.ProcessedStatus);
             // Find the order in orderAlerts array based on the OrderID
             const order = orderAlerts.find(order => order.OrderID === orderId);
+            
 
             // If order is found, push it to the fetchedOrders array
             if (order) {
-                newFetchedOrders.push(order);
+                newFetchedOrders.push({ ...order, ProcessedStatus: processedStatus });
             }
         }
         setFetchedOrders(newFetchedOrders);
@@ -154,9 +155,6 @@ function Alerts() {
                     <div className="OrderAlerts">
                         <div className="OrderAlertsTitle">
                             <span id="Title">Return Requests</span>
-                            <div className="ClearOrderAlerts">
-                                <button onClick={handleClearReturnOrderAlerts}>Clear All</button>
-                            </div>
                         </div>
                         <div className="OrderAlertsList">
                             {fetchedOrders.length === 0 && (
