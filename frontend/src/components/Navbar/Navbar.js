@@ -97,7 +97,6 @@ const Navbar = () => {
                     <NavLink to="/" onClick={scrollToContactSection}>Contact</NavLink>
                 </div>
                 <div className="icons">
-                    <img src={search} alt="Search" className="search-icon" />
                     <img src={cart} alt="cart" className="cart-icon" onClick={()=>{
                         navigate('/cart');
                     }}/>
