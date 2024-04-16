@@ -528,7 +528,7 @@ router.post('/rent/cart/:userId', async (req, res) => {
             adminOrders.push(newOrder);
 
             // Check if stock falls below threshold and update availability
-            if (product.stock < 20) {
+            if (product.stock <= 20) {
                 product.available = false;
                 const newNotification = {
                     image: product.image[0],
